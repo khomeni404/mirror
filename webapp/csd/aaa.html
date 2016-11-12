@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>jQuery Print Plugin Demos</title>
+    <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <style type='text/css'>
+        .a {
+            background: black;
+            color: white;
+        }
+
+        .b {
+            color: #aaa;
+        }
+    </style>
+
+    <!--[if lt IE 9]>
+    <script src="js/vendor/html5-3.6-respond-1.1.0.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div id="jquery-script-menu">
+    <div class="jquery-script-center">
+        <ul>
+
+        </ul>
+        <div class="jquery-script-ads">
+            <script type="text/javascript"><!--
+            google_ad_client = "ca-pub-2783044520727903";
+            /* jQuery_demo */
+            google_ad_slot = "2780937993";
+            google_ad_width = 728;
+            google_ad_height = 90;
+            //-->
+            </script>
+            <script type="text/javascript"
+                    src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+            </script>
+        </div>
+        <div class="jquery-script-clear"></div>
+    </div>
+</div>
+<h1 style="margin-top:150px;">jQuery Print Plugin Demos</h1>
+<!--[if lt IE 9]>
+<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to
+    improve your experience.</p>
+<![endif]-->
+
+<div id="content_holder">
+    <div id="ele1" class="a">
+        <h3>Element 1</h3>
+
+        <p> Some random text. </p>
+        <button class="print-link no-print" onclick="jQuery('#ele1').print()"> Print this</button>
+    </div>
+    <div id="ele2" class="b">
+        <h3>Element 2</h3>
+
+        <p> Some other random text. </p>
+        <button class="print-link no-print"> Print this</button>
+    </div>
+    <div id="ele3" class="a">
+        <h3>Element 3</h3>
+
+        <p class="no-print"> Some more random text. </p>
+        <button class="print-link" onclick="jQuery.print('#ele3')"> Print this</button>
+    </div>
+    <div id="ele4" class="b">
+        <h3 class='avoid-this'>Element 4</h3>
+
+        <p> Some really random text. </p>
+        <button class="print-link avoid-this"> Print this</button>
+    </div>
+    <br/>
+    <button class="print-link" onclick="jQuery.print()"> Print page</button>
+</div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="../jQuery.print.js"></script>
+<script type='text/javascript'>
+    //<![CDATA[
+    $(function () {
+        $("#ele2").find('.print-link').on('click', function () {
+            //Print ele2 with default options
+            $.print("#ele2");
+        });
+
+        $("#ele4").find('button').on('click', function () {
+            //Print ele4 with custom options
+            $("#ele4").print({
+                //Use Global styles
+                globalStyles: false,
+
+                //Add link with attrbute media=print
+                mediaPrint: false,
+
+                //Custom stylesheet
+                stylesheet: "http://fonts.googleapis.com/css?family=Inconsolata",
+
+                //Print in a hidden iframe
+                iframe: false,
+
+                //Don't print this
+                noPrintSelector: ".avoid-this",
+
+                //Add this on top
+                append: "Free jQuery Plugins!!!<br/>",
+
+                //Add this at bottom
+                prepend: "<br/>jQueryScript.net!"
+            });
+        });
+
+        // Fork https://github.com/sathvikp/jQuery.print for the full list of options
+    });
+    //]]>
+
+</script>
+<script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36251023-1']);
+    _gaq.push(['_setDomainName', 'jqueryscript.net']);
+    _gaq.push(['_trackPageview']);
+
+    (function () {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+    })();
+
+</script>
+</body>
+</html>

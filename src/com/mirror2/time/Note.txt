@@ -1,0 +1,18 @@
+LeaveApplicationDaoImpl
+>> This
+ "FROM LeaveApplication WHERE appliedBy=? AND appliedOn BETWEEN ? and ?"
+>> should be replace by like this...
+ "FROM LeaveApplication WHERE (fromDate=?) OR (fromDate<? AND toDate>?) OR (toDate=?)"
+ ===========================
+
+ saveWeekend
+ >>Weekend Duplicate            (Solved)
+
+ ============================================
+
+ Save Leave Application
+
+ Create 2014-11-24 to 2014-11-25
+
+ Forbidden
+ Again 2014-11-25 to any date

@@ -1,0 +1,43 @@
+INSERT INTO feature (operation, description, component_componentId) VALUES('createAttendanceRegister', 'AttendanceRegister Create', 19);
+INSERT INTO feature (operation, description, component_componentId) VALUES('saveAttendanceRegister', 'AttendanceRegister Save', 19);
+INSERT INTO feature (operation, description, component_componentId) VALUES('attendanceRegisterList', 'AttendanceRegister List', 19);
+INSERT INTO feature (operation, description, component_componentId) VALUES('attendanceRegisterJsonData', 'AttendanceRegister JsonData', 19);
+INSERT INTO feature (operation, description, component_componentId) VALUES('updateAttendanceRegister', 'AttendanceRegister Update', 19);
+INSERT INTO feature (operation, description, component_componentId) VALUES('deleteAttendanceRegister', 'AttendanceRegister Delete', 19);
+INSERT INTO feature (operation, description, component_componentId) VALUES('editAttendanceRegister', 'AttendanceRegister Edit', 19);
+
+
+INSERT INTO feature (operation, description, component_componentId) VALUES('createLeaveApplication', 'LeaveApplication Create', 19);
+INSERT INTO feature (operation, description, component_componentId) VALUES('saveLeaveApplication', 'LeaveApplication Save', 19);
+INSERT INTO feature (operation, description, component_componentId) VALUES('leaveApplicationList', 'LeaveApplication List', 19);
+INSERT INTO feature (operation, description, component_componentId) VALUES('leaveApplicationJsonData', 'LeaveApplication JsonData', 19);
+INSERT INTO feature (operation, description, component_componentId) VALUES('updateLeaveApplication', 'LeaveApplication Update', 19);
+INSERT INTO feature (operation, description, component_componentId) VALUES('deleteLeaveApplication', 'LeaveApplication Delete', 19);
+INSERT INTO feature (operation, description, component_componentId) VALUES('editLeaveApplication', 'LeaveApplication Edit', 19);
+INSERT INTO feature (operation, description, component_componentId) VALUES('viewLeaveApplication', 'LeaveApplication View', 19);
+
+
+INSERT INTO feature (operation, description, component_componentId) VALUES('createHolidayEntitlement', 'HolidayEntitlement Create', 19);
+INSERT INTO feature (operation, description, component_componentId) VALUES('saveHolidayEntitlement', 'HolidayEntitlement Save', 19);
+INSERT INTO feature (operation, description, component_componentId) VALUES('holidayEntitlementList', 'HolidayEntitlement List', 19);
+INSERT INTO feature (operation, description, component_componentId) VALUES('holidayEntitlementJsonData', 'HolidayEntitlement JsonData', 19);
+INSERT INTO feature (operation, description, component_componentId) VALUES('updateHolidayEntitlement', 'HolidayEntitlement Update', 19);
+INSERT INTO feature (operation, description, component_componentId) VALUES('deleteHolidayEntitlement', 'HolidayEntitlement Delete', 19);
+INSERT INTO feature (operation, description, component_componentId) VALUES('editHolidayEntitlement', 'HolidayEntitlement Edit', 19);
+
+
+INSERT INTO feature (operation, description, component_componentId) VALUES('createWeekend', 'Weekend Create', 19);
+INSERT INTO feature (operation, description, component_componentId) VALUES('saveWeekend', 'Weekend Save', 19);
+INSERT INTO feature (operation, description, component_componentId) VALUES('weekendList', 'Weekend List', 19);
+INSERT INTO feature (operation, description, component_componentId) VALUES('weekendJsonData', 'Weekend JsonData', 19);
+INSERT INTO feature (operation, description, component_componentId) VALUES('updateWeekend', 'Weekend Update', 19);
+INSERT INTO feature (operation, description, component_componentId) VALUES('deleteWeekend', 'Weekend Delete', 19);
+INSERT INTO feature (operation, description, component_componentId) VALUES('editWeekend', 'Weekend Edit', 19);
+INSERT INTO feature (operation, description, component_componentId) VALUES('viewWeekend', 'Weekend View', 19);
+
+
+INSERT INTO feature (operation, description, component_componentId) VALUES('timeHome', 'Time Home', 19);
+INSERT INTO feature (operation, description, component_componentId) VALUES('viewLeaveSummary', 'Leave Summary View', 19);
+INSERT INTO feature (operation, description, component_componentId) VALUES('viewAttendanceSummary', 'Attendance Summary View', 19);
+
+

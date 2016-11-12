@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report_13" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="dab30fce-f303-4704-bebe-7a017af37b9d">
+	<property name="ireport.zoom" value="1.6500000000000004"/>
+	<property name="ireport.x" value="11"/>
+	<property name="ireport.y" value="95"/>
+	<parameter name="LOGO" class="java.lang.String"/>
+	<parameter name="USER" class="java.lang.String"/>
+	<parameter name="DEG" class="java.lang.String"/>
+	<parameter name="TARGET_DATE" class="java.lang.String"/>
+	<parameter name="TYPE" class="java.lang.String"/>
+	<parameter name="TOTAL" class="java.lang.String"/>
+	<field name="ID" class="java.lang.String"/>
+	<field name="CID" class="java.lang.String"/>
+	<field name="NAME" class="java.lang.String"/>
+	<field name="REF_NAME" class="java.lang.String"/>
+	<field name="LAST_DATE" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="124" splitType="Stretch">
+			<staticText>
+				<reportElement x="113" y="42" width="431" height="26" forecolor="#FF6600" uuid="10eb9598-3e73-43aa-a9b5-3b2fc3ad8d34"/>
+				<textElement textAlignment="Right">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DORPAN Properties Limited]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="68" width="555" height="20" backcolor="#CCCCFF" uuid="7800635d-c1cd-44f3-a474-b92ccb1209d7"/>
+				<graphicElement>
+					<pen lineColor="#FFFFFF"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="201" y="70" width="342" height="20" backcolor="#9999FF" uuid="64e21a74-07e7-4be1-9164-f66a9c533b63"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Customer List]]></text>
+			</staticText>
+			<line>
+				<reportElement x="360" y="118" width="195" height="1" uuid="b3731cc7-2be4-4387-88cd-20e9260d9f86"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="360" y="115" width="195" height="1" uuid="99b9c40c-4280-4385-b7ff-0b9ba24fa88b"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<ellipse>
+				<reportElement x="349" y="113" width="8" height="8" uuid="0769e567-a01f-42d4-b59c-0d2a25b0f246"/>
+			</ellipse>
+			<image>
+				<reportElement x="14" y="28" width="93" height="72" uuid="9a1f3c7c-f2d4-471b-9744-bf1aeeec7dd8"/>
+				<imageExpression><![CDATA[$P{LOGO}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="45" splitType="Stretch">
+			<textField>
+				<reportElement x="113" y="0" width="161" height="20" uuid="1eb91eee-6d44-4cd8-aeb4-472272212fa4"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[": "+$P{TYPE}+" "+$P{TARGET_DATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="23" y="0" width="84" height="20" uuid="ea2dd901-f4a1-4cf2-bdeb-e1eaefc9831e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Last Payment]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="20" width="84" height="20" uuid="19d9d0d0-a0e9-48c7-ada4-0ef9ff56ccd1"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="113" y="20" width="425" height="20" uuid="985f9867-eaca-41be-9a6e-fe9675c6f166"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[": "+$P{TOTAL}+" Customer"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<rectangle>
+				<reportElement x="13" y="0" width="530" height="20" backcolor="#CCFFCC" uuid="79bc02a7-e915-4113-a1e4-1e4923ba97ad"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="20" y="0" width="76" height="20" uuid="92de9942-7ace-4d04-9ef5-0cf4d50ef612"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="96" y="1" width="215" height="20" uuid="acb517e9-4787-49c7-93aa-065b7dc73a16"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Customer Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="314" y="1" width="166" height="20" uuid="98a614a2-a10e-4c77-8b1a-d6935ecaa9b3"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reference Person]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="480" y="1" width="58" height="20" uuid="5c5cbea9-6177-4205-8b94-3769d09633f1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Last Pay]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement x="20" y="1" width="76" height="20" uuid="4da9ac16-4aa5-47b9-8b50-0d5263eea5ec"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{CID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="96" y="1" width="215" height="20" uuid="c7b874bc-07c4-4b8f-baa5-8cd58442f724"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="314" y="1" width="166" height="20" uuid="ac25ea9b-eb4f-4a05-aff9-39f76d93db4b"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{REF_NAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="480" y="3" width="58" height="20" uuid="dbf70d56-b701-4311-b595-d8a36c6e8824"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{LAST_DATE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="332" y="0" width="212" height="20" uuid="25b210c1-5d2c-4487-a319-78fe6ffb7b46"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="102" splitType="Stretch">
+			<line>
+				<reportElement x="385" y="54" width="158" height="1" uuid="d68f7d75-9a85-499c-8de6-b87092a977cf"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="165" y="54" width="373" height="20" uuid="2c2e7bdb-2fc6-4813-90d0-5d116fe5b748"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["("+$P{USER}+")"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="238" y="74" width="300" height="20" uuid="6f2d9501-e995-40b7-b628-4ef79732d53a"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DEG}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

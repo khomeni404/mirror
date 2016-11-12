@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+   <!-- <bean id="atm"  class="com.mirror2.live.ATM"/>-->
+
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+          p:location="/WEB-INF/jdbc.properties" />
+    <bean id="tradePlusDataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+          p:driverClassName="${jdbc.driverClassName}"
+          p:url="${jdbc.url}"
+          p:username="${jdbc.username}"
+          p:password="${jdbc.password}"/>
+    
+    <!-- ADD PERSISTENCE SUPPORT HERE (jpa, test, etc) -->
+    <bean id="jpaTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory" />
+        </property>
+    </bean>
+    
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory">
+            <ref local="sessionFactory"/>
+        </property>
+    </bean>
+    
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+        <property name="dataSource" ref="tradePlusDataSource"/>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${jdbc.hibernate.dialect}</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <!-- stats -->
+                <prop key="hibernate.generate_statistics">true</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="org.hibernate.type">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.jdbc.batch_size">50</prop>
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>
+                <prop key="hibernate.cache.use_query_cache">true</prop>
+                <prop key="hibernate.cache.provider_class">com.googlecode.hibernate.memcached.MemcachedCacheProvider</prop>
+                <prop key="hibernate.memcached.servers">127.0.0.1:11211</prop>
+            </props>
+        </property>
+        <property name="annotatedClasses">
+            <list>
+                <value>com.mirror2.time.model.AttendanceRegister</value>
+
+                <value>com.mirror2.security.model.User</value>
+                <value>com.mirror2.security.model.Token</value>
+                <value>com.mirror2.security.model.AuthorizedGroups</value>
+                <value>com.mirror2.security.model.Authority</value>
+                <value>com.mirror2.security.model.Feature</value>
+                <value>com.mirror2.security.model.Component</value>
+
+                <value>com.mirror2.csd.model.Customer</value>
+                <value>com.mirror2.csd.model.AptApplication</value>
+                <value>com.mirror2.csd.model.Building</value>
+                <value>com.mirror2.csd.model.Director</value>
+                <value>com.mirror2.csd.model.Installment</value>
+                <value>com.mirror2.csd.model.Project</value>
+                <value>com.mirror2.csd.model.Shareholder</value>
+                <value>com.mirror2.csd.model.MoneyReceipt</value>
+                <value>com.mirror2.csd.model.OtherPayment</value>
+                <value>com.mirror2.csd.model.Voucher</value>
+                <value>com.mirror2.csd.model.AdjustmentVoucher</value>
+                <value>com.mirror2.csd.model.WithdrawVoucher</value>
+                <value>com.mirror2.csd.model.MID</value>
+                <value>com.mirror2.csd.model.Offer</value>
+                <value>com.mirror2.csd.model.DisbursementLog</value>
+                <value>com.mirror2.csd.model.MoneyDisburse</value>
+                <value>com.mirror2.csd.model.EmpCsd</value>
+                <value>com.mirror2.csd.model.FollowUpHistory</value>
+                <value>com.mirror2.csd.model.IncentiveDist</value>
+                <value>com.mirror2.csd.model.Application</value>
+                <value>com.mirror2.csd.model.CancellationApp</value>
+
+                <value>com.mirror2.icm.model.Item</value>
+                <value>com.mirror2.icm.model.ItemCategory</value>
+                <value>com.mirror2.icm.model.Store</value>
+                <value>com.mirror2.icm.model.Unit</value>
+                <value>com.mirror2.icm.model.ItemIn</value>
+                <value>com.mirror2.icm.model.ItemOut</value>
+                <value>com.mirror2.icm.model.ItemUsageHistory</value>
+                <value>com.mirror2.icm.model.InternalRequisition</value>
+                <value>com.mirror2.icm.model.Requisition</value>
+
+                <value>com.mirror2.time.model.AttendanceRegister</value>
+                <value>com.mirror2.time.model.LeaveApplication</value>
+                <value>com.mirror2.time.model.HolidayEntitlement</value>
+                <value>com.mirror2.time.model.LateThreshold</value>
+                <value>com.mirror2.time.model.Weekend</value>
+
+                <!--Admin-->
+                <value>com.mirror2.admin.model.BoardMeeting</value>
+
+                <!--Messaging-->
+                <value>com.mirror2.messaging.model.EmailCluster</value>
+                <value>com.mirror2.messaging.model.SMSCluster</value>
+
+            </list>
+        </property>
+    </bean>
+    <!-- <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean> -->
+    <!-- ADD PERSISTENCE SUPPORT HERE (jpa, test, etc) -->
+    
+    <tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
+    
+        <!-- Freemarker configuration -->
+    <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath">
+            <value>/</value>
+        </property>
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="template_exception_handler">rethrow</prop>
+                <prop key="number_format">0.########</prop>
+                <prop key="date_format">dd-MM-yyyy</prop>
+            </props>
+        </property>
+    </bean>
+    
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="suffix" value=".ftl" />
+        <!-- if you want to use the Spring FreeMarker macros, set this property to true -->
+        <property name="exposeSpringMacroHelpers" value="true" />
+        <property name="exposeRequestAttributes">
+            <value>true</value>
+        </property>
+        <property name="exposeSessionAttributes">
+            <value>true</value>
+        </property>
+        <property name="requestContextAttribute" value="rc"/>
+    </bean>
+    <!-- Freemarker configuration -->
+    
+    
+</beans>

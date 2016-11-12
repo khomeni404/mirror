@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<body>
+         <button onclick="abc()">Hit ME</button>
+</body>
+
+<script>
+
+    function next(){
+        var x = "DPL 000202";
+        var y = x.substring(4,10);
+        alert(parseInt(y)+1) ;//
+    }
+
+
+
+    function isPrime2() {
+        var number = prompt("Please enter a number greater than 1", "");
+        if(number < 2)return false;
+
+        for (var i = 2; i < number; i++) {
+            if(number%i==0) {
+                alert("Sorry this is not prime number !");
+                return false;
+            }
+
+        }
+        alert("Yes this is a prime number !");
+    }
+
+
+
+    function isPrime() {
+        var n = prompt("Please enter a number greater than 2", "");
+        //alert(num)
+        if (n < 2) {
+            alert("Insert greater than 2");
+            return false;
+        }
+        var q = Math.sqrt(n);
+        for (var i = 2; i <= q; i++) {
+            if (n % i == 0) {
+                alert("No it is not a prime number")
+                return false;
+            }
+        }
+        alert("Yes it is a prime number")
+    }
+</script>
+</html>

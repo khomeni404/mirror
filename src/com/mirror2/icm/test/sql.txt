@@ -1,0 +1,89 @@
+
+
+INSERT INTO feature (operation, description, component_componentId) VALUES('createItemIn', 'ItemIn Create', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('saveItemIn', 'ItemIn Save', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('itemInList', 'ItemIn List', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('itemInJsonData', 'ItemIn JsonData', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('updateItemIn', 'ItemIn Update', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('deleteItemIn', 'ItemIn Delete', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('editItemIn', 'ItemIn Edit', 18);
+
+
+INSERT INTO feature (operation, description, component_componentId) VALUES('createItem', 'Item Create', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('saveItem', 'Item Save', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('itemList', 'Item List', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('itemJsonData', 'Item JsonData', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('updateItem', 'Item Update', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('deleteItem', 'Item Delete', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('editItem', 'Item Edit', 18);
+
+INSERT INTO feature (operation, description, component_componentId) VALUES('createItemOut', 'ItemOut Create', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('saveItemOut', 'ItemOut Save', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('itemOutList', 'ItemOut List', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('itemOutJsonData', 'ItemOut JsonData', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('updateItemOut', 'ItemOut Update', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('deleteItemOut', 'ItemOut Delete', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('editItemOut', 'ItemOut Edit', 18);
+
+INSERT INTO feature (operation, description, component_componentId) VALUES('createInternalRequisition', 'InternalRequisition Create', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('saveInternalRequisition', 'InternalRequisition Save', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('internalRequisitionList', 'InternalRequisition List', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('internalRequisitionJsonData', 'InternalRequisition JsonData', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('updateInternalRequisition', 'InternalRequisition Update', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('deleteInternalRequisition', 'InternalRequisition Delete', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('editInternalRequisition', 'InternalRequisition Edit', 18);
+
+INSERT INTO feature (operation, description, component_componentId) VALUES('createItemCategory', 'ItemCategory Create', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('saveItemCategory', 'ItemCategory Save', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('itemCategoryList', 'ItemCategory List', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('itemCategoryJsonData', 'ItemCategory JsonData', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('updateItemCategory', 'ItemCategory Update', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('deleteItemCategory', 'ItemCategory Delete', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('editItemCategory', 'ItemCategory Edit', 18);
+
+INSERT INTO feature (operation, description, component_componentId) VALUES('createItemUsageHistory', 'ItemUsageHistory Create', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('saveItemUsageHistory', 'ItemUsageHistory Save', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('itemUsageHistoryList', 'ItemUsageHistory List', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('itemUsageHistoryJsonData', 'ItemUsageHistory JsonData', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('updateItemUsageHistory', 'ItemUsageHistory Update', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('deleteItemUsageHistory', 'ItemUsageHistory Delete', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('editItemUsageHistory', 'ItemUsageHistory Edit', 18);
+
+INSERT INTO feature (operation, description, component_componentId) VALUES('createRequisition', 'Requisition Create', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('saveRequisition', 'Requisition Save', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('requisitionList', 'Requisition List', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('requisitionJsonData', 'Requisition JsonData', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('updateRequisition', 'Requisition Update', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('deleteRequisition', 'Requisition Delete', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('editRequisition', 'Requisition Edit', 18);
+
+INSERT INTO feature (operation, description, component_componentId) VALUES('createStore', 'Store Create', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('saveStore', 'Store Save', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('storeList', 'Store List', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('storeJsonData', 'Store JsonData', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('updateStore', 'Store Update', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('deleteStore', 'Store Delete', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('editStore', 'Store Edit', 18);
+
+INSERT INTO feature (operation, description, component_componentId) VALUES('createUnit', 'Unit Create', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('saveUnit', 'Unit Save', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('unitList', 'Unit List', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('unitJsonData', 'Unit JsonData', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('updateUnit', 'Unit Update', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('deleteUnit', 'Unit Delete', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('editUnit', 'Unit Edit', 18);
+
+INSERT INTO feature (operation, description, component_componentId) VALUES('icmConfigurationHome', 'ICM Configuration Home', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('reportHome', 'ICM Report Home', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('viewItemSummary', 'View Item Summary', 18);
+
+
+INSERT INTO feature (operation, description, component_componentId) VALUES('viewMyItem', 'View My Item Summary', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('viewEmpItem', 'View Emp Item Summary', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('myInternalRequisitionList', 'My Internal Requisition List', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('icmHome', 'ICM Home', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('myIcmHome', 'My ICM Home', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('viewComingItem', 'View Coming Item', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('viewStatusOfRequestedItem', 'Status Of Requested Item', 18);
+INSERT INTO feature (operation, description, component_componentId) VALUES('vieWaitingItemList', 'Vie Waiting Item List', 18);
+

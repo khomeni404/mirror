@@ -1,0 +1,18 @@
+
+
+1. Downpayment Due report
+
+2. Special Payment Due Report
+
+3. Disbursement Log for DP + Inst + SP + CP
+
+DisbursementLog
+
+
+4. SMS for due on each month
+
+5. SMS to Individual + email
+
+6. Collection from Over-due + From Due  [ Log on inst. save ]
+
+7. Search by Reference + ID Tab

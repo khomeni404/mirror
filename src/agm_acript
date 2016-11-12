@@ -1,0 +1,13 @@
+
+/*Sales by Year*/
+SELECT YEAR(booking_date), COUNT(*)  FROM csd_customer
+GROUP BY YEAR(booking_date);
+
+/*Sales by Month*/
+SELECT YEAR(booking_date) YEAR, MONTH(booking_date) MONTH, COUNT(*) sales  FROM csd_customer
+GROUP BY YEAR(booking_date), MONTH(booking_date);
+
+/*With cust_ids*/
+SELECT YEAR(booking_date), COUNT(*), GROUP_CONCAT(id SEPARATOR ',') cust_ids
+FROM csd_customer csdc WHERE STATUS != 'Refunded'
+GROUP BY YEAR(booking_date) ORDER BY YEAR(booking_date) ASC;

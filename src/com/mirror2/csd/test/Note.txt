@@ -1,0 +1,26 @@
+//Using reflection API
+        for(int i = 1; i <= numberOfPayment; i++){
+            try {
+                otherPayment = new OtherPayment();
+                otherPayment.setCustomer(customer);
+                Field paymentType = CsdController.class.getDeclaredField("paymentType"+i);
+                otherPayment.setPaymentType((String) paymentType.get(csdController));
+
+                Field paymentName = CsdController.class.getDeclaredField("paymentName"+i);
+                otherPayment.setPaymentName((String) paymentName.get(csdController));
+
+                Field amount = CsdController.class.getDeclaredField("amount"+i);
+                otherPayment.setAmount((Double) amount.get(csdController));
+
+                Field note = CsdController.class.getDeclaredField("note"+i);
+                otherPayment.setNote((String) note.get(csdController));
+
+                Field deadLine = CsdController.class.getDeclaredField("deadLine"+i);
+                otherPayment.setDeadLine((Date) deadLine.get(csdController));
+
+                customer.getOtherPayments().add(otherPayment);
+                csdService.save(otherPayment);
+            }catch (Exception ex){
+
+            }
+        }

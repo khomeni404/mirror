@@ -1,0 +1,50 @@
+Document Management System (DMS)
+Enterprise resource planning (mirror)
+Management information system (MIS)
+Cognizant Technology Solutions (CTS)
+Supply chain management (SCM)
+
+HRM > model >
+1. Degree           CRUD >
+2. Employee         CRUD >
+3. EmployeeProfile  CRUD >
+4. Employer         CRUD >
+5. EmploymentStatus CRUD > CR
+6. JobAppreciation  CRUD > CR D
+7. JobCategory      CRUD >
+8. JobRole          CRUD > CR D
+9. JobSpec          CRUD > CR D
+10 JobTitle         CRUD > CR
+
+HRM > Payroll > model
+1. AllowanceType    CRUD > C
+2. DeductType       CRUD > CR D
+3. Incentive        CRUD > Abstract
+4. OccIncentive     CRUD > CR
+5. OverTimeRate     CRUD > C
+6. PaymentMethod    CRUD >
+7. PaymentReq.      CRUD >
+8. PayResister      CRUD >
+9. ProvidentFund    CRUD >
+10. Reg.Incentive   CRUD > CR
+
+HRM > Time > Model
+1. AttendanceAdjustment CRUD > CR
+2. AttendanceRegister   CRUD >
+3. LateThreshold        CRUD > CR
+4. Leave                CRUD > CRUD
+5. LeaveEntitlement     CRUD > CR D
+6. LeaveResister        CRUD > ??
+7. LeaveWaiver          CRUD >
+
+Lifecycle of JSP
+Lifecycle of Servlet
+
+
+Dependency Injection
+
+Q. What is the difference between BeanFactory and ApplicationContext?
+Q. Bean lifecycle
+
+
+

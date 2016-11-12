@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4a0f3e14-8ef5-4c25-92e2-ba9ad239198f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     csd_building.`id` AS csd_building_id,
+     csd_building.`BUILDING_NAME` AS csd_building_BUILDING_NAME,
+     csd_building.`FLOOR_SIZES` AS csd_building_FLOOR_SIZES,
+     csd_building.`HAND_OVER` AS csd_building_HAND_OVER,
+     csd_building.`APT_IDS` AS csd_building_APT_IDS,
+     csd_building.`FLOOR_SIZE` AS csd_building_FLOOR_SIZE,
+     csd_building.`LAND_AREA` AS csd_building_LAND_AREA,
+     csd_building.`NUMBER_OF_FLOOR` AS csd_building_NUMBER_OF_FLOOR,
+     csd_building.`NUMBER_OF_UNIT` AS csd_building_NUMBER_OF_UNIT,
+     csd_building.`project_id` AS csd_building_project_id,
+     csd_building.`NAME_ALIAS` AS csd_building_NAME_ALIAS
+FROM
+     `csd_building` csd_building]]>
+	</queryString>
+	<field name="csd_building_id" class="java.lang.Long"/>
+	<field name="csd_building_BUILDING_NAME" class="java.lang.String"/>
+	<field name="csd_building_FLOOR_SIZES" class="java.lang.String"/>
+	<field name="csd_building_HAND_OVER" class="java.lang.String"/>
+	<field name="csd_building_APT_IDS" class="java.lang.String"/>
+	<field name="csd_building_FLOOR_SIZE" class="java.lang.Integer"/>
+	<field name="csd_building_LAND_AREA" class="java.lang.Double"/>
+	<field name="csd_building_NUMBER_OF_FLOOR" class="java.lang.Integer"/>
+	<field name="csd_building_NUMBER_OF_UNIT" class="java.lang.Integer"/>
+	<field name="csd_building_project_id" class="java.lang.Long"/>
+	<field name="csd_building_NAME_ALIAS" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement x="17" y="2" width="100" height="20" uuid="fad5ec15-c185-4ad9-8b03-9de39b5914e3"/>
+				<text><![CDATA[csd_building_BUILDING_NAME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="158" y="2" width="100" height="20" uuid="a63158e1-ffc6-4051-9f56-87dc62db2612"/>
+				<text><![CDATA[csd_building_FLOOR_SIZES]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement x="17" y="4" width="100" height="20" uuid="89d83896-051f-41c3-ab1e-2bfc02c22a33"/>
+				<textFieldExpression><![CDATA[$F{csd_building_BUILDING_NAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="158" y="6" width="100" height="20" uuid="ed2c3522-5c9b-44dc-9259-905990af6abe"/>
+				<textFieldExpression><![CDATA[$F{csd_building_FLOOR_SIZES}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
