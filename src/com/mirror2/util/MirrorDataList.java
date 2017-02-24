@@ -7,4 +7,10 @@ public interface MirrorDataList {
 
     String[][] APP_STATUS = {{"0", "Applied"}, {"1", "Approved"}, {"2", "Executed"}, {"3", "Rejected"}};
 
+    String CUST_STATUS_APPROVE = "Approved";
+    String CUST_STATUS_CANCELLED = "Cancelled";
+    String CUST_STATUS_PROCESSING = "Processing";
+    String CUST_STATUS_REFUNDED = "Refunded";
+
+
 }

@@ -6,6 +6,7 @@ import com.mirror2.csd.service.CsdService;
 import com.mirror2.csd.util.CurrentUserCredentials;
 import com.mirror2.messaging.threads.SmsThreadOut;
 import com.mirror2.util.MyProperty;
+import com.mirror2.util.NumberUtil;
 import com.mirror2.util.TheDates;
 import com.mirror2.security.model.User;
 import com.mirror2.security.service.UserDetailsService;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.math.BigDecimal;
+import java.net.InetAddress;
 import java.text.DecimalFormat;
 import java.util.*;
 
@@ -42,7 +44,7 @@ public class HomeController {
     static List<InboundMessage> msgList = new ArrayList<InboundMessage>();
 
     @RequestMapping(method = RequestMethod.GET, value = "/home.erp")
-    public ModelAndView home() {
+    public ModelAndView home()  throws Exception{
         // startService();
         Long empId = new CurrentUserCredentials().authorizeId;
         Date dateAndTime = new Date();
@@ -109,7 +111,8 @@ public class HomeController {
             logList.add(logMap);
         }
         map.put("logList", logList);
-
+        map.put("NU", new NumberUtil());
+        map.put("host_address", InetAddress.getLocalHost().getHostAddress());
         if (new TheDates().isLicenceOk())
             return new ModelAndView("/home/index", map);
         else

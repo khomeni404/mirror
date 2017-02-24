@@ -5,6 +5,7 @@ import com.mirror2.csd.dao.CustomerDAO;
 import com.mirror2.csd.dao.MoneyReceiptDAO;
 import com.mirror2.csd.model.Customer;
 import com.mirror2.csd.model.MoneyReceipt;
+import com.mirror2.mis.dao.MisDAO;
 import com.mirror2.util.DateUtil;
 import com.mirror2.util.MirrorUtil;
 import com.mirror2.util.NumberUtil;
@@ -38,6 +39,8 @@ public class MISServiceImpl implements MISService {
     private MoneyReceiptDAO moneyReceiptDAO;
     @Autowired
     private CustomerDAO customerDAO;
+    @Autowired
+    private MisDAO misDAO;
 
     @Override
     public Object[] getPaymentStatementDataList(Customer customer, Date from, Date to) {
@@ -148,6 +151,33 @@ public class MISServiceImpl implements MISService {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Double total = 0.0;
         return new Object[]{dataList, MirrorUtil.toCommaFormattedTaka(0), NumberUtil.inWord(total.longValue())};
+    }
+
+    @Override
+    public List<Map<String, String>> getCustomerOfferWise(Long offerId, Date bookingFrom, Date bookingTo) {
+
+        List<Object[]> objectList = misDAO.getCustomerData(offerId);
+
+        List<Map<String, String>> dataList = new ArrayList<Map<String, String>>();
+        Map<String, String> map;
+        int sl = 1;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        for (Object[] o : objectList) {
+            map = new HashMap<String, String>();
+            map.put("SL", String.valueOf(sl++));
+            //CID, name, bookingDate, floorSize, building.buildingName,5 AID,6 referenceBy.mid, 7 c.offer.offerName
+            map.put("CID", String.valueOf(o[0]).replace("DPL ", ""));
+            map.put("NAME", String.valueOf(o[1]));
+            map.put("BOOKING", sdf.format((Date) o[2]));
+            map.put("SIZE", String.valueOf(o[3]));
+            String buildingAlias = String.valueOf(o[4]);
+            map.put("AID", buildingAlias + "-" + String.valueOf(o[5]));
+            map.put("MID", String.valueOf(o[6]));
+            map.put("OFFER", String.valueOf(o[7]));
+            dataList.add(map);
+        }
+
+        return dataList;
     }
 
     @Override

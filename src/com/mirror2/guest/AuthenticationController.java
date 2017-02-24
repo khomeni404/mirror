@@ -13,6 +13,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mirror2.security.service.AuthenticationAndAuthorizationService;
 
+import java.net.InetAddress;
+import java.util.HashMap;
+import java.util.Map;
+
 
 @Controller
 @RequestMapping("/auth")
@@ -32,7 +36,9 @@ public class AuthenticationController{
 	@RequestMapping(method=RequestMethod.GET, value="/login.erp")
 	public ModelAndView login() throws Exception {
         bootStrap.createDefaultAdmin();
-		return new ModelAndView("authentication/login");
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("host_address", InetAddress.getLocalHost().getHostAddress());
+        return new ModelAndView("authentication/login", map);
     }
 	
 	@RequestMapping(method=RequestMethod.POST, value="/authenticateUser.erp")

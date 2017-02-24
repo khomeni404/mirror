@@ -1,6 +1,8 @@
 package com.mirror2.mis;
 
+import com.mirror2.common.dao.CommonDAO;
 import com.mirror2.csd.model.Customer;
+import com.mirror2.csd.model.Offer;
 import com.mirror2.csd.service.CsdService;
 import com.mirror2.mis.service.MISService;
 import com.mirror2.report.service.ReportService;
@@ -13,6 +15,7 @@ import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -52,6 +55,9 @@ public class MISController {
     @Autowired
     private ReportService reportService;
 
+    @Autowired
+    private CommonDAO commonDAO;
+
     @RequestMapping(method = RequestMethod.GET, value = "/home.erp")
     public ModelAndView home() {
         Map<String, Object> map = new HashMap<String, Object>();
@@ -59,6 +65,7 @@ public class MISController {
         map.put("PageTitle", "MIS Home");
         map.put("from", sdf_2.format(DateUtil.getFirstDayOfYear(new Date())));
         map.put("to", sdf_2.format(new Date()));
+        map.put("offerList", commonDAO.findAll(Offer.class));
         return new ModelAndView("/mis/home_mis", map);
     }
 
@@ -130,6 +137,43 @@ public class MISController {
         params.put("TO", to);
         params.put("FOR", type);
         params.put("TOTAL_AMT", "");
+        params.put("LOGO", misService.getRealPath("/") + "dp.png");
+        JRDataSource dataSource = new JRBeanCollectionDataSource(dataList);
+        try {
+            params.put("format", "pdf");
+            params.put("fileName", "report_26");
+            ByteArrayOutputStream byteArrayOutputStream = misService.generateReport(response, params, dataSource);
+            response.setContentLength(byteArrayOutputStream.size());
+            response.getOutputStream().write(byteArrayOutputStream.toByteArray());
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
+    @RequestMapping(value = "/getCustomerOfferWise.erp", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    String getCustomerOfferWise(@RequestParam(required = false) Long offerId,
+                                       @RequestParam(required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") Date bookingDateFrom,
+                                       @RequestParam(required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") Date bookingDateTo,
+                                       HttpServletRequest request, HttpServletResponse response)
+            throws JRException, IOException {
+
+        Map<String, Object> params = new HashMap<String, Object>();
+      Offer offer =  commonDAO.get(Offer.class, offerId);
+
+        List<Map<String, String>> dataList = misService.getCustomerOfferWise(offerId, bookingDateFrom, bookingDateTo);
+
+//        params.put("FROM", sdf_1.format(bookingDateFrom));
+//        params.put("TO", sdf_1.format(bookingDateTo));
+        params.put("OFFER_NAME", offer.getOfferName());
+        params.put("OFFER_DEAD_LINE", offer.getDeadLine());
+        params.put("OFFER_DESCRIPTION", offer.getOfferDescription());
+        params.put("TAKEN_ON", sdf_2.format(new Date()));
         params.put("LOGO", misService.getRealPath("/") + "dp.png");
         JRDataSource dataSource = new JRBeanCollectionDataSource(dataList);
         try {

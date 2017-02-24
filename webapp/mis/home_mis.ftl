@@ -1,6 +1,6 @@
 <#import "../gen_template/gen_app_layout.ftl" as layout>
 <@layout.gen_app_layout "${PageTitle!}" >
-
+    <#assign ctx = rc.getContextPath()/>
 <!--Resources For Bootstrap-->
     <#include "../gen_template/resources_of_bootstrap.ftl">
 
@@ -102,45 +102,75 @@
 
 
 <div class="row">
-    <div class="col-lg-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <label style="font-weight: bolder; font-family: 'Arial Black'">Customer List : Last Payment</label>
-                <br/> <label style="color: red" id="message-ps"></label>
-            </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-lg-4 text-center">
-                        <div class="form-group  text-left">
-                            <select name="" id="vcpm-type" class="form-control">
-                                <option value="BEFORE">Before</option>
-                                <option value="AFTER">Within</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 text-center">
-                        <div class="form-group  text-left">
-                            <select name="" id="vcpm-month" class="form-control">
-                                <#list 1..24 as month>
-                                    <option value="${month}">${month} Month</option>
-                                </#list>
-                            </select>
-                        </div>
-                    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <label style="font-weight: bolder; font-family: 'Arial Black'">Customer List : Last Payment</label>
+                    <br/> <label style="color: red" id="message-ps"></label>
                 </div>
-                <div class="row">
-                    <div class="col-lg-8 text-left"></div>
-                    <div class="col-lg-4 text-left">
-                        <button type="button" id="view-customer-payment-month"
-                                class="btn  btn-block btn-success">
-                            View Report
-                        </button>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-4 text-center">
+                            <div class="form-group  text-left">
+                                <select name="" id="vcpm-type" class="form-control">
+                                    <option value="BEFORE">Before</option>
+                                    <option value="AFTER">Within</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 text-center">
+                            <div class="form-group  text-left">
+                                <select name="" id="vcpm-month" class="form-control">
+                                    <#list 1..24 as month>
+                                        <option value="${month}">${month} Month</option>
+                                    </#list>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 text-left">
+                            <button type="button" id="view-customer-payment-month"
+                                    class="btn  btn-block btn-success">
+                                View Report
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
+
+        <#--Offer Wise-->
+        <div class="col-lg-6">
+            <form action="getCustomerOfferWise.erp" method="GET">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <label style="font-weight: bolder; font-family: 'Arial Black'">Customer List : Offer Wise</label>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-8 text-center">
+                                <div class="form-group  text-left">
+                                    <select name="offerId" class="form-control">
+                                        <#list offerList as offer>
+                                            <option value="${offer.id!}">${offer.offerName!} | ${(offer.deadLine)!'---'}</option>
+                                        </#list>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 text-left">
+                                <button type="submit" id="view-customer-payment-month"
+                                        class="btn  btn-block btn-success">
+                                    View Report
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
         <div class="col-lg-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -199,7 +229,6 @@
             </div>
         </div>
 
-
     </div>
 
     <div class="row">
@@ -242,7 +271,7 @@
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <label style="color: green; font-size: 15px;">Sales & Collection Report</label>
+                <label style="color: green; font-size: 15px;">Board Meeting Report</label>
             </div>
             <div class="panel-body">
                 <div class="col-lg-2">
@@ -265,7 +294,7 @@
                         <img src="../resources/images/csd/report.png"><span>Sales Report 4</span>
                     </a>
                 </div>
-                <div class="col-lg-2">
+                <#--<div class="col-lg-2">
                     <a href="/mirror/csd/salesReport5.erp?from=thisMonth&to=thisMonth" original-title="Payment Report">
                         <img src="../resources/images/csd/paymentStatement.png"><span>Collection 1</span>
                     </a>
@@ -274,7 +303,7 @@
                     <a href="/mirror/report/getCollectionDataAllYear.erp" original-title="View Customer by MID">
                         <img src="../resources/images/csd/paymentStatement.png"><span>Collection 2</span>
                     </a>
-                </div>
+                </div>-->
             </div>
         </div>
     </div>

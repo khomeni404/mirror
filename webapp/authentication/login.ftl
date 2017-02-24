@@ -5,6 +5,8 @@
   Time: 11:00 AM
   To change this template use File | Settings | File Templates.
 -->
+
+<#assign ctx = rc.getContextPath()/>
 <html>
     <head>
         <title>Login</title>
@@ -53,11 +55,15 @@
                     </div><!--loginbox_inner-->
                 </div><!--loginbox-->
 
+                <div class="loginoption" style="text-align: center">
+                    <#--<a href="${host_address!}/ctx/" class="cant"></a>-->
+                        Host Address : ${host_address!}
+                </div><#--
                 <div class="loginoption">
                     <a href="" class="cant">Can't access your account?</a>
 
                     <input type="checkbox" name="remember"> Remember me on this computer.
-                </div><!--loginoption-->
+                </div>-->
             </form> <!-- It was </g:form>   -->
         </div>
     </body>

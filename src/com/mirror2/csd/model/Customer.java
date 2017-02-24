@@ -72,9 +72,9 @@ public class Customer implements Serializable{
     private String mailingAddress;
 
     @Column(name="FLOOR_SIZE")
-    private int floorSize;
+    private Integer floorSize;
 
-    private double price;
+    private Double price;
 
     @Column(columnDefinition="text")
     private String notes;
@@ -325,19 +325,19 @@ public class Customer implements Serializable{
         this.mailingAddress = mailingAddress;
     }
 
-    public int getFloorSize() {
+    public Integer getFloorSize() {
         return floorSize;
     }
 
-    public void setFloorSize(int floorSize) {
+    public void setFloorSize(Integer floorSize) {
         this.floorSize = floorSize;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

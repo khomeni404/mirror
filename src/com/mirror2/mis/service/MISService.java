@@ -27,7 +27,10 @@ public interface MISService {
 
     public Object[] getCollectionModeWise(Date from, Date to);
 
+    List<Map<String, String>> getCustomerOfferWise(Long offerId, Date bookingFrom, Date bookingTo);
+
     public String getRealPath(String pathExtension);
+
 
     public ByteArrayOutputStream generateReport(HttpServletResponse response, Map<String, Object> params, JRDataSource dataSource);
 }

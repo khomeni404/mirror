@@ -133,7 +133,7 @@
                                 </div>
                             </td>
                             <td style="font-size: 22px; color: green; font-weight: bold">
-                                <div class="msg_date total_count">${collectedAmount}/= <span>(Till today) </span></div>
+                                <div class="msg_date total_count">${NU.toCommaFormattedTaka(collectedAmount!0.0)}/= <span>(Till today) </span></div>
                             </td>
                         </tr>
 
@@ -184,7 +184,7 @@
                 <div class="content tableName">
                     <table class="display data_table">
                         <thead>
-                        <tr>
+                        <tr align="left">
                             <th width="">
                                 <div style="text-align:left; margin-left:10px">Head</div>
                             </th>
@@ -204,22 +204,22 @@
                             <#assign RDA = 0.0>
                             <#assign ADA = 0.0>
                             <#list logList as log>
-                            <tr>
-                                <td>${log.head!}</td>
-                                <td>${log.overDue!}</td>
-                                <td>${log.regularDue!}</td>
-                                <td>${log.advanced!}</td>
+                            <tr align="right">
+                                <td  align="left">${log.head!}</td>
+                                <td>${NU.toCommaFormattedTaka(log.overDue!0.0)}/-</td>
+                                <td>${NU.toCommaFormattedTaka(log.regularDue!0.0)}/-</td>
+                                <td>${NU.toCommaFormattedTaka(log.advanced!0.0)}/-</td>
                             </tr>
 
                                 <#assign ODA = ODA+log.overDue>
                                 <#assign RDA = RDA+log.regularDue>
                                 <#assign ADA = ADA+log.advanced>
                             </#list>
-                        <tr style="font-weight: bolder">
-                            <td>Total</td>
-                            <td>${ODA!}</td>
-                            <td>${RDA!}</td>
-                            <td>${ADA!}</td>
+                        <tr  align="right" style="font-weight: bolder">
+                            <td align="left">Total</td>
+                            <td>${NU.toCommaFormattedTaka(ODA?number)}/-</td>
+                            <td>${NU.toCommaFormattedTaka(RDA?number)}/-</td>
+                            <td>${NU.toCommaFormattedTaka(ADA?number)}/-</td>
                         </tr>
 
 

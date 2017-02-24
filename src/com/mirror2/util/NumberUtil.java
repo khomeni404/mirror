@@ -1,5 +1,7 @@
 package com.mirror2.util;
 
+import org.apache.commons.lang.math.NumberUtils;
+
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
@@ -14,35 +16,39 @@ import java.text.DecimalFormat;
  */
 
 public class NumberUtil {
-    public static String toCommaFormateTaka(Object takaPaisaObj) {
-        String takaPaisa = String.valueOf(takaPaisaObj);
-        if (takaPaisa == null) return "";
-        boolean hasPaisa = takaPaisa.split("\\.").length > 1;
-        String taka = takaPaisa.split("\\.")[0];
-        String paisa = "";
-        if (hasPaisa) {
-            paisa = takaPaisa.split("\\.")[1];
-            paisa = MirrorUtil.cutOrPadRight(paisa, 2, "0");
-        }
-        int len = taka.length();
-        if (len <= 3) {
-            return taka + "." + paisa;
-        } else {
-            String sotok = taka.substring(len - 3);
-            String result = "";
-            String rest = taka.substring(0, len - 3);
-            for (int i = 0; i <= rest.length(); i++) {
-                if (rest.length() % 2 == 0) {
-                    result += rest.substring(0, 2);
-                    rest = rest.substring(2);
-                } else {
-                    result += rest.substring(0, 1);
-                    rest = rest.substring(1);
+    public static void main(String[] args) {
+        System.out.println(toCommaFormattedTaka(1.2653));
+    }
+    public static String toCommaFormattedTaka(Object takaPaisaObj) {
+        if(takaPaisaObj == null ) return "";
+        if (takaPaisaObj instanceof Double || takaPaisaObj instanceof Integer || NumberUtils.isDigits(takaPaisaObj.toString())) {
+            DecimalFormat df = new DecimalFormat("#0.00");
+            String takaPaisa = df.format(takaPaisaObj);
+            String taka = takaPaisa.split("\\.")[0];
+            String paisa = takaPaisa.split("\\.")[1];
+
+            int len = taka.length();
+            if (len <= 3) {
+                return taka + "." + paisa;
+            } else {
+                String sotok = taka.substring(len - 3);
+                String result = "";
+                String rest = taka.substring(0, len - 3);
+                for (int i = 0; i <= rest.length(); i++) {
+                    if (rest.length() % 2 == 0) {
+                        result += rest.substring(0, 2);
+                        rest = rest.substring(2);
+                    } else {
+                        result += rest.substring(0, 1);
+                        rest = rest.substring(1);
+                    }
+                    result += ",";
                 }
-                result += ",";
+                //System.out.println(result);
+                return result + sotok + "." + paisa;
             }
-            //System.out.println(result);
-            return result + sotok + "." + paisa;
+        } else {
+            return "";
         }
     }
 
@@ -86,8 +92,6 @@ public class NumberUtil {
             " nineteen"
     };
 
-    private NumberUtil() {}
-
     private static String convertLessThanOneThousand(int number) {
         String soFar;
 
@@ -115,13 +119,13 @@ public class NumberUtil {
         DecimalFormat df = new DecimalFormat(mask);
         snumber = df.format(number);
 
-        int billions = Integer.parseInt(snumber.substring(0, 5));
+        int billions = Integer.parseInt(snumber.substring(0,5));
         // nnnXXXnnnnnn
-        int crore  = Integer.parseInt(snumber.substring(5, 7));
+        int crore  = Integer.parseInt(snumber.substring(5,7));
         // nnnnnnXXXnnn
-        int lakh = Integer.parseInt(snumber.substring(7, 9));
+        int lakh = Integer.parseInt(snumber.substring(7,9));
         // nnnnnnnnnXXX
-        int thousands = Integer.parseInt(snumber.substring(9, 12));
+        int thousands = Integer.parseInt(snumber.substring(9,12));
         System.out.println("crore = " + billions);
         System.out.println("lakh = " + crore);
         System.out.println("Thousands / lakh= " + lakh);
@@ -135,7 +139,7 @@ public class NumberUtil {
      * @return String - English word of given number
      */
     public static String inWord(long number) {
-        try {            
+        try {
             if (number == 0) { return "zero"; }
             String sourceNumber;
             sourceNumber = Long.toString(number);
@@ -144,9 +148,9 @@ public class NumberUtil {
             DecimalFormat df = new DecimalFormat(mask);
             sourceNumber = df.format(number);
             int crore = Integer.parseInt(sourceNumber.substring(0, 5));
-            int lakh  = Integer.parseInt(sourceNumber.substring(5, 7));
+            int lakh  = Integer.parseInt(sourceNumber.substring(5,7));
             int thousands = Integer.parseInt(sourceNumber.substring(7, 9));
-            int hundreds = Integer.parseInt(sourceNumber.substring(9, 12));
+            int hundreds = Integer.parseInt(sourceNumber.substring(9,12));
 
             String tradBillions;
             switch (crore) {
@@ -208,7 +212,7 @@ public class NumberUtil {
      * testing
      * @param args
      */
-    public static void main(String[] args) {
+    public static void main4(String[] args) {
       /*  System.out.println("*** " + EnglishNumberToWords.convert(0));
         System.out.println("*** " + EnglishNumberToWords.convert(1));
         System.out.println("*** " + EnglishNumberToWords.convert(16));
@@ -253,5 +257,4 @@ public class NumberUtil {
      *** three billion ten
      **/
     }
-
 }
