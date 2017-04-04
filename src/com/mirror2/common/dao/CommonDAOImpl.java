@@ -38,8 +38,8 @@ public class CommonDAOImpl implements CommonDAO {
     @SuppressWarnings("unchecked")
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public boolean saveAll(List modelList) {
-        /*modelList.stream().forEach(model ->
-                        save(model)
+        /*modelList.forEach(model ->
+                        CommonDAOImpl::save
         );*/
         return true;
     }

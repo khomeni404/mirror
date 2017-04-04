@@ -34,11 +34,11 @@ public class SecurityController {
 	@Autowired
 	private SecurityService securityService;
 
-    @Autowired
-    private CsdService csdService;
+//    @Autowired
+//    private CsdService csdService;
 
-	@Autowired
-	private AuthenticationAndAuthorizationService authorizationService;
+//	@Autowired
+//	private AuthenticationAndAuthorizationService authorizationService;
 	private HttpSession userSession;
     
 	@RequestMapping(method=RequestMethod.GET, value="/home.erp")
