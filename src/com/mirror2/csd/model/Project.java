@@ -32,7 +32,7 @@ public class Project implements Serializable {
     private String hotLine;
 
     @Column(name="NUMBER_OF_BUILDING")
-    private int numberOfBuilding;
+    private Integer numberOfBuilding;
 
     @Column(name="LAND_AREA")
     private Double landArea;        //Unit : decimal
@@ -82,11 +82,11 @@ public class Project implements Serializable {
         this.hotLine = hotLine;
     }
 
-    public int getNumberOfBuilding() {
+    public Integer getNumberOfBuilding() {
         return numberOfBuilding;
     }
 
-    public void setNumberOfBuilding(int numberOfBuilding) {
+    public void setNumberOfBuilding(Integer numberOfBuilding) {
         this.numberOfBuilding = numberOfBuilding;
     }
 

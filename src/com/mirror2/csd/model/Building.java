@@ -24,13 +24,13 @@ public class Building implements Serializable {
     private String floorSizes;
 
     @Column(name = "FLOOR_SIZE")
-    private int totalFloorSize;
+    private Integer totalFloorSize;
 
     @Column(name = "NUMBER_OF_FLOOR")
-    private int numberOfFloor;
+    private Integer numberOfFloor;
 
     @Column(name = "NUMBER_OF_UNIT")
-    private int numberOfUnit;
+    private Integer numberOfUnit;
 
     @Column(columnDefinition = "text", name = "APT_IDS")
     private String aptIds;     //101|102|103|201|202|203|301|302|303|401|402|403|501|502|503|601|602|603|701|702|703|801|802|803|901|902|903
@@ -66,28 +66,52 @@ public class Building implements Serializable {
         this.buildingName = buildingName;
     }
 
-    public int getTotalFloorSize() {
+    public String getNameAlias() {
+        return nameAlias;
+    }
+
+    public void setNameAlias(String nameAlias) {
+        this.nameAlias = nameAlias;
+    }
+
+    public String getFloorSizes() {
+        return floorSizes;
+    }
+
+    public void setFloorSizes(String floorSizes) {
+        this.floorSizes = floorSizes;
+    }
+
+    public Integer getTotalFloorSize() {
         return totalFloorSize;
     }
 
-    public void setTotalFloorSize(int totalFloorSize) {
+    public void setTotalFloorSize(Integer totalFloorSize) {
         this.totalFloorSize = totalFloorSize;
     }
 
-    public int getNumberOfFloor() {
+    public Integer getNumberOfFloor() {
         return numberOfFloor;
     }
 
-    public void setNumberOfFloor(int numberOfFloor) {
+    public void setNumberOfFloor(Integer numberOfFloor) {
         this.numberOfFloor = numberOfFloor;
     }
 
-    public int getNumberOfUnit() {
+    public Integer getNumberOfUnit() {
         return numberOfUnit;
     }
 
-    public void setNumberOfUnit(int numberOfUnit) {
+    public void setNumberOfUnit(Integer numberOfUnit) {
         this.numberOfUnit = numberOfUnit;
+    }
+
+    public String getAptIds() {
+        return aptIds;
+    }
+
+    public void setAptIds(String aptIds) {
+        this.aptIds = aptIds;
     }
 
     public String getHandOver() {
@@ -96,14 +120,6 @@ public class Building implements Serializable {
 
     public void setHandOver(String handOver) {
         this.handOver = handOver;
-    }
-
-    public String getNameAlias() {
-        return nameAlias;
-    }
-
-    public void setNameAlias(String nameAlias) {
-        this.nameAlias = nameAlias;
     }
 
     public Double getLandArea() {
@@ -128,21 +144,5 @@ public class Building implements Serializable {
 
     public void setCustomers(List<Customer> customers) {
         this.customers = customers;
-    }
-
-    public String getAptIds() {
-        return aptIds;
-    }
-
-    public void setAptIds(String aptIds) {
-        this.aptIds = aptIds;
-    }
-
-    public String getFloorSizes() {
-        return floorSizes;
-    }
-
-    public void setFloorSizes(String floorSizes) {
-        this.floorSizes = floorSizes;
     }
 }

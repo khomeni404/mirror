@@ -82,7 +82,7 @@
                 </a>
             </li>
             <li>
-                <a href="../csd/buildingList.erp" original-title="Job Appreciation">
+                <a href="../csd/buildingCreate.erp" original-title="Job Appreciation">
                     <img src="../resources/images/hrm/ico1.png"><span>Building</span>
                 </a>
             </li>
@@ -92,12 +92,12 @@
                 </a>
             </li>
             <li>
-                <a href="../csd/projectList.erp" original-title="Job Status">
+                <a href="../csd/projectCreate.erp" original-title="Job Status">
                     <img src="../resources/images/hrm/degree.png"><span>Project</span>
                 </a>
             </li>
             <li>
-                <a href="../csd/offerList.erp" original-title="Job Status">
+                <a href="../csd/offerCreate.erp" original-title="Job Status">
                     <img src="../resources/images/hrm/ico2.png"><span>Offer</span>
                 </a>
             </li>

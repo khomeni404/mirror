@@ -97,25 +97,16 @@
                         <thead class="se-thead">
                         <tr>
                             <th>Name</th>
-                            <th>Name Alias</th>
-                            <th>Floor Sizes</th>
-                            <th>Floor</th>
-                            <th>Unit</th>
-                            <th>Hand Over</th>
-                            <th>Land Area</th>
-                            <th></th>
+                            <th>Offer Description</th>
+                            <th>Dead Line</th>
                         </tr>
                         </thead>
-                        <#list buildingList as building>
+                        <#list offerList as offer>
                             <tr>
-                                <td>${building.buildingName!}</td>
-                                <td>${(building.nameAlias)!}</td>
-                                <td>${(building.floorSizes)!}</td>
-                                <td>${(building.numberOfFloor)!}</td>
-                                <td>${(building.numberOfUnit)!}</td>
-                                <td>${(building.handOver)!}</td>
-                                <td>${(building.landArea)!}</td>
-                            <td><a href="/mirror/csd/viewBuilding.erp?id=${building.id}">View</a></td>
+                                <td>${offer.offerName!}</td>
+                                <td>${offer.offerDescription!}</td>
+                                <td>${offer.deadLine!}</td>
+                            <#--<td><a href="/mirror/admin/deleteBoardMeeting.erp?id=${offer.id}">Delete</a></td>-->
                             </tr>
                         </#list>
                     </table>
@@ -136,6 +127,71 @@
 
 </script>
 
+<#--</div>-->
+<#--End widget div-->
 
 </@layout.gen_app_layout>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--Form right column--><#--
+                    <div class="col-lg-6 text-center">
+                        <div class="col-lg-4 text-left">
+                            Customer Name:
+                        </div>
+                        <div class="col-lg-8 text-center">
+                            <div class="form-group">
+                                <div class="form-group has-success">
+                                    <input type="text" name="customerName" id="customerName" class="form-control" disabled>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 text-left">
+                            Total Apartment Price :
+                        </div>
+                        <div class="col-lg-8 text-center">
+                            <div class="form-group">
+                                <div class="form-group has-success">
+                                    <input type="text" name="tv" id="tv" class="form-control" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 text-left">
+                            Distributed Incentive:
+                        </div>
+                        <div class="col-lg-8 text-center">
+                            <div class="form-group">
+                                <div class="form-group has-success">
+                                    <input type="text" name="distributed" id="distributed" class="form-control" disabled>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 text-left">
+                            Previous Incentive(s):
+                        </div>
+                        <div class="col-lg-8 text-center">
+                            <div class="form-group">
+                                <textarea name="pastIncentive" id="pastIncentive" class="form-control" disabled
+                                          rows="3"></textarea>
+                            </div>
+                        </div>
+
+
+
+
+
+                    </div>-->

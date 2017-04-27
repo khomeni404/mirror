@@ -226,7 +226,7 @@
                                 <td class="amount">${paidInst?string("#,##0.00")}</td>
                                 <td class="status">
                                     <#if dueInst &gt; -0.9>
-                                    ${dueInst?string("#,##0.00")}/=
+                                    ${dueInst?string("#,##0.00")}
                                     <#else >
                                         Adv: (${(-dueInst)?string("#,##0.00")})
                                     </#if>

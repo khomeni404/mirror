@@ -2,6 +2,7 @@ package com.mirror2.csd;
 
 import com.google.gson.Gson;
 import com.mirror2.admin.service.AdminService;
+import com.mirror2.common.service.CommonService;
 import com.mirror2.csd.bean.PaymentDetailBean;
 import com.mirror2.csd.model.*;
 import com.mirror2.csd.service.CsdService;
@@ -16,6 +17,7 @@ import com.mirror2.security.service.UserDetailsService;
 import com.mirror2.util.*;
 import com.mirror2.security.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 
+import javax.persistence.Column;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.DecimalFormat;
@@ -40,6 +43,9 @@ public class CsdController {
     private UserDetailsService userDetailsService;
     @Autowired
     private AdminService adminService;
+
+    @Autowired
+    private CommonService commonService;
 
 
     @RequestMapping(method = RequestMethod.GET, value = "/csdConfigurationHome.erp")
@@ -70,6 +76,7 @@ public class CsdController {
 
         return new ModelAndView("/csd/report/report_home", payHomeMap);
     }
+
 
     //approveHome
     @RequestMapping(method = RequestMethod.GET, value = "/approveHome.erp")
@@ -264,9 +271,9 @@ public class CsdController {
             offer.getCustomers().add(customer);
 
             csdService.save(customer);
-            String sms = "New Customer: "+cid+"\n" +
-                    "Name: "+name+"\n" +
-                    "Reference: "+referBy.getName();
+            String sms = "New Customer: " + cid + "\n" +
+                    "Name: " + name + "\n" +
+                    "Reference: " + referBy.getName();
             SmsThread smsThread2 = new SmsThread("01717659287", sms);
             smsThread2.start();
             return new ModelAndView("redirect:/csd/createCustomer.erp", map);
@@ -2242,13 +2249,85 @@ public class CsdController {
     }
 
     //Project start ................
-    @RequestMapping(method = RequestMethod.GET, value = "/projectList.erp")
-    public ModelAndView projectList() {
+    @RequestMapping(method = RequestMethod.GET, value = "/projectCreate.erp")
+    public ModelAndView projectCreate() {
+        Map<String, Object> buildingMap = new HashMap<String, Object>();
+        buildingMap.put("PageTitle", "Project List");
+        buildingMap.put("DashboardLink", MirrorConstants.DASHBOARD_LINK);
+        buildingMap.put("projectList", commonService.findAll((Project.class)));
+
+        return new ModelAndView("/csd/project_create", buildingMap);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/saveProject.erp")
+    public ModelAndView saveProject(
+            @RequestParam String projectName,
+            @RequestParam String location,
+            @RequestParam String address,
+            @RequestParam String hotLine,
+            @RequestParam Integer numberOfBuilding,
+            @RequestParam Double landArea
+    ) {
         Map<String, Object> buildingMap = new HashMap<String, Object>();
         buildingMap.put("PageTitle", "Project List");
         buildingMap.put("DashboardLink", MirrorConstants.DASHBOARD_LINK);
 
-        return new ModelAndView("/csd/project_list", buildingMap);
+        return new ModelAndView("redirect:/csd/projectList.erp", buildingMap);
+    }
+
+
+    @RequestMapping(method = RequestMethod.GET, value = "/saveBuilding.erp")
+    public ModelAndView saveBuilding(
+            @RequestParam String buildingName,
+            @RequestParam String nameAlias,
+            @RequestParam String floorSizes,
+            @RequestParam Integer totalFloorSize,
+            @RequestParam Integer numberOfFloor,
+            @RequestParam Integer numberOfUnit,
+            @RequestParam String aptIds,     //101|102|103|201|202|203|301|302|303|401|402|403|501|502|503|601|602|603|701|702|703|801|802|803|901|902|903
+            @RequestParam String handOver,
+            @RequestParam Double landArea,
+            @RequestParam Long projectId
+    ) {
+
+        Map<String, Object> buildingMap = new HashMap<String, Object>();
+        buildingMap.put("PageTitle", "Project List");
+        buildingMap.put("DashboardLink", MirrorConstants.DASHBOARD_LINK);
+
+        return new ModelAndView("redirect:/csd/buildingCreate.erp", buildingMap);
+
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/buildingCreate.erp")
+    public ModelAndView buildingCreate() {
+        Map<String, Object> buildingMap = new HashMap<String, Object>();
+        buildingMap.put("PageTitle", "Project List");
+        buildingMap.put("DashboardLink", MirrorConstants.DASHBOARD_LINK);
+
+        buildingMap.put("buildingList", commonService.findAll(Building.class));
+        return new ModelAndView("/csd/building_create", buildingMap);
+    }
+
+    //Payment Home
+    @RequestMapping(method = RequestMethod.GET, value = "/offerCreate.erp")
+    public ModelAndView offerCreate() {
+        Map<String, Object> payHomeMap = new HashMap<String, Object>();
+        payHomeMap.put("PageTitle", "Report Home");
+        payHomeMap.put("DashboardLink", MirrorConstants.DASHBOARD_LINK);
+
+        payHomeMap.put("offerList", commonService.findAll(Offer.class));
+        return new ModelAndView("/csd/offer_create", payHomeMap);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/saveOffer.erp")
+    public ModelAndView saveOffer(@RequestParam String offerName,
+                                  @RequestParam String offerDescription,
+                                  @RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy") String deadLine) {
+        Map<String, Object> payHomeMap = new HashMap<String, Object>();
+        payHomeMap.put("PageTitle", "Report Home");
+        payHomeMap.put("DashboardLink", MirrorConstants.DASHBOARD_LINK);
+
+        return new ModelAndView("/csd/offer_create", payHomeMap);
     }
 
     //Project Json Data
@@ -2697,11 +2776,11 @@ public class CsdController {
     //EmpCsd CSD
     @RequestMapping(method = RequestMethod.GET, value = "/createEmpCsd.erp")
     public ModelAndView createEmpCsd() {
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, Object> map = new HashMap<String, Object>();
         map.put("PageTitle", "Create Employee");
         map.put("errorMsg", "");
         map.put("DashboardLink", MirrorConstants.DASHBOARD_LINK);
-
+        map.put("employeeList", commonService.findAll(EmpCsd.class));
         return new ModelAndView("/csd/emp_csd_create", map);
     }
 
@@ -2863,14 +2942,14 @@ public class CsdController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/saveCancellationApp.erp")
     public ModelAndView saveCancellationApp(@RequestParam String applicationDate,
-                                          @RequestParam String cid,
-                                          @RequestParam String applicantName,
-                                          @RequestParam Double depositedAmt,
-                                          @RequestParam Double demandedAmt,
-                                          @RequestParam String refAccountName,
-                                          @RequestParam String refAccountNo,
-                                          @RequestParam String refBank,
-                                          @RequestParam String refBranch) {
+                                            @RequestParam String cid,
+                                            @RequestParam String applicantName,
+                                            @RequestParam Double depositedAmt,
+                                            @RequestParam Double demandedAmt,
+                                            @RequestParam String refAccountName,
+                                            @RequestParam String refAccountNo,
+                                            @RequestParam String refBank,
+                                            @RequestParam String refBranch) {
         cid = MirrorUtil.makeCid(cid);
         CancellationApp app = new CancellationApp();
         app.setApplicationDate(DateUtil.toDate(applicationDate, "DD/MM/YYYY"));

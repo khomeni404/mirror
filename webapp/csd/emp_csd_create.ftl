@@ -3,10 +3,10 @@
 
 <div class="bread_crumbs_ui_div" style="width: 611px">
     <ul id="crumbs_ui_custom">
-        <li><a  href="index">Dashboard</a></li>
+        <li><a href="index">Dashboard</a></li>
         <li><a href="//home.erp">CSD Home</a></li>
-        <li><a  href="#">Employee</a></li>
-        <li><a  href="#">Create</a></li>
+        <li><a href="#">Employee</a></li>
+        <li><a href="#">Create</a></li>
     </ul>
 </div>
 <br class="clear"/>
@@ -17,7 +17,7 @@
     <div class="header" style="width: 500px;">
         <span><span class="ico gray user"></span>${PageTitle}</span>
     </div>
-    <div  style="width: 500px;">
+    <div style="width: 500px;">
         <span><span style="color: red; font-weight: bold"></span></span>
     </div>
 
@@ -37,7 +37,8 @@
                     </div>
 
 
-                    <br class="clear" /> <br class="clear" />
+                    <br class="clear"/> <br class="clear"/>
+
                     <div class="grid_3 alpha">
                         <label for="name">
                             Name:
@@ -45,10 +46,11 @@
                         </label>
                     </div>
                     <div class="grid_4 omega reset-input">
-                        <input type="text" name="name" id="name" placeholder="name"  value=""/>
+                        <input type="text" name="name" id="name" placeholder="name" value=""/>
                     </div>
 
-                    <br class="clear" />   <br class="clear" />
+                    <br class="clear"/> <br class="clear"/>
+
                     <div class="grid_3 alpha">
                         <label for="reference">
                             Reference:
@@ -59,7 +61,8 @@
                         <input type="text" name="reference" id="reference" placeholder="reference" value=""/>
                     </div>
 
-                    <br class="clear" />   <br class="clear" />
+                    <br class="clear"/> <br class="clear"/>
+
                     <div class="grid_3 alpha">
                         <label for="joiningDate">
                             Joining Date:
@@ -67,11 +70,13 @@
                         </label>
                     </div>
                     <div class="grid_4 omega reset-input">
-                        <input type="text" name="joiningDate" id="joiningDate" placeholder="joiningDate" value="12/02/16"/>
+                        <input type="text" name="joiningDate" id="joiningDate" placeholder="joiningDate"
+                               value="12/02/16"/>
                     </div>
 
 
-                    <br class="clear" />   <br class="clear" />
+                    <br class="clear"/> <br class="clear"/>
+
                     <div class="grid_3 alpha">
                         <label for="designation">
                             Designation:
@@ -79,9 +84,11 @@
                         </label>
                     </div>
                     <div class="grid_4 omega reset-input">
-                        <input type="text" name="designation" id="designation" placeholder="Designation" value="Executive"/>
+                        <input type="text" name="designation" id="designation" placeholder="Designation"
+                               value="Executive"/>
                     </div>
-                    <br class="clear" />   <br class="clear" />
+                    <br class="clear"/> <br class="clear"/>
+
                     <div class="grid_3 alpha">
                         <label for="department">
                             Department:
@@ -92,7 +99,8 @@
                         <input type="text" name="department" id="department" placeholder="Department" value=""/>
                     </div>
 
-                    <br class="clear" />   <br class="clear" />
+                    <br class="clear"/> <br class="clear"/>
+
                     <div class="grid_3 alpha">
                         <label for="corporatePhone">
                             Corporate Phone:
@@ -100,10 +108,12 @@
                         </label>
                     </div>
                     <div class="grid_4 omega reset-input">
-                        <input type="text" name="corporatePhone" id="corporatePhone" placeholder="corporatePhone" value=""/>
+                        <input type="text" name="corporatePhone" id="corporatePhone" placeholder="corporatePhone"
+                               value=""/>
                     </div>
 
-                    <br class="clear" />   <br class="clear" />
+                    <br class="clear"/> <br class="clear"/>
+
                     <div class="grid_3 alpha">
                         <label for="personalPhone">
                             Personal Phone:
@@ -111,10 +121,12 @@
                         </label>
                     </div>
                     <div class="grid_4 omega reset-input">
-                        <input type="text" name="personalPhone" id="personalPhone" placeholder="personalPhone" value=""/>
+                        <input type="text" name="personalPhone" id="personalPhone" placeholder="personalPhone"
+                               value=""/>
                     </div>
 
-                    <br class="clear" />   <br class="clear" />
+                    <br class="clear"/> <br class="clear"/>
+
                     <div class="grid_3 alpha">
                         <label for="email">
                             E-mail:
@@ -126,8 +138,8 @@
                     </div>
 
 
+                    <br class="clear"/> <br class="clear"/>
 
-                    <br class="clear" /> <br class="clear" />
                     <div class="grid_4 omega reset-input reset-button-left">
                         <a id="directorCreate" class="button icon approve" onclick="submitForm()">Save</a>
                         <a id="ff" class="button danger icon remove" onclick="document.dataForm.reset()">Clear</a>
@@ -137,13 +149,55 @@
         </form>
     </div>
     <!--end user create div-->
+    <style type="text/css">
+        #emp-list tr td {
+            font-size: 10px;
+            padding: 5px 5px 15px 15px;
+        }
+
+        .se-thead tr th {
+            background-color: #808080;
+            font-weight: bold;
+            text-transform: capitalize;
+            padding: 5px 5px 5px 5px;
+        }
+    </style>
 
     <script type="text/javascript">
-        function submitForm(){
+        function submitForm() {
             document.dataForm.submit();
             //alert("Record Saved ! !");
         }
     </script>
+</div>
+
+<div class="content" role="main">
+    <table id="emp-list">
+        <thead class="se-thead">
+        <tr>
+            <th>mid</th>
+            <th>name</th>
+            <th>joiningDate</th>
+            <th>designation</th>
+            <th>department</th>
+            <th>corporatePhone</th>
+            <th>personalPhone</th>
+        </tr>
+        </thead>
+        <#list employeeList as emp>
+            <tr>
+                <td>${(emp.mid)!}</td>
+                <td>${(emp.name)!}</td>
+                <#--<td>${(emp.reference)!}</td>-->
+                <td>${(emp.joiningDate)!}</td>
+                <td>${(emp.designation)!}</td>
+                <td>${(emp.department)!}</td>
+                <td>${(emp.corporatePhone)!}</td>
+                <td>${(emp.personalPhone)!}</td>
+                <#--<td>${(emp.email)!}</td>-->
+            </tr>
+        </#list>
+    </table>
 </div>
 <#--End widget div-->
 
