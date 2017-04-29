@@ -10,68 +10,61 @@
     }
 </style>
 <div class="row">
-    <div class="col-lg-12 text-center" style="display: none">
+    <div class="col-lg-12 text-center" style="font-size: 17px;  color: #001e97" >
+        ${message!}
+    </div>
+    <div class="col-lg-12 text-center" >
         <div class="panel panel-default">
             <div class="panel-body">
-                <h3 class="text-left text-success">Create ${PageTitle}</h3>
+                <h3 class="text-left text-success">Create New Offer</h3>
 
-                <form name="dataForm" id="dataForm" action="saveBoardMeeting.erp" method="POST">
+                <form name="dataForm" id="dataForm" action="saveOffer.erp" method="POST">
                     <div class="col-lg-12 text-center">
                         <div class="row">
-                        <#--<div class="col-lg-2 text-left">
-                                Customer Identity (CID):
-                            </div>
-                            <div class="col-lg-4 text-center">
-                                <div class="form-group">
-                                    <select name="salesMan" id="salesMan" class="form-control">
-                                        <#list customerList as customer>
-                                            <option value="${customer.id}">${customer.CID} : ${customer.name}</option>
-                                        </#list>
-                                    </select>
-                                </div>
-                            </div>-->
-
-                        </div>
-
-                        <div class="row">
                             <div class="col-lg-2 text-left">
-                                Held On:
-                            </div>
-                            <div class="col-lg-10 text-center">
-                                <div class="form-group  text-left">
-                                    <input type="text" placeholder="DD/MM/YYYY" readonly name="heldOn"
-                                           id="heldOn" class="form-control" onclick="clearErrMsg()">
-                                    <span for="errMsgDate" id="errMsgDate" class="errMsg text-left text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-2 text-left">
-                                Meeting Number
+                               <b>Offer Name</b>
                             </div>
                             <div class="col-lg-10 text-left">
                                 <div class="form-group  text-left">
                                     <div class="form-group has-success">
-                                        <input type="text" name="meetingName" id="meetingName"
-                                               placeholder="e.g. 13, 42 (number only)"
-                                               class="form-control" onclick="clearErrMsg()">
+                                        <input type="text" name="offerName" id="offer-name"
+                                               placeholder=""
+                                               class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2 text-left">
+                               <b>Offer Description</b>
+                            </div>
+                            <div class="col-lg-10 text-left">
+                                <div class="form-group  text-left">
+                                    <div class="form-group has-success">
+                                        <input type="text" name="offerDescription" id="offer-description"
+                                               placeholder=""
+                                               class="form-control">
                                     </div>
                                 </div>
                             </div>
                         </div>
 
+
                         <div class="row">
                             <div class="col-lg-2 text-left">
-                                Number of Director (Attended)
+                               <b>Dead Line</b>
                             </div>
-                            <div class="col-lg-10 text-center">
+                            <div class="col-lg-10 text-left">
                                 <div class="form-group  text-left">
-                                    <input type="text" name="remarks" id="remarks" placeholder="(number only)"
-                                           class="form-control" onclick="clearErrMsg()">
+                                    <div class="form-group has-success">
+                                        <input type="text" name="deadLine" id="dead-line"
+                                               placeholder=""
+                                               class="form-control">
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
 
                         <div class="row">
                             <div class="col-lg-3 text-left">

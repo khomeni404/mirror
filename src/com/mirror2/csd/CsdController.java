@@ -16,6 +16,7 @@ import com.mirror2.security.SessionUtil;
 import com.mirror2.security.service.UserDetailsService;
 import com.mirror2.util.*;
 import com.mirror2.security.model.User;
+import org.apache.commons.validator.GenericValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -2310,24 +2311,35 @@ public class CsdController {
 
     //Payment Home
     @RequestMapping(method = RequestMethod.GET, value = "/offerCreate.erp")
-    public ModelAndView offerCreate() {
+    public ModelAndView offerCreate(@RequestParam(required = false) String message) {
         Map<String, Object> payHomeMap = new HashMap<String, Object>();
-        payHomeMap.put("PageTitle", "Report Home");
+        payHomeMap.put("PageTitle", "Offer Create");
+        payHomeMap.put("message", message);
         payHomeMap.put("DashboardLink", MirrorConstants.DASHBOARD_LINK);
 
         payHomeMap.put("offerList", commonService.findAll(Offer.class));
         return new ModelAndView("/csd/offer_create", payHomeMap);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/saveOffer.erp")
+    @RequestMapping(method = RequestMethod.POST, value = "/saveOffer.erp")
     public ModelAndView saveOffer(@RequestParam String offerName,
                                   @RequestParam String offerDescription,
-                                  @RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy") String deadLine) {
-        Map<String, Object> payHomeMap = new HashMap<String, Object>();
-        payHomeMap.put("PageTitle", "Report Home");
-        payHomeMap.put("DashboardLink", MirrorConstants.DASHBOARD_LINK);
+                                  @RequestParam String deadLine) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("PageTitle", "Report Home");
+        if (GenericValidator.isBlankOrNull(offerName) || GenericValidator.isBlankOrNull(deadLine) || GenericValidator.isBlankOrNull(offerDescription)) {
+            map.put("message", "All field required");
+            return new ModelAndView("redirect:/csd/offerCreate.erp", map);
+        }
+        map.put("message", "Saved successfully");
+        map.put("DashboardLink", MirrorConstants.DASHBOARD_LINK);
+        Offer offer = new Offer();
+        offer.setOfferName(offerName);
+        offer.setDeadLine(deadLine);
+        offer.setOfferDescription(offerDescription);
+        commonService.save(offer);
 
-        return new ModelAndView("/csd/offer_create", payHomeMap);
+        return new ModelAndView("redirect:/csd/offerCreate.erp", map);
     }
 
     //Project Json Data
@@ -2788,7 +2800,7 @@ public class CsdController {
     public ModelAndView saveEmpCsd(@RequestParam("mid") String mid,
                                    @RequestParam("name") String name,
                                    @RequestParam("reference") String reference,
-                                   @RequestParam("joiningDate") Date joiningDate,
+                                   @RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy") Date joiningDate,
                                    @RequestParam("designation") String designation,
                                    @RequestParam("department") String department,
                                    @RequestParam("corporatePhone") String corporatePhone,
@@ -2796,6 +2808,12 @@ public class CsdController {
                                    @RequestParam("email") String email) {
 
         Map<String, String> map = new HashMap<String, String>();
+        if (GenericValidator.isBlankOrNull(mid) || GenericValidator.isBlankOrNull(name) ||
+                joiningDate == null || GenericValidator.isBlankOrNull(designation) || GenericValidator.isBlankOrNull(department)
+                || GenericValidator.isBlankOrNull(personalPhone)) {
+
+            return new ModelAndView("redirect:/csd/createEmpCsd.erp", map);
+        }
         EmpCsd empCsd = new EmpCsd();
         empCsd.setEmail(email);
         empCsd.setName(name.toUpperCase());

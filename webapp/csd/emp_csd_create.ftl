@@ -33,7 +33,7 @@
                         </label>
                     </div>
                     <div class="grid_4 omega reset-input">
-                        <input type="text" name="mid" id="mid" placeholder="mid" value=""/>
+                        <input type="text" name="mid" id="mid" placeholder="M 0023" value=""/>
                     </div>
 
 
@@ -58,7 +58,7 @@
                         </label>
                     </div>
                     <div class="grid_4 omega reset-input">
-                        <input type="text" name="reference" id="reference" placeholder="reference" value=""/>
+                        <input type="text" name="reference" id="reference" placeholder="" value=""/>
                     </div>
 
                     <br class="clear"/> <br class="clear"/>
@@ -70,8 +70,8 @@
                         </label>
                     </div>
                     <div class="grid_4 omega reset-input">
-                        <input type="text" name="joiningDate" id="joiningDate" placeholder="joiningDate"
-                               value="12/02/16"/>
+                        <input type="text" name="joiningDate" id="joiningDate" placeholder="25/10/2017"
+                               value=""/>
                     </div>
 
 
@@ -84,8 +84,16 @@
                         </label>
                     </div>
                     <div class="grid_4 omega reset-input">
-                        <input type="text" name="designation" id="designation" placeholder="Designation"
-                               value="Executive"/>
+                        <select  name="designation" id="designation">
+                            <option value="">--Select--</option>
+                            <option value="Executive">Executive</option>
+                            <option value="Sr. Executive">Sr. Executive</option>
+                            <option value="Management Trainee">Management Trainee</option>
+                            <option value="Asst. Manager">Asst. Manager</option>
+                            <option value="GM">General Manager</option>
+                            <option value="DGM">Deputy General Manager</option>
+                            <option value="Manager">Manager</option>
+                        </select>
                     </div>
                     <br class="clear"/> <br class="clear"/>
 
@@ -96,7 +104,16 @@
                         </label>
                     </div>
                     <div class="grid_4 omega reset-input">
-                        <input type="text" name="department" id="department" placeholder="Department" value=""/>
+
+                        <select  name="department" id="department">
+                            <option value="">--Select--</option>
+                            <option value="Customer Care Service">Customer Care Service</option>
+                            <option value="Sales & Marketing">Sales & Marketing</option>
+                            <option value="Admin & HR">Admin & HR</option>
+                            <option value="Estate">Estate</option>
+                            <option value="Legal Affairs">Legal Affairs</option>
+                            <option value="Engineering">Engineering</option>
+                        </select>
                     </div>
 
                     <br class="clear"/> <br class="clear"/>
@@ -108,7 +125,7 @@
                         </label>
                     </div>
                     <div class="grid_4 omega reset-input">
-                        <input type="text" name="corporatePhone" id="corporatePhone" placeholder="corporatePhone"
+                        <input type="text" name="corporatePhone" id="corporatePhone" placeholder="Corporate Cell"
                                value=""/>
                     </div>
 
@@ -121,7 +138,7 @@
                         </label>
                     </div>
                     <div class="grid_4 omega reset-input">
-                        <input type="text" name="personalPhone" id="personalPhone" placeholder="personalPhone"
+                        <input type="text" name="personalPhone" id="personalPhone" placeholder="Personal Cell"
                                value=""/>
                     </div>
 
