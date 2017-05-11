@@ -74,6 +74,7 @@ public class CustomerDaoImpl implements CustomerDAO {
             return null;
         }
     }
+
     @Override
     @SuppressWarnings("unchecked")
     public List<Object[]> getSalesDataSalesPersonWise(String type, Date from, Date to) {
@@ -87,6 +88,7 @@ public class CustomerDaoImpl implements CustomerDAO {
             return null;
         }
     }
+
     @Override
     @SuppressWarnings("unchecked")
     public List<Object[]> getSalesDataDetailsSalesPersonWise(String type, Date from, Date to) {
@@ -101,6 +103,7 @@ public class CustomerDaoImpl implements CustomerDAO {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private Customer setTransientProperty(Customer customer) {
         List<Object[]> list;
         Query queryInstTotal = null;
@@ -120,21 +123,20 @@ public class CustomerDaoImpl implements CustomerDAO {
         try {         //count(select inst2 from  Installment inst2 where inst2.deadLine < :today)
             queryInstTotal = session.createQuery("select count(inst.id), sum(inst.amount) from Installment inst  where customer = :customer");
             queryInstTotal.setParameter("customer", customer);
-            if (queryInstTotal != null) {
-                list = queryInstTotal.list();
-                totInst = ((Long) (list.get(0))[0]).intValue();
-                totInstAmt = ((Double) (list.get(0))[1]).doubleValue();
-            }
+
+            list = queryInstTotal.list();
+            totInst = ((Long) (list.get(0))[0]).intValue();
+            totInstAmt = ((Double) (list.get(0))[1]);
+
 
             queryInstTotal = session.createQuery("select count(inst.id) from Installment inst  where deadLine < :today and customer = :customer");
             queryInstTotal.setParameter("customer", customer);
             queryInstTotal.setParameter("today", new Date());
-            if (queryInstTotal != null) {
-                List<Long> list2 = queryInstTotal.list();
-                recoverableInst = (list2.get(0)).intValue();
-            }
-            Double instAmt = totInstAmt/totInst;
-            paidInst = customer.getMoneyDisburse().getInstallment()/instAmt;
+            List<Long> list2 = queryInstTotal.list();
+            recoverableInst = (list2.get(0)).intValue();
+
+            Double instAmt = totInstAmt / totInst;
+            paidInst = customer.getMoneyDisburse().getInstallment() / instAmt;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -142,11 +144,10 @@ public class CustomerDaoImpl implements CustomerDAO {
         customer.setTotalInstAmt(totInstAmt);
         customer.setRecoverableInst(recoverableInst);
         customer.setPaidInst(Precision.round(paidInst, 2));
-        customer.setDueInst(Precision.round(recoverableInst-paidInst, 2));
+        customer.setDueInst(Precision.round(recoverableInst - paidInst, 2));
 
         return customer;
     }
-
 
 
     @Override
@@ -212,7 +213,6 @@ public class CustomerDaoImpl implements CustomerDAO {
             return null;
         }
     }
-
 
 
     @Override

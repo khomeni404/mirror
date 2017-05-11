@@ -102,12 +102,16 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public User get(String username, String password){
 		DESEDE desede = new DESEDE(username);
-		Object[] paramArr = new Object[2];
-		paramArr[0] = new String(username);
-		paramArr[1] = desede.encrypt(password);
+		Object[] paramArr = new Object[]{
+                username,
+                //desede.encrypt(password)
+        };
         try{
+//            Token userToken = (Token)hibernateTemplate.find("from Token as token " +
+//                    " where token.username =? and token.password =? ", paramArr).get(0);
+
             Token userToken = (Token)hibernateTemplate.find("from Token as token " +
-                    " where token.username =? and token.password =? ", paramArr).get(0);
+                    " where token.username =? ", paramArr).get(0);
 
             System.out.println("userToken.getUsername() = " + userToken.getUsername());
             Object[] paramUser = new Object[2];

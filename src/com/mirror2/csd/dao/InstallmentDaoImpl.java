@@ -2,12 +2,17 @@ package com.mirror2.csd.dao;
 
 import com.mirror2.csd.model.Customer;
 import com.mirror2.csd.model.Installment;
+import org.apache.commons.collections.CollectionUtils;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -76,5 +81,18 @@ public class InstallmentDaoImpl implements InstallmentDAO {
     @Override
     public Installment getInstallment(Long id) {
         return hibernateTemplate.get(Installment.class, id);
+    }
+    @Override
+    public Double getPayableInstallmentAmount(Customer customer) {
+        try {
+            DetachedCriteria dc = DetachedCriteria.forClass(Installment.class)
+                    .setProjection(Projections.sum("amount"))
+                    .add(Restrictions.eq("customer", customer))
+                    .add(Restrictions.le("deadLine", new Date()));
+            List result = hibernateTemplate.findByCriteria(dc);
+            return CollectionUtils.isEmpty(result) ? 0.0 : (Double) result.get(0);
+        } catch (Exception e) {
+            return 0.0;
+        }
     }
 }

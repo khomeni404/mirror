@@ -1837,6 +1837,7 @@ public class CsdController {
         param.put("PageTitle", "Due Report");
         param.put("DashboardLink", MirrorConstants.DASHBOARD_LINK);
 
+        System.out.println(new Date().getTime());
         List<Customer> customerList = csdService.findAllCustomer();
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         Map<String, Object> map;
@@ -1861,7 +1862,7 @@ public class CsdController {
             map.put("otherDueAmount", csdService.getPayableOtherPaymentAmount(customer, "ALL"));
             list.add(map);
         }
-
+        System.out.println(new Date().getTime());
         param.put("dataList", list);
 
         return new ModelAndView("/csd/report/sales_report_4", param);
@@ -2800,7 +2801,9 @@ public class CsdController {
     public ModelAndView saveEmpCsd(@RequestParam("mid") String mid,
                                    @RequestParam("name") String name,
                                    @RequestParam("reference") String reference,
-                                   @RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy") Date joiningDate,
+                                   @RequestParam(required = false)
+                                   @DateTimeFormat(pattern = "dd/MM/yyyy")
+                                   Date joiningDate,
                                    @RequestParam("designation") String designation,
                                    @RequestParam("department") String department,
                                    @RequestParam("corporatePhone") String corporatePhone,
@@ -2945,7 +2948,7 @@ public class CsdController {
         return new ModelAndView("redirect:/csd/viewIncentiveDist.erp", map);
     }
 
-    //Application
+    // Application
     @RequestMapping(method = RequestMethod.GET, value = "/createCancellationApp.erp")
     public ModelAndView createCancellationApp() {
         Map<String, Object> map = new HashMap<String, Object>();

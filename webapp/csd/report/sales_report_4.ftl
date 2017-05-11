@@ -88,6 +88,8 @@
                     <#list dataList as data>
                         <#if data.customer.status = "Cancelled" ||   data.customer.status = "Refunded">
                         <#else >
+                            <#assign overDue = data.instDueAmount + data.otherDueAmount - data.paid>
+                        <#if overDue <= 0> <#else >
                             <tr>
                                 <td class="sl">${data.customer.CID}</td>
                                 <td>${data.customer.name}</td>
@@ -101,7 +103,7 @@
                                 </td>
                                 <td class="nos"><a href="/mirror/csd/viewPaymentReport.erp?cid=${data.customer.CID}">${(data.price - data.paid)?string["0"]}</a></td>
                                 <td  class="nos"><#if data.dueInst?string = ""><#else > ${data.dueInst?string["0.00"]}</#if></td>
-                                <#assign overDue = data.instDueAmount + data.otherDueAmount - data.paid>
+
                                 <td class="nos">
                                     <a href="/mirror/csd/viewCustomer.erp?cidView=${data.customer.CID}">
                                         <#if overDue <0>(Adv. ${(-overDue)?string["0"]})<#else >${overDue?string["0"]}</#if>
@@ -112,6 +114,7 @@
                             <#assign paidGrant = paidGrant+ data.paid>
                             <#assign dueGrant = dueGrant + (data.price - data.paid)>
                             <#assign overdueGrant = overdueGrant + (data.instDueAmount + data.otherDueAmount - data.paid)>
+                        </#if>
                         </#if>
                     </#list>
                     <tr>

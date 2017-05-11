@@ -27,4 +27,5 @@ public interface InstallmentDAO {
 
     public Installment getInstallment(Long id);
 
+    Double getPayableInstallmentAmount(Customer customer);
 }

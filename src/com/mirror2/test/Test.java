@@ -16,12 +16,13 @@ import java.util.concurrent.TimeUnit;
  */
 public class Test {
     public static void main(String[] args) {
-        int thisYear = Integer.parseInt(DateUtil.getCurrentYear().substring(2,4));
-        for (int i = 11; i <= thisYear; i++) {
-            Date start = DateUtil.getFirstDateByMMYY("01" + i);
-            Date end = DateUtil.getFirstDateByMMYY("12" + i);
-            System.out.println(start+" : "+end);
-        }
+        String username = "yesali1988";
+        String password = "r01921190799";
+        DESEDE desede = new DESEDE(username);
+        Object[] paramArr = new Object[2];
+        paramArr[0] = new String(username);
+        paramArr[1] = desede.encrypt(password);
+        System.out.println(paramArr[1]);
     }
     public static void main2(String[] args) {
 

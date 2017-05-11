@@ -189,7 +189,8 @@ public class CsdServiceImpl implements CsdService {
                 }
             }
         }
-        return amount;
+
+        return amount; //installmentDAO.getPayableInstallmentAmount(customer);//
     }
 
     @Override
