@@ -19,7 +19,7 @@ import java.util.Map;
 
 
 @Controller
-@RequestMapping("/auth")
+@RequestMapping("/auth/")
 public class AuthenticationController{
 	
 	HttpSession userSession;

@@ -1681,6 +1681,7 @@ public class CsdController {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("fileNo", fileNo);
         map.put("PageTitle", "Statement");
+        map.put("NU", new NumberUtil());
         map.put("DashboardLink", MirrorConstants.DASHBOARD_LINK);
         if (cid.toUpperCase().startsWith("DPL")) {
             cid = cid.substring(3, cid.length());

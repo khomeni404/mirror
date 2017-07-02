@@ -161,7 +161,7 @@
                         <th>MR Date</th>
                         <th>Cash Date</th>
                         <th class="vrNo">MR No/Vr No.</th>
-                        <th class="mode">Mode of payment</th>
+                        <th class="mode">Pay Mode</th>
                         <th>Note / Status</th>
                         <th class="amount">Debt(Dr.)</th>
                         <th class="amount">Credit(Cr.)</th>
@@ -196,20 +196,20 @@
 
                             </#if>
 
-                            <td class="amount">${pl.dr}</td>
-                            <td class="amount">${pl.cr}</td>
+                            <td class="amount">${NU.toCommaFormattedTaka(pl.dr, false)!0.00}</td>
+                            <td class="amount">${NU.toCommaFormattedTaka(pl.cr, false)!0.00}</td>
                         </tr>
                     <#assign x = x + 1 >
                     </#list>
 
                     <tr class="total">
                         <td colspan="5">Total Dr. & Total Cr. : </td>
-                        <td class="amount">${totalDr}</td>
-                        <td class="amount">${totalCr}</td>
+                        <td class="amount">${NU.toCommaFormattedTaka(totalDr)!}</td>
+                        <td class="amount">${NU.toCommaFormattedTaka(totalCr)!}</td>
                     </tr>
                     <tr class="">
                         <td colspan="5" class="closing">Closing Balance :</td>
-                        <td colspan="2" class="closing">${totalDeposit}</td>
+                        <td colspan="2" class="closing">${NU.toCommaFormattedTaka(totalDeposit)!}</td>
                     </tr>
 
                 </table>

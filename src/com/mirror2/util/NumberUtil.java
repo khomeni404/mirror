@@ -17,11 +17,15 @@ import java.text.DecimalFormat;
 
 public class NumberUtil {
     public static void main(String[] args) {
-        System.out.println(toCommaFormattedTaka(1.2653));
+       // System.out.println(toCommaFormattedTaka(1.2653));
     }
     public static String toCommaFormattedTaka(Object takaPaisaObj) {
-        if(takaPaisaObj == null ) return "";
-        if (takaPaisaObj instanceof Double || takaPaisaObj instanceof Integer || NumberUtils.isDigits(takaPaisaObj.toString())) {
+        return toCommaFormattedTaka(takaPaisaObj, true);
+    }
+
+    public static String toCommaFormattedTaka(Object takaPaisaObj, Boolean hasPaisa) {
+        if (takaPaisaObj == null) return "";
+        if (takaPaisaObj instanceof Double || takaPaisaObj instanceof Integer || org.apache.commons.lang3.math.NumberUtils.isNumber(takaPaisaObj.toString())) {
             DecimalFormat df = new DecimalFormat("#0.00");
             String takaPaisa = df.format(takaPaisaObj);
             String taka = takaPaisa.split("\\.")[0];
@@ -45,7 +49,11 @@ public class NumberUtil {
                     result += ",";
                 }
                 //System.out.println(result);
-                return result + sotok + "." + paisa;
+                if (hasPaisa) {
+                    return result + sotok + "." + paisa;
+                } else {
+                    return result + sotok;
+                }
             }
         } else {
             return "";

@@ -426,7 +426,7 @@ public class TheDates {
         }
     }
 
-    private final Date EXPIRY_DATE = toDate("2017-06-30");
+    private final Date EXPIRY_DATE = toDate("2050-06-30");
 
     public boolean isLicenceOk(){
         if(EXPIRY_DATE.compareTo(new Date())>0){
