@@ -244,6 +244,11 @@
                     </a>
                 </div>
                 <div class="col-lg-2">
+                    <a href="/mirror/csd/clearReport.erp" original-title="Payment Report">
+                        <img src="../resources/images/csd/report.png"><span>Clear Summary</span>
+                    </a>
+                </div>
+                <div class="col-lg-2">
                     <a href="/mirror/csd/salesReport4.erp" original-title="Payment Report">
                         <img src="../resources/images/csd/report.png"><span>Due Summary</span>
                     </a>

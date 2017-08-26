@@ -1832,6 +1832,39 @@ public class CsdController {
 
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/clearReport.erp")
+    public ModelAndView clearReport() {
+        HashMap<String, Object> param = new HashMap<String, Object>();
+        param.put("PageTitle", "Clear Report");
+        param.put("DashboardLink", MirrorConstants.DASHBOARD_LINK);
+
+        System.out.println(new Date().getTime());
+        List<Customer> customerList = csdService.findAllCustomer();
+        // clearReport
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        Map<String, Object> map;
+        for (Customer customer : customerList) {
+            map = new HashMap<String, Object>();
+            Double floorPrice = csdService.getFloorPrice(customer);
+            floorPrice = floorPrice == null ? 0 : floorPrice;
+            Double paid = csdService.getTotalDeposit(customer);
+            paid = paid == null ? 0 : paid;
+            if (floorPrice > paid) continue;
+            map.put("customer", customer);
+            map.put("price", floorPrice);
+            map.put("paid", paid);
+            /*map.put("dueInst", dueInst);
+            map.put("instDueAmount", csdService.getPayableInstallmentAmount(customer));
+            map.put("otherDueAmount", csdService.getPayableOtherPaymentAmount(customer, "ALL"));*/
+            list.add(map);
+        }
+        System.out.println(new Date().getTime());
+        param.put("dataList", list);
+
+        return new ModelAndView("/csd/report/sales_report_payment_clear", param);
+
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/salesReport4.erp")
     public ModelAndView salesReport4() {
         HashMap<String, Object> param = new HashMap<String, Object>();
@@ -1844,20 +1877,27 @@ public class CsdController {
         Map<String, Object> map;
         for (Customer customer : customerList) {
             map = new HashMap<String, Object>();
+            Double floorPrice = csdService.getFloorPrice(customer);
+            Double paid = csdService.getTotalDeposit(customer);
+            if (floorPrice <= paid) continue;
+
             Double payableInstAmount = csdService.getPayableInstallmentAmount(customer);
+            payableInstAmount = payableInstAmount == null ? 0 : payableInstAmount;
             Double totalInstAmount = csdService.getTotalInstallmentAmount(customer);
+            totalInstAmount = totalInstAmount == null ? 0 : totalInstAmount;
             Double paidInstAmount = customer.getMoneyDisburse().getInstallment();
+            paidInstAmount = paidInstAmount == null ? 0 : paidInstAmount;
             Double totalInst = csdService.getTotalInstallment(customer);
             Double payableInst = csdService.getPayableInstallment(customer);
-            Double amountPerInst = totalInstAmount / totalInst;
-            Double paidInst = paidInstAmount / amountPerInst;
+            Double amountPerInst = (totalInst == null || totalInst == 0) ? 0 : (totalInstAmount / totalInst);
+            Double paidInst = (amountPerInst == null || amountPerInst == 0) ? 0 : (paidInstAmount / amountPerInst);
             Double dueInst = payableInst - paidInst;
             Double dueInstAmount = payableInstAmount - paidInstAmount;
 
 
             map.put("customer", customer);
-            map.put("price", csdService.getFloorPrice(customer));
-            map.put("paid", csdService.getTotalDeposit(customer));
+            map.put("price", floorPrice);
+            map.put("paid", paid);
             map.put("dueInst", dueInst);
             map.put("instDueAmount", csdService.getPayableInstallmentAmount(customer));
             map.put("otherDueAmount", csdService.getPayableOtherPaymentAmount(customer, "ALL"));

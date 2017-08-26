@@ -62,7 +62,7 @@
                     </tr>
                     <tr>
                         <td class="header">
-                            <h2><label style="color: #1c0eff">Sales Summary with due and overdue status</label></h2>
+                            <h2><label style="color: #1c0eff">Customer List : Fully Paid</label></h2>
                         </td>
                     </tr>
                 </table>
@@ -71,6 +71,7 @@
             <div style="min-height: 1250px">
                 <table>
                     <tr style="font-weight: bold; color: #0200ff">
+                        <th style="width: 5px">SL</th>
                         <th style="width: 130px">CID</th>
                         <th style="width: 800px">Customer Name</th>
                         <th style="width: 50px">Offer</th>
@@ -79,54 +80,34 @@
                         <th style="width: 50px">Handover</th>
                         <th style="width: 50px">Total Price</th>
                         <th style="width: 50px">Paid</th>
-                        <th style="width: 50px">Due</th>
-                        <th style="width: 50px">Due Inst.</th>
-                        <th style="width: 50px">Tot. Overdue</th>
                     </tr>
                     <#assign sl = 1>
-                    <#assign paidGrant = 0>
-                    <#assign dueGrant = 0>
-                    <#assign overdueGrant = 0>
+                    <#assign priceGrand = 0>
+                    <#assign paidGrand = 0>
                     <#list dataList as data>
                         <#if data.customer.status = "Cancelled" ||   data.customer.status = "Refunded">
                         <#else >
-                            <#assign overDue = data.instDueAmount + data.otherDueAmount - data.paid>
-                            <#if overDue <= 0> <#else >
-                                <tr>
-                                    <td class="sl">${(data.customer.CID?replace(" ", ""))!}</td>
-                                    <td>${(data.customer.name)!}</td>
-                                    <td>${(data.customer.offer.offerName)!}</td>
-                                    <td>${(data.customer.cellPhone)!}</td>
-                                    <td>${(data.customer.floorSize)!}</td>
-                                    <td>${(data.customer.handoverDate?string('yyyy'))!}</td>
-                                    <td class="nos">${data.price?string["0"]}</td>
-                                    <td class="nos">
-                                        <a href="/mirror/csd/viewPaymentStatement.erp?cid=${data.customer.CID}">
-                                        ${data.paid}
-                                        </a>
-                                    </td>
-                                    <td class="nos"><a href="/mirror/csd/viewPaymentReport.erp?cid=${data.customer.CID}">${(data.price - data.paid)?string["0"]}</a></td>
-                                    <td  class="nos"><#if data.dueInst?string = ""><#else > ${data.dueInst?string["0.00"]}</#if></td>
+                            <tr>
+                                <td>${(sl)!}</td>
+                                <td>${(data.customer.CID?replace(" ", ""))!}</td>
+                                <td>${(data.customer.name)!}</td>
+                                <td>${(data.customer.offer.offerName)!}</td>
+                                <td>${(data.customer.cellPhone)!}</td>
+                                <td>${(data.customer.floorSize)!}</td>
+                                <td>${(data.customer.handoverDate?string('yyyy'))!}</td>
+                                <td class="nos">${data.price?string["0"]}</td>
+                                <td class="nos">
+                                    <a href="/mirror/csd/viewPaymentStatement.erp?cid=${data.customer.CID}">
+                                    ${data.paid}
+                                    </a>
+                                </td>
+                            </tr>
 
-                                    <td class="nos">
-                                        <a href="/mirror/csd/viewCustomer.erp?cidView=${data.customer.CID}">
-                                            <#if overDue <0>(Adv. ${(-overDue)?string["0"]})<#else >${overDue?string["0"]}</#if>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <#assign sl = sl + 1>
-                                <#assign paidGrant = paidGrant+ data.paid>
-                                <#assign dueGrant = dueGrant + (data.price - data.paid)>
-                                <#assign overdueGrant = overdueGrant + (data.instDueAmount + data.otherDueAmount - data.paid)>
-                            </#if>
+                            <#assign priceGrand = priceGrand +(data.price)!0.0>
+                            <#assign paidGrand = paidGrand +(data.paid)!0.0>
+                            <#assign sl = 1+sl>
                         </#if>
                     </#list>
-                    <tr>
-                        <td colspan="6">Total</td>
-                        <td class="nos total">${paidGrant?string["0"]}</td>
-                        <td class="nos">${dueGrant?string["0"]}</td>
-                        <td class="nos">${overdueGrant?string["0"]}</td>
-                    </tr>
                 </table>
             </div>
             <br/><br/>
