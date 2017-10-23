@@ -170,6 +170,41 @@
                 </div>
             </form>
         </div>
+        <#--Handover Wise-->
+        <div class="col-lg-6">
+            <form action="getCustomerDataByHandoverYYYY.erp" method="GET">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <label style="font-weight: bolder; font-family: 'Arial Black'">Customer List : Handover Year Wise</label>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-8 text-center">
+                                <div class="form-group  text-left">
+                                    <select name="yyyy" class="form-control">
+                                        <#--<#list 2017..2050 as year>
+                                            <option value="${year}">${year}</option>
+                                        </#list>-->
+                                            <option value="---">---</option>
+                                            <option value="2019">2019</option>
+                                            <option value="2021">2021</option>
+                                            <option value="2022">2022</option>
+                                            <option value="2028">2028</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 text-left">
+                                <button type="submit" id="view-customer-payment-month"
+                                        class="btn  btn-block btn-success">
+                                    View Report
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
 
         <div class="col-lg-6">
             <div class="panel panel-default">

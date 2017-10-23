@@ -190,6 +190,36 @@ public class MISController {
         return null;
     }
 
+
+    @RequestMapping(value = "/getCustomerDataByHandoverYYYY.erp", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    String getCustomerDataByHandoverYYYY(@RequestParam(required = false) String yyyy,
+                                       HttpServletRequest request, HttpServletResponse response)
+            throws JRException, IOException {
+
+        Map<String, Object> params = new HashMap<String, Object>();
+
+        List<Map<String, String>> dataList = misService.getCustomersDataByHandoverYYYY(yyyy);
+
+        params.put("HANDOVER_YEAR", yyyy);
+        params.put("REPORT_DATE", sdf_2.format(new Date()));
+        params.put("LOGO", misService.getRealPath("/") + "dp.png");
+        JRDataSource dataSource = new JRBeanCollectionDataSource(dataList);
+        try {
+            params.put("format", "pdf");
+            params.put("fileName", "report_27");
+            ByteArrayOutputStream byteArrayOutputStream = misService.generateReport(response, params, dataSource);
+            response.setContentLength(byteArrayOutputStream.size());
+            response.getOutputStream().write(byteArrayOutputStream.toByteArray());
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     @RequestMapping(value = "/showPaymentStatement.erp", method = RequestMethod.GET)
     public
     @ResponseBody

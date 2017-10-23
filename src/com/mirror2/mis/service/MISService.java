@@ -3,6 +3,7 @@ package com.mirror2.mis.service;
 
 import com.mirror2.csd.model.Customer;
 import net.sf.jasperreports.engine.JRDataSource;
+import org.hibernate.criterion.Criterion;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
@@ -23,6 +24,8 @@ public interface MISService {
 
     public List<Map<String, String>> getCustomerDataListAsPerLastPayment(String type, Date targetDate);
 
+    public  List<Map<String, String>> getCustomersDataByHandoverYYYY(String yyyy);
+
     public Object[] getPaymentStatementDataList(Customer customer, Date from, Date to);
 
     public Object[] getCollectionModeWise(Date from, Date to);
@@ -30,7 +33,6 @@ public interface MISService {
     List<Map<String, String>> getCustomerOfferWise(Long offerId, Date bookingFrom, Date bookingTo);
 
     public String getRealPath(String pathExtension);
-
 
     public ByteArrayOutputStream generateReport(HttpServletResponse response, Map<String, Object> params, JRDataSource dataSource);
 }
