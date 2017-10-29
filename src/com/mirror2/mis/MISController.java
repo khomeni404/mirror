@@ -4,6 +4,7 @@ import com.mirror2.common.dao.CommonDAO;
 import com.mirror2.csd.model.Customer;
 import com.mirror2.csd.model.Offer;
 import com.mirror2.csd.service.CsdService;
+import com.mirror2.mis.bean.SearchBean;
 import com.mirror2.mis.service.MISService;
 import com.mirror2.report.service.ReportService;
 import com.mirror2.security.SessionUtil;
@@ -14,13 +15,11 @@ import com.mirror2.util.MirrorUtil;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.apache.commons.validator.GenericValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -158,13 +157,13 @@ public class MISController {
     public
     @ResponseBody
     String getCustomerOfferWise(@RequestParam(required = false) Long offerId,
-                                       @RequestParam(required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") Date bookingDateFrom,
-                                       @RequestParam(required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") Date bookingDateTo,
-                                       HttpServletRequest request, HttpServletResponse response)
+                                @RequestParam(required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") Date bookingDateFrom,
+                                @RequestParam(required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") Date bookingDateTo,
+                                HttpServletRequest request, HttpServletResponse response)
             throws JRException, IOException {
 
         Map<String, Object> params = new HashMap<String, Object>();
-      Offer offer =  commonDAO.get(Offer.class, offerId);
+        Offer offer = commonDAO.get(Offer.class, offerId);
 
         List<Map<String, String>> dataList = misService.getCustomerOfferWise(offerId, bookingDateFrom, bookingDateTo);
 
@@ -194,15 +193,26 @@ public class MISController {
     @RequestMapping(value = "/getCustomerDataByHandoverYYYY.erp", method = RequestMethod.GET)
     public
     @ResponseBody
-    String getCustomerDataByHandoverYYYY(@RequestParam(required = false) String yyyy,
-                                       HttpServletRequest request, HttpServletResponse response)
+    String getCustomerDataByHandoverYYYY(@ModelAttribute SearchBean searchBean,
+                                         HttpServletRequest request, HttpServletResponse response)
             throws JRException, IOException {
 
         Map<String, Object> params = new HashMap<String, Object>();
 
-        List<Map<String, String>> dataList = misService.getCustomersDataByHandoverYYYY(yyyy);
+        List<Map<String, String>> dataList = misService.getCustomersDataByHandoverYYYY(searchBean);
 
-        params.put("HANDOVER_YEAR", yyyy);
+        String handoverYear = searchBean.getHandoverYear();
+        String payMode = searchBean.getPayMode();
+        Long offerId = searchBean.getOfferId();
+        Integer floorSize = searchBean.getFloorSize();
+        params.put("HANDOVER_YEAR", GenericValidator.isBlankOrNull(handoverYear) ? "All year" : handoverYear);
+        params.put("PAY_MODE", GenericValidator.isBlankOrNull(payMode) ? "Installment & One-time" : payMode);
+        Offer offer = null;
+        if (offerId != null) {
+            offer = commonDAO.get(Offer.class, offerId);
+        }
+        params.put("OFFER_NAME", offer == null? "All Offer" : offer.getOfferName());
+        params.put("FLOOR_SIZE", floorSize == null ? "All Sizes" : String.valueOf(floorSize));
         params.put("REPORT_DATE", sdf_2.format(new Date()));
         params.put("LOGO", misService.getRealPath("/") + "dp.png");
         JRDataSource dataSource = new JRBeanCollectionDataSource(dataList);
@@ -231,7 +241,7 @@ public class MISController {
         cid = MirrorUtil.makeCid(cid);
         Map<String, Object> params = new HashMap<String, Object>();
         Date fromDate = from.equals("") ? DateUtil.toDate("01/01/2011", "DD-MM-YYYY") : DateUtil.toDate(from, "DD-MM-YYYY");
-        Date toDate = to.equals("")? new Date() : DateUtil.toDate(to, "DD-MM-YYYY");
+        Date toDate = to.equals("") ? new Date() : DateUtil.toDate(to, "DD-MM-YYYY");
         Customer customer = csdService.getCustomer(cid);
         Object[] dataArray = misService.getPaymentStatementDataList(customer, fromDate, toDate);
         @SuppressWarnings("unchecked")
@@ -246,11 +256,11 @@ public class MISController {
         params.put("CELL", customer.getCellPhone());
         params.put("ADDRESS", customer.getMailingAddress());
         params.put("TOTAL_AMT", total);
-        params.put("TOTAL_AMT_WORD", totalInWord.toUpperCase()+" TAKA ONLY.");
+        params.put("TOTAL_AMT_WORD", totalInWord.toUpperCase() + " TAKA ONLY.");
         params.put("LOGO", misService.getRealPath("/") + "dp.png");
         User user = SessionUtil.getSessionUser();
         params.put("USER", user.getToken().getName());
-        params.put("DEG", user.getToken().getDesignation()+", "+user.getToken().getDepartment());
+        params.put("DEG", user.getToken().getDesignation() + ", " + user.getToken().getDepartment());
 
         JRDataSource dataSource = new JRBeanCollectionDataSource(dataList); //*222#
         try {
@@ -270,8 +280,8 @@ public class MISController {
 
     @RequestMapping(value = "/ShowCustomerListAsPerLastPayment1.erp", method = RequestMethod.POST)
     public ModelAndView ShowCustomerListAsPerLastPayment1(@RequestParam Integer month,
-                                @RequestParam String type,
-                                HttpServletRequest request, HttpServletResponse response)
+                                                          @RequestParam String type,
+                                                          HttpServletRequest request, HttpServletResponse response)
             throws JRException, IOException {
         Date targetDate = DateUtil.getDateBeforeDay(new Date(), month * 30);
         Map<String, Object> map = new HashMap<String, Object>();
@@ -281,12 +291,13 @@ public class MISController {
         map.put("dataList", dataList);
         return new ModelAndView("/report/csd/customer_by_last_payment", map);
     }
+
     @RequestMapping(value = "/report_13.erp", method = RequestMethod.POST)
     public
     @ResponseBody
     String report_13(@RequestParam Integer month,
-                                @RequestParam String type,
-                                HttpServletRequest request, HttpServletResponse response)
+                     @RequestParam String type,
+                     HttpServletRequest request, HttpServletResponse response)
             throws JRException, IOException {
         Date targetDate = DateUtil.getDateBeforeDay(new Date(), month * 30);
         Map<String, Object> params = new HashMap<String, Object>();
@@ -298,7 +309,7 @@ public class MISController {
         params.put("TOTAL", String.valueOf(dataList.size()));
         User user = SessionUtil.getSessionUser();
         params.put("USER", user.getToken().getName());
-        params.put("DEG", user.getToken().getDesignation()+", "+user.getToken().getDepartment());
+        params.put("DEG", user.getToken().getDesignation() + ", " + user.getToken().getDepartment());
 
         JRDataSource dataSource = new JRBeanCollectionDataSource(dataList); //*222#
         try {
@@ -319,10 +330,10 @@ public class MISController {
     @RequestMapping(method = RequestMethod.GET, value = "/showCollectionReport_16.erp")
     @SuppressWarnings("unchecked")
     public ModelAndView showCollectionReport_16(
-                                                     @RequestParam String from,
-                                                     @RequestParam String to) {
+            @RequestParam String from,
+            @RequestParam String to) {
         Date fromDate = from.equals("") ? DateUtil.toDate("01/01/2011", "DD-MM-YYYY") : DateUtil.toDate(from, "DD-MM-YYYY");
-        Date toDate = to.equals("")? new Date() : DateUtil.toDate(to, "DD-MM-YYYY");
+        Date toDate = to.equals("") ? new Date() : DateUtil.toDate(to, "DD-MM-YYYY");
         Object[] dataArray = misService.getCollectionModeWise(fromDate, toDate);
         List<Map<String, String>> dataList = (List<Map<String, String>>) dataArray[0];
 

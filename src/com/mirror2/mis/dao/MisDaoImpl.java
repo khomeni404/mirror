@@ -5,7 +5,9 @@ import com.mirror2.csd.model.Installment;
 import com.mirror2.csd.model.MoneyReceipt;
 import com.mirror2.mis.bean.SearchBean;
 import com.mirror2.util.DateUtil;
+import com.mirror2.util.MirrorConstants;
 import com.mirror2.util.MirrorDataList;
+import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.validator.GenericValidator;
 import org.hibernate.criterion.*;
 import org.hibernate.transform.Transformers;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -48,7 +51,7 @@ public class MisDaoImpl implements MisDAO {
 
     @SuppressWarnings("unchecked")
     public List<Map<String, Object>> getCustomerDataListMap(SearchBean searchBean) {
-        DetachedCriteria dc = DetachedCriteria.forClass(Customer.class)
+        DetachedCriteria dc = getCriteria(searchBean)
                 .setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY)
                 .createAlias("building", "b")
                 .setProjection(Projections.projectionList()
@@ -60,33 +63,53 @@ public class MisDaoImpl implements MisDAO {
                                 .add(Projections.property("b.nameAlias").as("B_AL"))
                                 .add(Projections.property("floorSize").as("SIZE"))
                 );
+
+        dc.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+        return hibernateTemplate.findByCriteria(dc);
+    }
+
+    private DetachedCriteria getCriteria(SearchBean searchBean) {
+        DetachedCriteria dc = DetachedCriteria.forClass(Customer.class).createAlias("offer", "o");
         if (!GenericValidator.isBlankOrNull(searchBean.getNotStatus())) {
             dc.add(Restrictions.ne("status", searchBean.getNotStatus()));
         }
         String handoverYear = searchBean.getHandoverYear();
         if (!GenericValidator.isBlankOrNull(handoverYear)) {
-            dc.add(Restrictions.eq("b.handOver", handoverYear));
+            try {
+                Date from = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(handoverYear + "-01-01 00:00:00");
+                Date to = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(handoverYear + "-12-31 23:59:59");
+                dc.add(Restrictions.between("handoverDate", from, to));
+            } catch (Exception e) {
+            }
         }
-        dc.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
-        return hibernateTemplate.findByCriteria(dc);
+
+        String paymentType = searchBean.getPayMode();// payMode == 1 ? MirrorConstants.PAYMENT_TYPE_INST : payMode == 2 ? MirrorConstants.PAYMENT_TYPE_OT : null;
+        if (!GenericValidator.isBlankOrNull(paymentType)) {
+            dc.add(Restrictions.eq("paymentType", paymentType));
+        }
+        Integer floorSize = searchBean.getFloorSize();
+        if (floorSize != null) {
+            dc.add(Restrictions.eq("floorSize", floorSize));
+        }
+        Long offerId = searchBean.getOfferId();
+        if (offerId != null) {
+            dc.add(Restrictions.eq("o.id", offerId));
+        }
+        dc.addOrder(Order.asc("CID"));//21=188, i-89+99
+
+        return dc;
     }
 
     @SuppressWarnings("unchecked")
     public Map<Long, Double> getCustomersPayableInstAmtMap(SearchBean searchBean) {
-        DetachedCriteria dc = DetachedCriteria.forClass(Customer.class).createAlias("installments", "i")
+        DetachedCriteria dc = getCriteria(searchBean).createAlias("installments", "i")
                 .createAlias("building", "b");
         dc.setProjection(Projections.projectionList()
                         .add(Projections.groupProperty("id"), "ID")
                         .add(Projections.sum("i.amount"), "AMT")
         );
         dc.add(Restrictions.le("i.deadLine", new Date()));
-        if (!GenericValidator.isBlankOrNull(searchBean.getNotStatus())) {
-            dc.add(Restrictions.ne("status", searchBean.getNotStatus()));
-        }
-        String handoverYear = searchBean.getHandoverYear();
-        if (!GenericValidator.isBlankOrNull(handoverYear)) {
-            dc.add(Restrictions.eq("b.handOver", handoverYear));
-        }
+
         dc.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
         List<Map<String, Object>> data = hibernateTemplate.findByCriteria(dc);
         Map<Long, Double> map = new HashMap<Long, Double>();
@@ -98,20 +121,15 @@ public class MisDaoImpl implements MisDAO {
 
     @SuppressWarnings("unchecked")
     public Map<Long, Double> getCustomersPayableOPAmtMap(SearchBean searchBean) {
-        DetachedCriteria dc = DetachedCriteria.forClass(Customer.class).createAlias("otherPayments", "op")
-                .createAlias("building", "b");
-        dc.setProjection(Projections.projectionList()
-                        .add(Projections.groupProperty("id"), "ID")
-                        .add(Projections.sum("op.amount"), "AMT")
-        );
-        dc.add(Restrictions.le("op.deadLine", new Date()));
-        if (!GenericValidator.isBlankOrNull(searchBean.getNotStatus())) {
-            dc.add(Restrictions.ne("status", searchBean.getNotStatus()));
-        }
-        String handoverYear = searchBean.getHandoverYear();
-        if (!GenericValidator.isBlankOrNull(handoverYear)) {
-            dc.add(Restrictions.eq("b.handOver", handoverYear));
-        }
+        DetachedCriteria dc = getCriteria(searchBean)
+                .createAlias("otherPayments", "op")
+                .createAlias("building", "b")
+                .setProjection(Projections.projectionList()
+                                .add(Projections.groupProperty("id"), "ID")
+                                .add(Projections.sum("op.amount"), "AMT")
+                )
+                .add(Restrictions.le("op.deadLine", new Date()));
+
         dc.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
         List<Map<String, Object>> data = hibernateTemplate.findByCriteria(dc);
         Map<Long, Double> map = new HashMap<Long, Double>();
@@ -123,20 +141,13 @@ public class MisDaoImpl implements MisDAO {
 
     @SuppressWarnings("unchecked")
     public Map<Long, Double> getCustomersPaidInstAmtMap(SearchBean searchBean) {
-        DetachedCriteria dc = DetachedCriteria.forClass(Customer.class).createAlias("moneyReceipts", "r")
-                .createAlias("building", "b");
-        dc.setProjection(Projections.projectionList()
-                        .add(Projections.groupProperty("id"), "ID")
-                        .add(Projections.sum("r.amount"), "AMT")
-        );
-        //dc.add(Restrictions.le("i.deadLine", new Date()));
-        if (!GenericValidator.isBlankOrNull(searchBean.getNotStatus())) {
-            dc.add(Restrictions.ne("status", searchBean.getNotStatus()));
-        }
-        String handoverYear = searchBean.getHandoverYear();
-        if (!GenericValidator.isBlankOrNull(handoverYear)) {
-            dc.add(Restrictions.eq("b.handOver", handoverYear));
-        }
+        DetachedCriteria dc = getCriteria(searchBean).createAlias("moneyReceipts", "r")
+                .createAlias("building", "b")
+                .setProjection(Projections.projectionList()
+                                .add(Projections.groupProperty("id"), "ID")
+                                .add(Projections.sum("r.amount"), "AMT")
+                );
+
         dc.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
         List<Map<String, Object>> data = hibernateTemplate.findByCriteria(dc);
         Map<Long, Double> map = new HashMap<Long, Double>();
@@ -144,7 +155,6 @@ public class MisDaoImpl implements MisDAO {
             map.put((Long) m.get("ID"), (Double) m.get("AMT"));
         }
         return map;
-
     }
 
 }

@@ -2,6 +2,7 @@ package com.mirror2.mis.service;
 
 
 import com.mirror2.csd.model.Customer;
+import com.mirror2.mis.bean.SearchBean;
 import net.sf.jasperreports.engine.JRDataSource;
 import org.hibernate.criterion.Criterion;
 
@@ -24,7 +25,7 @@ public interface MISService {
 
     public List<Map<String, String>> getCustomerDataListAsPerLastPayment(String type, Date targetDate);
 
-    public  List<Map<String, String>> getCustomersDataByHandoverYYYY(String yyyy);
+    public  List<Map<String, String>> getCustomersDataByHandoverYYYY(SearchBean searchBean);
 
     public Object[] getPaymentStatementDataList(Customer customer, Date from, Date to);
 

@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report_27" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="dab30fce-f303-4704-bebe-7a017af37b9d">
-	<property name="ireport.zoom" value="2.357947691000019"/>
-	<property name="ireport.x" value="15"/>
-	<property name="ireport.y" value="174"/>
+	<property name="ireport.zoom" value="1.7715610000000146"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="LOGO" class="java.lang.String"/>
 	<parameter name="HANDOVER_YEAR" class="java.lang.String"/>
 	<parameter name="REPORT_DATE" class="java.lang.String"/>
+	<parameter name="OFFER_NAME" class="java.lang.String"/>
+	<parameter name="FLOOR_SIZE" class="java.lang.String"/>
+	<parameter name="PAY_MODE" class="java.lang.String"/>
 	<field name="SL" class="java.lang.String"/>
 	<field name="NAME" class="java.lang.String"/>
 	<field name="AID" class="java.lang.String"/>
@@ -19,7 +22,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="124" splitType="Stretch">
+		<band height="101" splitType="Stretch">
 			<staticText>
 				<reportElement x="113" y="42" width="431" height="26" forecolor="#FF6600" uuid="10eb9598-3e73-43aa-a9b5-3b2fc3ad8d34"/>
 				<textElement textAlignment="Right">
@@ -62,21 +65,63 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="22" splitType="Stretch">
+		<band height="37" splitType="Stretch">
 			<textField>
-				<reportElement x="68" y="0" width="161" height="20" uuid="1eb91eee-6d44-4cd8-aeb4-472272212fa4"/>
+				<reportElement x="86" y="4" width="161" height="14" uuid="1eb91eee-6d44-4cd8-aeb4-472272212fa4"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[": "+$P{HANDOVER_YEAR}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="14" y="0" width="54" height="20" uuid="ea2dd901-f4a1-4cf2-bdeb-e1eaefc9831e"/>
+				<reportElement x="14" y="4" width="54" height="14" uuid="ea2dd901-f4a1-4cf2-bdeb-e1eaefc9831e"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Hand Over]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="14" y="18" width="72" height="14" uuid="bb13bc16-0962-4d63-ab1d-2af8044c6d12"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pament Mode]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="87" y="18" width="161" height="14" uuid="dbb84b49-805f-4d7c-9295-cd89d1b450fb"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[": "+$P{PAY_MODE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="311" y="4" width="59" height="14" uuid="f6f52ba4-3338-4382-a62c-c5f4822a323c"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Floor Size]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="370" y="4" width="161" height="14" uuid="4b8d0dd0-d41b-40f3-998e-0004ab0db97b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[": "+$P{FLOOR_SIZE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="311" y="18" width="59" height="14" uuid="4f303634-3000-49ee-9785-1c2879592947"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Offer Name]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="370" y="18" width="161" height="14" uuid="6489a82d-f509-4d9f-a63a-9bcc0743cfb6"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[": "+$P{OFFER_NAME}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>

@@ -27,6 +27,10 @@ public class SearchBean {
 
     private Integer floorSize;
 
+    private String payMode;
+
+    private Long offerId;
+
     public String getBookingYear() {
         return bookingYear;
     }
@@ -81,5 +85,21 @@ public class SearchBean {
 
     public void setYesStatus(String yesStatus) {
         this.yesStatus = yesStatus;
+    }
+
+    public String getPayMode() {
+        return payMode;
+    }
+
+    public void setPayMode(String payMode) {
+        this.payMode = payMode;
+    }
+
+    public Long getOfferId() {
+        return offerId;
+    }
+
+    public void setOfferId(Long offerId) {
+        this.offerId = offerId;
     }
 }

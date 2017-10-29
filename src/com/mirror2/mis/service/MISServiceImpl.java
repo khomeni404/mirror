@@ -13,6 +13,7 @@ import com.mirror2.util.NumberUtil;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.export.*;
 import net.sf.jasperreports.engine.util.JRLoader;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -126,9 +127,7 @@ public class MISServiceImpl implements MISService {
     }
 
     @Override
-    public List<Map<String, String>> getCustomersDataByHandoverYYYY(String year) {
-        SearchBean searchBean = new SearchBean();
-        searchBean.setHandoverYear(year);
+    public List<Map<String, String>> getCustomersDataByHandoverYYYY(SearchBean searchBean) {
         searchBean.setNotStatus(MirrorDataList.CUST_STATUS_REFUNDED);
         SimpleDateFormat sdf = new SimpleDateFormat("MMM yy");
         List<Map<String, Object>> customerList = misDAO.getCustomerDataListMap(searchBean);
@@ -139,32 +138,46 @@ public class MISServiceImpl implements MISService {
         List<Map<String, String>> dataList = new ArrayList<Map<String, String>>();
         Map<String, String> map;
         int sl = 1;
-        for (Map<String, Object> o : customerList) {
-            map = new HashMap<String, String>();
-            Long id = (Long) o.get("ID");
-            map.put("SL", String.valueOf(sl++));
-            map.put("ID", String.valueOf(id));
-            map.put("CID", (String) o.get("CID"));
-            map.put("NAME", (String) o.get("NAME"));
-            map.put("AID", o.get("B_AL") + "-" + o.get("AID"));
-            map.put("HOD", sdf.format((Date) o.get("HOD")));
-            map.put("SIZE", String.valueOf(o.get("SIZE")));
+        if (!CollectionUtils.isEmpty(customerList)) {
+            for (Map<String, Object> o : customerList) {
+                map = new HashMap<String, String>();
+                Long id = (Long) o.get("ID");
+                map.put("SL", String.valueOf(sl++));
+                map.put("ID", String.valueOf(id));
+                map.put("CID", (String) o.get("CID"));
+                map.put("NAME", (String) o.get("NAME"));
+                map.put("AID", o.get("B_AL") + "-" + o.get("AID"));
+                map.put("HOD", sdf.format((Date) o.get("HOD")));
+                map.put("SIZE", String.valueOf(o.get("SIZE")));
 
-            Double payableInstAmt = payableInstAmtMap.get(id);
-            payableInstAmt = payableInstAmt == null ? 0.0 : payableInstAmt;
-            Double payableOPAmt = payableOPAmtMap.get(id);
-            payableOPAmt = payableOPAmt == null ? 0.0 : payableOPAmt;
-            Double paidAmt = paidInstAmtMap.get(id);
-            paidAmt = paidAmt == null ? 0.0 : paidAmt;
+                Double payableInstAmt = payableInstAmtMap.get(id);
+                payableInstAmt = payableInstAmt == null ? 0.0 : payableInstAmt;
+                Double payableOPAmt = payableOPAmtMap.get(id);
+                payableOPAmt = payableOPAmt == null ? 0.0 : payableOPAmt;
+                Double paidAmt = paidInstAmtMap.get(id);
+                paidAmt = paidAmt == null ? 0.0 : paidAmt;
 
-            Double due = payableInstAmt + payableOPAmt;
-            Double overDue = due - paidAmt;
-            map.put("PAID", NumberUtil.toCommaFormattedTaka(paidAmt));
-            if (overDue >= 0) {
-                map.put("O_DUE", NumberUtil.toCommaFormattedTaka(overDue));
-            } else {
-                map.put("O_DUE", "("+NumberUtil.toCommaFormattedTaka(-overDue)+")");
+                Double due = payableInstAmt + payableOPAmt;
+                Double overDue = due - paidAmt;
+                map.put("PAID", NumberUtil.toCommaFormattedTaka(paidAmt));
+                if (overDue >= 0) {
+                    map.put("O_DUE", NumberUtil.toCommaFormattedTaka(overDue));
+                } else {
+                    map.put("O_DUE", "(" + NumberUtil.toCommaFormattedTaka(-overDue) + ")");
+                }
+                dataList.add(map);
             }
+        } else {
+            map = new HashMap<String, String>();
+            map.put("SL", "");
+            map.put("ID", "");
+            map.put("CID", "");
+            map.put("NAME", "No Customer Found !");
+            map.put("AID", "");
+            map.put("HOD", "");
+            map.put("SIZE", "");
+            map.put("PAID", "");
+            map.put("O_DUE", "");
             dataList.add(map);
         }
         return dataList;
