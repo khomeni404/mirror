@@ -12,6 +12,7 @@ import com.mirror2.messaging.threads.EmailThread;
 import com.mirror2.csd.threads.ReceiptThread;
 import com.mirror2.messaging.threads.MRSmsThread;
 import com.mirror2.messaging.threads.SmsThread;
+import com.mirror2.report.service.ReportService;
 import com.mirror2.security.SessionUtil;
 import com.mirror2.security.service.UserDetailsService;
 import com.mirror2.util.*;
@@ -40,6 +41,8 @@ public class CsdController {
 
     @Autowired
     private CsdService csdService;
+    @Autowired
+    private ReportService reportService;
     @Autowired
     private UserDetailsService userDetailsService;
     @Autowired
@@ -1768,8 +1771,8 @@ public class CsdController {
         List<Customer> customers = csdService.findAllCustomer();
         Integer soldArea = 0;
         int soldApartment = 0;
-        Double salesValue = 0.0;
-        Double collectedAmount = 0.0;
+        //Double salesValue = 0.0;
+        //Double collectedAmount = 0.0;
         Double overDue = 0.0;
 
         int approved = 0;
@@ -1777,23 +1780,42 @@ public class CsdController {
         int refunded = 0;
         int pending = 0;
         for (Customer customer : customers) {
+            boolean hasRefunded = customer.getStatus().toUpperCase().equals("REFUNDED");
+            if (hasRefunded) {
+                refunded++;
+            }
             soldArea += customer.getFloorSize();
             soldApartment++;
-            salesValue += customer.getPrice() * customer.getFloorSize();
-            collectedAmount += csdService.getTotalDeposit(customer);
+            //salesValue += hasRefunded ? 0.0 : customer.getPrice() * customer.getFloorSize();
+            //collectedAmount += csdService.getTotalDeposit(customer);
             approved += customer.getStatus().toUpperCase().equals("APPROVED") ? 1 : 0;
             cancelled += customer.getStatus().toUpperCase().equals("CANCELLED") ? 1 : 0;
-            refunded += customer.getStatus().toUpperCase().equals("REFUNDED") ? 1 : 0;
             pending += customer.getStatus().toUpperCase().equals("PENDING") ? 1 : 0;
             overDue += csdService.getPayableInstallmentAmount(customer) + csdService.getPayableOtherPaymentAmount(customer, "ALL");
+
+
         }
+
+        Date from = DateUtil.toDate("01/01/2011", "DD/MM/YYYY");
+        Date to = DateUtil.toDate("31/12/2045", "DD/MM/YYYY");
+        List<Map<String, Object>> dataList = reportService.getSalesBySalesPersonType(from, to);
+        Double salesValue2 = 0.0;
+        Double collectedAmount2 = 0.0;
+
+        for (Map<String, Object> map1 : dataList) {
+            Object sv = map1.get("SalesValue");
+            Object ca = map1.get("Collected");
+            salesValue2 += (Double) (sv == null ? 0.0 : sv);
+            collectedAmount2 += (Double) (ca == null ? 0.0 : ca);
+        }
+
         map.put("soldArea", soldArea);
         map.put("soldApartment", soldApartment);
-        map.put("salesValue", salesValue);
-        map.put("avgPrice", salesValue / soldArea);
-        map.put("collectedAmount", collectedAmount);
-        map.put("dueAmount", salesValue - collectedAmount);
-        map.put("overDue", overDue - collectedAmount);
+        map.put("salesValue", salesValue2);
+        map.put("avgPrice", salesValue2 / soldArea);
+        map.put("collectedAmount", collectedAmount2);
+        map.put("dueAmount", salesValue2 - collectedAmount2);
+        map.put("overDue", overDue - collectedAmount2);
 
         map.put("approved", approved);
         map.put("cancelled", cancelled);

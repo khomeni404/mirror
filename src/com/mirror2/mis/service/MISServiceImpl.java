@@ -181,7 +181,6 @@ public class MISServiceImpl implements MISService {
             dataList.add(map);
         }
         return dataList;
-
     }
 
     public Object[] getCollectionModeWise(Date from, Date to) {
