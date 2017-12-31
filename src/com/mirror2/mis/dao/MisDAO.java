@@ -15,6 +15,8 @@ public interface MisDAO {
 
     List<Map<String, Object>> getCustomerDataListMap(SearchBean searchBean);
 
+    //Map<Long, Double> getCustomersAptPriceMap(SearchBean searchBean);
+
     Map<Long, Double> getCustomersPayableInstAmtMap(SearchBean searchBean);
 
     Map<Long, Double> getCustomersPayableOPAmtMap(SearchBean searchBean);

@@ -62,6 +62,7 @@ public class MisDaoImpl implements MisDAO {
                                 .add(Projections.property("handoverDate").as("HOD"))
                                 .add(Projections.property("b.nameAlias").as("B_AL"))
                                 .add(Projections.property("floorSize").as("SIZE"))
+                                .add(Projections.property("price").as("PRICE"))
                 );
 
         dc.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
@@ -95,10 +96,16 @@ public class MisDaoImpl implements MisDAO {
         if (offerId != null) {
             dc.add(Restrictions.eq("o.id", offerId));
         }
+        String status = searchBean.getBookingStatus();
+        if (!GenericValidator.isBlankOrNull(status)) {
+            dc.add(Restrictions.eq("status", status));
+        }
+
         dc.addOrder(Order.asc("CID"));//21=188, i-89+99
 
         return dc;
     }
+
 
     @SuppressWarnings("unchecked")
     public Map<Long, Double> getCustomersPayableInstAmtMap(SearchBean searchBean) {

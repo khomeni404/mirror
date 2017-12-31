@@ -19,6 +19,8 @@ public class SearchBean {
 
     private Date paymentDeadLine;
 
+    private String bookingStatus; // Approved, Canceled, Refunded etc
+
     private String yesStatus;
 
     private String notStatus;
@@ -28,8 +30,9 @@ public class SearchBean {
     private Integer floorSize;
 
     private String payMode;
-
     private Long offerId;
+
+    private String reportFileName;
 
     public String getBookingYear() {
         return bookingYear;
@@ -101,5 +104,21 @@ public class SearchBean {
 
     public void setOfferId(Long offerId) {
         this.offerId = offerId;
+    }
+
+    public String getBookingStatus() {
+        return bookingStatus;
+    }
+
+    public void setBookingStatus(String bookingStatus) {
+        this.bookingStatus = bookingStatus;
+    }
+
+    public String getReportFileName() {
+        return reportFileName;
+    }
+
+    public void setReportFileName(String reportFileName) {
+        this.reportFileName = reportFileName;
     }
 }

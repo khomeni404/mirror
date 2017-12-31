@@ -148,7 +148,11 @@ public class MISServiceImpl implements MISService {
                 map.put("NAME", (String) o.get("NAME"));
                 map.put("AID", o.get("B_AL") + "-" + o.get("AID"));
                 map.put("HOD", sdf.format((Date) o.get("HOD")));
-                map.put("SIZE", String.valueOf(o.get("SIZE")));
+                Integer size =  (Integer)o.get("SIZE");
+                Double pps =  (Double)o.get("PRICE");
+                Double price = (size != null && pps != null) ? (size * pps) : 0.0;
+                map.put("SIZE", String.valueOf(size));
+                map.put("PRICE", price >0 ?  NumberUtil.toCommaFormattedTaka(price, false) : "N/D");
 
                 Double payableInstAmt = payableInstAmtMap.get(id);
                 payableInstAmt = payableInstAmt == null ? 0.0 : payableInstAmt;
@@ -159,11 +163,11 @@ public class MISServiceImpl implements MISService {
 
                 Double due = payableInstAmt + payableOPAmt;
                 Double overDue = due - paidAmt;
-                map.put("PAID", NumberUtil.toCommaFormattedTaka(paidAmt));
+                map.put("PAID", NumberUtil.toCommaFormattedTaka(paidAmt, false));
                 if (overDue >= 0) {
-                    map.put("O_DUE", NumberUtil.toCommaFormattedTaka(overDue));
+                    map.put("O_DUE", NumberUtil.toCommaFormattedTaka(overDue, false));
                 } else {
-                    map.put("O_DUE", "(" + NumberUtil.toCommaFormattedTaka(-overDue) + ")");
+                    map.put("O_DUE", "(" + NumberUtil.toCommaFormattedTaka(-overDue, false) + ")");
                 }
                 dataList.add(map);
             }

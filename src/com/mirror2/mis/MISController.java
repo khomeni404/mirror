@@ -190,7 +190,7 @@ public class MISController {
     }
 
 
-    @RequestMapping(value = "/getCustomerDataByHandoverYYYY.erp", method = RequestMethod.GET)
+    @RequestMapping(value = "/getCustomerDataByHandoverYYYY.erp", method = RequestMethod.POST)
     public
     @ResponseBody
     String getCustomerDataByHandoverYYYY(@ModelAttribute SearchBean searchBean,
@@ -211,14 +211,17 @@ public class MISController {
         if (offerId != null) {
             offer = commonDAO.get(Offer.class, offerId);
         }
-        params.put("OFFER_NAME", offer == null? "All Offer" : offer.getOfferName());
+        params.put("OFFER_NAME", offer == null ? "All Offer" : offer.getOfferName());
         params.put("FLOOR_SIZE", floorSize == null ? "All Sizes" : String.valueOf(floorSize));
         params.put("REPORT_DATE", sdf_2.format(new Date()));
+        params.put("STATUS", searchBean.getBookingStatus());
         params.put("LOGO", misService.getRealPath("/") + "dp.png");
         JRDataSource dataSource = new JRBeanCollectionDataSource(dataList);
         try {
             params.put("format", "pdf");
-            params.put("fileName", "report_27");
+            String fileName = searchBean.getReportFileName();
+            params.put("fileName", GenericValidator.isBlankOrNull(fileName) ? "report_27_2" : fileName);
+
             ByteArrayOutputStream byteArrayOutputStream = misService.generateReport(response, params, dataSource);
             response.setContentLength(byteArrayOutputStream.size());
             response.getOutputStream().write(byteArrayOutputStream.toByteArray());
