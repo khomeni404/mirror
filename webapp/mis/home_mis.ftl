@@ -243,6 +243,7 @@
                         </div>
                         <div class="col-lg-4 text-center">
                             <select name="bookingStatus" class="form-control">
+                                <option value="">All Status</option>
                                 <option value="Approved">Approved</option>
                                 <option value="Cancelled">Cancelled</option>
                                 <option value="Processing">Processing</option>
