@@ -97,12 +97,18 @@
                     <br class="clear" />   <br class="clear" />
                     <div class="grid_3 alpha">
                         <label for="countryLocation">
-                            Country Location:
+                            Location: <a href="/mirror/csd/createLocation.erp">Add New</a>
                             <span class="required-indicator">*</span>
                         </label>
                     </div>
                     <div class="grid_4 omega reset-input">
-                        <input type="text" name="countryLocation" id="countryLocation" placeholder="e.g. JP, BD, USA, UAE" style="height: 30px; padding-left: 5px; width: 200%;"/>
+                        <input list="locationList" style="height: 30px; padding-left: 5px; width: 130%;"
+                               name="locationId" value="" placeholder=""/>
+                        <datalist id="locationList" autocomplete="off">
+                            <#list locationList as location>
+                            <option value="${location.id} : ${(location.toString())!}">
+                            </#list>
+                        </datalist>
                     </div>
 
                     <br class="clear" />   <br class="clear" />

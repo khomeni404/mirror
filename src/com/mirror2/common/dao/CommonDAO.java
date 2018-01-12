@@ -1,5 +1,7 @@
 package com.mirror2.common.dao;
 
+import org.hibernate.criterion.DetachedCriteria;
+
 import java.util.List;
 import java.util.Map;
 
@@ -43,6 +45,10 @@ public interface CommonDAO {
     <MODEL> List<MODEL> findAll(Class<MODEL> clazz, String aliasModel, String propertyName, Object propertyValue);
 
     <MODEL> List<MODEL> findAll(Class<MODEL> clazz, Map<String, Object> propertyValueMap);
+
+    Object findAll(DetachedCriteria dc);
+
+    Object findAll(String sql, Object[] param);
 
     <MODEL> List<MODEL> searchBy_name(Class<MODEL> clazz, String text);
 

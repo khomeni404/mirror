@@ -2,6 +2,7 @@ package com.mirror2.mis;
 
 import com.mirror2.common.dao.CommonDAO;
 import com.mirror2.csd.model.Customer;
+import com.mirror2.csd.model.Location;
 import com.mirror2.csd.model.Offer;
 import com.mirror2.csd.service.CsdService;
 import com.mirror2.mis.bean.SearchBean;
@@ -11,11 +12,16 @@ import com.mirror2.security.SessionUtil;
 import com.mirror2.security.model.User;
 import com.mirror2.util.DateUtil;
 import com.mirror2.util.MirrorConstants;
+import com.mirror2.util.MirrorDataList;
 import com.mirror2.util.MirrorUtil;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.validator.GenericValidator;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -26,7 +32,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -64,7 +69,12 @@ public class MISController {
         map.put("PageTitle", "MIS Home");
         map.put("from", sdf_2.format(DateUtil.getFirstDayOfYear(new Date())));
         map.put("to", sdf_2.format(new Date()));
+        String sql1 = "SELECT DISTINCT(b.handOver) FROM Building b ORDER BY b.handOver ASC";
+        map.put("buildingHandoverYearList", commonDAO.findAll(sql1, null));
+        String sql = "SELECT DISTINCT(YEAR(c.handoverDate)) FROM Customer c ORDER BY YEAR(c.handoverDate) ASC";
+        map.put("handoverYearList", commonDAO.findAll(sql, null));
         map.put("offerList", commonDAO.findAll(Offer.class));
+        map.put("locationList", commonDAO.findAll(Location.class));
         return new ModelAndView("/mis/home_mis", map);
     }
 
@@ -190,23 +200,23 @@ public class MISController {
     }
 
 
-    @RequestMapping(value = "/getCustomerDataByHandoverYYYY.erp", method = RequestMethod.POST)
+    @RequestMapping(value = "/getCustomerListCustomized.erp", method = RequestMethod.POST)
     public
     @ResponseBody
-    String getCustomerDataByHandoverYYYY(@ModelAttribute SearchBean searchBean,
+    String getCustomerListCustomized(@ModelAttribute SearchBean searchBean,
                                          HttpServletRequest request, HttpServletResponse response)
             throws JRException, IOException {
 
         Map<String, Object> params = new HashMap<String, Object>();
 
-        List<Map<String, String>> dataList = misService.getCustomersDataByHandoverYYYY(searchBean);
+        List<Map<String, String>> dataList = misService.getCustomerListCustomized(searchBean);
 
         String handoverYear = searchBean.getHandoverYear();
         String payMode = searchBean.getPayMode();
         Long offerId = searchBean.getOfferId();
         Integer floorSize = searchBean.getFloorSize();
         params.put("HANDOVER_YEAR", GenericValidator.isBlankOrNull(handoverYear) ? "All year" : handoverYear);
-        params.put("PAY_MODE", GenericValidator.isBlankOrNull(payMode) ? "Installment & One-time" : payMode);
+        params.put("PAY_MODE", GenericValidator.isBlankOrNull(payMode) ? "All Mode" : payMode);
         Offer offer = null;
         if (offerId != null) {
             offer = commonDAO.get(Offer.class, offerId);
@@ -214,7 +224,8 @@ public class MISController {
         params.put("OFFER_NAME", offer == null ? "All Offer" : offer.getOfferName());
         params.put("FLOOR_SIZE", floorSize == null ? "All Sizes" : String.valueOf(floorSize));
         params.put("REPORT_DATE", sdf_2.format(new Date()));
-        params.put("STATUS", searchBean.getBookingStatus());
+        params.put("STATUS", GenericValidator.isBlankOrNull(searchBean.getBookingStatus()) ? "All Status": searchBean.getBookingStatus());
+        params.put("B_HANDOVER", GenericValidator.isBlankOrNull(searchBean.getBuildingHandover()) ? "All Year": searchBean.getBuildingHandover());
         params.put("LOGO", misService.getRealPath("/") + "dp.png");
         JRDataSource dataSource = new JRBeanCollectionDataSource(dataList);
         try {
@@ -369,5 +380,38 @@ public class MISController {
         return new ModelAndView("report/csd/sales_data_sales_person_wise", map);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/customerListByLocation.erp")
+    public ModelAndView customerListByLocation(@RequestParam("location") String location) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("PageTitle", "Customer");
+        map.put("DashboardLink", MirrorConstants.DASHBOARD_LINK);
+        Long locationId = null;
+        if (!GenericValidator.isBlankOrNull(location)) {
+            String locId = location.split(":")[0].trim();
+            locationId = NumberUtils.isDigits(locId) ? Long.valueOf(locId) : null;
+        }
+        DetachedCriteria criteria = DetachedCriteria.forClass(Customer.class);
+                /*criteria.setProjection(Projections.projectionList()
+                                .add(Projections.property("CID"))
+                                .add(Projections.property("name"))
+                                .add(Projections.property("id"))
+                        //.add(Projections.property("cellPhone"))
+                );*/
+        if (locationId != null) {
+            criteria.add(Restrictions.and(
+                    Restrictions.isNotNull("location"),
+                    Restrictions.eq("location", new Location(locationId))
+            ));
+            map.put("location", location);
+        } else {
+            criteria.add(Restrictions.isNull("location"));
+            map.put("location", "Not Defined");
+        }
+        criteria.add(Restrictions.ne("status", MirrorDataList.CUST_STATUS_REFUNDED));
+        criteria.addOrder(Order.asc("CID"));
+
+        map.put("customerList", commonDAO.findAll(criteria));
+        return new ModelAndView("/mis/customer_list", map);
+    }
 }
 

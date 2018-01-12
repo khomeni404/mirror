@@ -19,6 +19,8 @@ import java.util.List;
 @Entity
 @Table(name = "CSD_MARKETING_IDENTITY")
 public class MID implements Serializable {
+    public MID(){}
+    public MID(Long id){this.id = id;}
     @Id
     @GeneratedValue
     private Long id;

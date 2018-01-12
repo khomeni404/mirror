@@ -27,6 +27,8 @@ public class SearchBean {
 
     private String handoverYear;
 
+    private String buildingHandover;
+
     private Integer floorSize;
 
     private String payMode;
@@ -72,6 +74,14 @@ public class SearchBean {
 
     public void setHandoverYear(String handoverYear) {
         this.handoverYear = handoverYear;
+    }
+
+    public String getBuildingHandover() {
+        return buildingHandover;
+    }
+
+    public void setBuildingHandover(String buildingHandover) {
+        this.buildingHandover = buildingHandover;
     }
 
     public Integer getFloorSize() {

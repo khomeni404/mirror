@@ -148,6 +148,10 @@
                                 ">${customer.status}</td>
                 </tr>
                 <tr>
+                    <td class="a">Location :</td>
+                    <td class="b" colspan="3">${(customer.location.toString())!}</td>
+                </tr>
+                <tr>
                     <td class="a">Address :</td>
                     <td class="b" colspan="3">${customer.mailingAddress}</td>
                 </tr>

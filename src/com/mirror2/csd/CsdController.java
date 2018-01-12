@@ -17,14 +17,15 @@ import com.mirror2.security.SessionUtil;
 import com.mirror2.security.service.UserDetailsService;
 import com.mirror2.util.*;
 import com.mirror2.security.model.User;
+import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.validator.GenericValidator;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -174,6 +175,9 @@ public class CsdController {
         List<Offer> offers = csdService.findAllOffer();
         map.put("offers", offers);
         map.put("errorMsg", "");
+
+        Object o = commonService.findAll(Location.class);
+        map.put("locationList", o);
         return new ModelAndView("/csd/customer_create", map);
 
     }
@@ -185,7 +189,8 @@ public class CsdController {
                                      @RequestParam String keyName,
                                      @RequestParam("buildingId") Long buildingId,
                                      @RequestParam("aid") String aid,
-                                     @RequestParam("countryLocation") String countryLocation,
+                                     // @RequestParam("countryLocation") String countryLocation,
+                                     @RequestParam String locationId,
                                      @RequestParam("referenceId") String referenceId,
                                      @RequestParam("offerId") Long offerId,
                                      @RequestParam("careById") String careById,
@@ -252,7 +257,7 @@ public class CsdController {
             customer.setKeyName(keyName);
             customer.setBuilding(building);
             customer.setAID(aid);
-            customer.setCountryLocation(countryLocation.trim());
+            //customer.setCountryLocation(countryLocation.trim());
             customer.setReferenceBy(referBy);
             customer.setOffer(offer);
             customer.setStatus(MirrorConstants.PROCESSING);
@@ -268,6 +273,10 @@ public class CsdController {
             customer.setPaymentType(paymentType.trim());
             customer.setMoneyDisburse(moneyDisburse);
             customer.setNotes(notes);
+            if (!GenericValidator.isBlankOrNull(locationId)) {
+                String locId = locationId.split(":")[0].trim();
+                customer.setLocation(NumberUtils.isDigits(locId) ? new Location(Long.valueOf(locId)) : null);
+            }
             //Collection
             building.getCustomers().add(customer);
             careBy.getCustomersCared().add(customer);
@@ -281,6 +290,7 @@ public class CsdController {
             SmsThread smsThread2 = new SmsThread("01717659287", sms);
             smsThread2.start();
             return new ModelAndView("redirect:/csd/createCustomer.erp", map);
+
         }
 
     }
@@ -301,6 +311,9 @@ public class CsdController {
         List<Offer> offers = csdService.findAllOffer();
         map.put("offers", offers);
 
+        Object o = commonService.findAll(Location.class);
+        map.put("locationList", o);
+
         map.put("customerDuplicateErrMsg", errMsg);
         return new ModelAndView("/csd/customer_edit", map);
 
@@ -316,7 +329,7 @@ public class CsdController {
                                        @RequestParam("buildingId") Long buildingId,
                                        @RequestParam("oldBuildingId") Long oldBuildingId,
                                        @RequestParam("aid") String aid,
-                                       @RequestParam("countryLocation") String countryLocation,
+                                       @RequestParam String locationId,
                                        @RequestParam("referenceId") String referenceId,
                                        @RequestParam String salesType,
                                        @RequestParam("oldReferenceId") String oldReferenceId,
@@ -363,10 +376,10 @@ public class CsdController {
 
 
             Building building = csdService.getBuilding(buildingId);
-            MID careBy = csdService.getMID(careById.split(":")[0].trim());
-            MID referBy = csdService.getMID(referenceId.split(":")[0].trim());
-            Offer offer = csdService.getOffer(offerId);
 
+            MID referBy =  csdService.getMID(referenceId.split(":")[0].trim());
+            Offer offer =  csdService.getOffer(offerId);
+            MID careBy = csdService.getMID(careById.split(":")[0].trim());;
             TheDates td = new TheDates();
 
             Customer customer = csdService.getCustomer(id);
@@ -376,7 +389,7 @@ public class CsdController {
             customer.setKeyName(keyName);
             customer.setBuilding(building);
             customer.setAID(aid);
-            customer.setCountryLocation(countryLocation.trim());
+            //customer.setCountryLocation(countryLocation.trim());
             customer.setReferenceBy(referBy);
             customer.setSalesType(salesType);
             customer.setOffer(offer);
@@ -391,12 +404,19 @@ public class CsdController {
             customer.setHandoverDate(td.toDate(handoverDate));
             customer.setPaymentType(paymentType.trim());
             customer.setNotes(notes);
-
+            if (!GenericValidator.isBlankOrNull(locationId)) {
+                String locId = locationId.split(":")[0].trim();
+                customer.setLocation(NumberUtils.isDigits(locId) ? new Location(Long.valueOf(locId)) : null);
+            }
             //Collection Set
-            building.getCustomers().add(customer);
-            careBy.getCustomersCared().add(customer);
-            referBy.getCustomersReferred().add(customer);
-            offer.getCustomers().add(customer);
+            if (building != null)
+                building.getCustomers().add(customer);
+            if (careBy != null)
+                careBy.getCustomersCared().add(customer);
+            if (referBy != null)
+                referBy.getCustomersReferred().add(customer);
+            if (offer != null)
+                offer.getCustomers().add(customer);
 
             csdService.save(customer);
             return new ModelAndView("redirect:/csd/viewCustomer.erp?cidView=" + cid);
@@ -420,6 +440,44 @@ public class CsdController {
         map.put("historyList", historyList);
 
         return new ModelAndView("csd/customer_view_2", map);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/createLocation.erp")
+    public ModelAndView createLocation(@RequestParam(required = false) Long custId,
+                                       Model model,
+                                       @RequestParam(required = false) String errMsg) {
+
+        model.addAttribute("custId", custId);
+        model.addAttribute("errMsg", errMsg);
+        model.addAttribute("PageTitle", "Location");
+        model.addAttribute("DashboardLink", MirrorConstants.DASHBOARD_LINK);
+
+        DetachedCriteria dc = DetachedCriteria.forClass(Location.class)
+                .setProjection(Projections.distinct(Projections.property("country")));
+        Object o = commonService.findAll(dc);
+        model.addAttribute("countryList", o);
+        return new ModelAndView("/common/create_location");
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/saveLocation.erp")
+    public ModelAndView saveLocation(@RequestParam(required = false) Long custId,
+                                     @ModelAttribute("location") Location location,
+                                     @RequestParam(required = false) String errMsg) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("custId", custId);
+        map.put("PageTitle", "Location");
+        map.put("DashboardLink", MirrorConstants.DASHBOARD_LINK);
+        if (GenericValidator.isBlankOrNull(location.getName()) || GenericValidator.isBlankOrNull(location.getCountry())) {
+            map.put("errMsg", "Fields Are mandatory");
+            return new ModelAndView("redirect:/csd/createLocation.erp", map);
+        }
+        commonService.save(location);
+        if (custId == null || custId < 0L) {
+            map.put("errMsg", "Location Saved Successfully.");
+            return new ModelAndView("redirect:/csd/createLocation.erp", map);
+        } else {
+            return new ModelAndView("redirect:/csd/editCustomer.erp?errMsg=&id=" + custId);
+        }
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/followUpHistoryList.erp")

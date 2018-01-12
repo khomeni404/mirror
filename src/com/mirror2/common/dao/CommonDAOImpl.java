@@ -2,6 +2,7 @@ package com.mirror2.common.dao;
 
 import com.google.gson.internal.Primitives;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.ArrayUtils;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.*;
 import org.hibernate.transform.Transformers;
@@ -211,6 +212,20 @@ public class CommonDAOImpl implements CommonDAO {
             criteria.add(Restrictions.eq(property, propertyValueMap.get(property)));
         }
         return (List<MODEL>) hibernateTemplate.findByCriteria(criteria);
+    }
+
+    @Override
+    public Object findAll(DetachedCriteria dc) {
+        return hibernateTemplate.findByCriteria(dc);
+    }
+
+    @Override
+    public Object findAll(String sql, Object[] param) {
+        if (ArrayUtils.isEmpty(param)) {
+            return hibernateTemplate.find(sql);
+        } else {
+            return hibernateTemplate.find(sql, param);
+        }
     }
 
     @Override

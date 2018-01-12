@@ -38,7 +38,7 @@
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">${jdbc.hibernate.dialect}</prop>
-                <!--<prop key="hibernate.hbm2ddl.auto">update</prop>-->
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
                 <!-- stats -->
                 <prop key="hibernate.generate_statistics">true</prop>
                 <prop key="hibernate.show_sql">true</prop>
@@ -102,6 +102,7 @@
 
                 <!--Admin-->
                 <value>com.mirror2.admin.model.BoardMeeting</value>
+                <value>com.mirror2.csd.model.Location</value>
 
                 <!--Messaging-->
                 <value>com.mirror2.messaging.model.EmailCluster</value>

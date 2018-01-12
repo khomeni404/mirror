@@ -16,6 +16,8 @@ import java.util.List;
 @Entity
 @Table(name="CSD_OFFER")
 public class Offer  implements Serializable {
+    public Offer(){}
+    public Offer(Long id){this.id = id;}
     @Id
     @GeneratedValue
     private Long id;

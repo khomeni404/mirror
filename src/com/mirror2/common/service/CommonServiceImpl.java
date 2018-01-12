@@ -3,6 +3,7 @@ package com.mirror2.common.service;/**
  */
 
 import com.mirror2.common.dao.CommonDAO;
+import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -107,6 +108,10 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public <MODEL> List<MODEL> findAll(Class<MODEL> clazz, Map<String, Object> propertyValueMap) {
         return commonDAO.findAll(clazz);
+    }
+    @Override
+    public Object findAll(DetachedCriteria dc) {
+        return commonDAO.findAll(dc);
     }
 
     @Override

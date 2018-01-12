@@ -25,7 +25,7 @@ public interface MISService {
 
     public List<Map<String, String>> getCustomerDataListAsPerLastPayment(String type, Date targetDate);
 
-    public  List<Map<String, String>> getCustomersDataByHandoverYYYY(SearchBean searchBean);
+    public  List<Map<String, String>> getCustomerListCustomized(SearchBean searchBean);
 
     public Object[] getPaymentStatementDataList(Customer customer, Date from, Date to);
 

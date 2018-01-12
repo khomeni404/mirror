@@ -176,7 +176,7 @@
 <div class="row">
 <#--Handover Wise-->
     <div class="col-lg-6">
-        <form action="getCustomerDataByHandoverYYYY.erp" method="POST">
+        <form action="getCustomerListCustomized.erp" method="POST">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <label style="font-weight: bolder; font-family: 'Arial Black'">Customer List :
@@ -190,11 +190,9 @@
                         <div class="col-lg-4 text-center">
                             <select name="handoverYear" class="form-control">
                                 <option value="">All Year</option>
-                                <option value="---">Not Defined</option>
-                                <option value="2019">2019</option>
-                                <option value="2021">2021</option>
-                                <option value="2022">2022</option>
-                                <option value="2028">2028</option>
+                                <#list handoverYearList as year>
+                                    <option value="${year}">${year}</option>
+                                </#list>
                             </select>
                         </div>
                         <div class="col-lg-2 text-left">
@@ -203,12 +201,27 @@
                         <div class="col-lg-4 text-center">
                             <select name="floorSize" class="form-control">
                                 <option value="">All Sizes</option>
-                                <option value="1100">1100</option>
-                                <option value="1300">1300</option>
-                                <option value="1700">1700</option>
-                                <option value="2100">2100</option>
+                                <option value="1100">1100 SFT</option>
+                                <option value="1300">1300 SFT</option>
+                                <option value="1700">1700 SFT</option>
+                                <option value="2100">2100 SFT</option>
                             </select>
                         </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-lg-6 text-left">
+                            <b>Building Handover Year :</b>
+                        </div>
+                        <div class="col-lg-6 text-center">
+                            <select name="buildingHandover" class="form-control">
+                                <option value="">All Year</option>
+                                <#list buildingHandoverYearList as year>
+                                    <option value="${year}">${year}</option>
+                                </#list>
+                            </select>
+                        </div>
+
                     </div>
                     <br/>
 
@@ -255,15 +268,13 @@
                         <div class="col-lg-3">
                             <button type="submit" id="view-customer-payment-month"
                                     onclick="$('#report-file-name').val('report_27');"
-                                    class="btn  btn-block btn-success">
-                                Old Format
+                                    class="btn  btn-block btn-success">Old Format
                             </button>
                         </div>
                         <div class="col-lg-3">
                             <button type="submit" id="view-customer-payment-month"
                                     onclick="$('#report-file-name').val('report_27_2');"
-                                    class="btn  btn-block btn-success">
-                                New Format
+                                    class="btn  btn-block btn-success">New Format
                             </button>
                         </div>
                     </div>
@@ -333,7 +344,40 @@
     </div>
 
 </div>
+<div class="row">
+    <div class="col-lg-6">
+        <form action="customerListByLocation.erp" method="GET">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <label style="font-weight: bolder; font-family: 'Arial Black'">Customer List : Location
+                        Wise</label>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-8 text-center">
+                            <div class="form-group  text-left">
+                                <input list="locationList" class="form-control"
+                                       name="location" placeholder="Type Location"/>
+                                <datalist id="locationList" autocomplete="off">
+                                    <#list locationList as location>
+                                    <option value="${location.id} : ${(location.toString())!}">
+                                    </#list>
+                                </datalist>
+                            </div>
+                        </div>
 
+                        <div class="col-lg-4 text-left">
+                            <button type="submit" id="view-customer-payment-month"
+                                    class="btn  btn-block btn-success">
+                                View Report
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 <div class="row">
     <div class="panel panel-default">
         <div class="panel-heading">

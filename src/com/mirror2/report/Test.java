@@ -1,32 +1,30 @@
 package com.mirror2.report;
 
+import com.mirror2.csd.model.Building;
 import com.mirror2.util.DateUtil;
 import net.sf.jasperreports.engine.JasperFillManager;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by ayatullah213574 on 29/07/2015.
  */
 public class Test {
-    public static void main(String[] args) throws Exception{
-        Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-        String strDate = formatter.format(date);
-        System.out.println("Date Format with MM/dd/yyyy : "+strDate);
+    public static void main(String[] args) throws Exception {
+        Building b = new Building();
+        b.setNameAlias("BB");
+        b.setId(45L);
+        b.setBuildingName("Jamal");
 
-        formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-        strDate = formatter.format(date);
-        System.out.println("Date Format with dd-M-yyyy hh:mm:ss : "+strDate);
+        List<Building> list = Arrays.asList(b);
 
-        formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm");
-        //strDate = formatter.format(date);
-        System.out.println(formatter.parse("31/12/2017 12:05"));
-        Date dates = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2017-12-31 23:59:59");
-        System.out.println("dates = " + dates);
+        list.remove(new Building(45L));
 
+        System.out.println(list.size());
     }
 
     // E:\Projects\Spring\Store\dplreport\src\main\java\com\dpl\report\resources\Director.jasper

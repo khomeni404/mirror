@@ -53,7 +53,7 @@ public class MisDaoImpl implements MisDAO {
     public List<Map<String, Object>> getCustomerDataListMap(SearchBean searchBean) {
         DetachedCriteria dc = getCriteria(searchBean)
                 .setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY)
-                .createAlias("building", "b")
+                //.createAlias("building", "b")
                 .setProjection(Projections.projectionList()
                                 .add(Projections.property("id"), "ID")
                                 .add(Projections.property("CID").as("CID"))
@@ -70,18 +70,24 @@ public class MisDaoImpl implements MisDAO {
     }
 
     private DetachedCriteria getCriteria(SearchBean searchBean) {
-        DetachedCriteria dc = DetachedCriteria.forClass(Customer.class).createAlias("offer", "o");
+        DetachedCriteria dc = DetachedCriteria.forClass(Customer.class)
+                .createAlias("offer", "o")
+                .createAlias("building", "b");
         if (!GenericValidator.isBlankOrNull(searchBean.getNotStatus())) {
             dc.add(Restrictions.ne("status", searchBean.getNotStatus()));
         }
         String handoverYear = searchBean.getHandoverYear();
-        if (!GenericValidator.isBlankOrNull(handoverYear)) {
+        if (NumberUtils.isDigits(handoverYear)) {
             try {
                 Date from = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(handoverYear + "-01-01 00:00:00");
                 Date to = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(handoverYear + "-12-31 23:59:59");
                 dc.add(Restrictions.between("handoverDate", from, to));
             } catch (Exception e) {
             }
+        }
+        String buildingHandoverYear = searchBean.getBuildingHandover();
+        if (!GenericValidator.isBlankOrNull(buildingHandoverYear)) {
+            dc.add(Restrictions.like("b.handOver", buildingHandoverYear, MatchMode.ANYWHERE));
         }
 
         String paymentType = searchBean.getPayMode();// payMode == 1 ? MirrorConstants.PAYMENT_TYPE_INST : payMode == 2 ? MirrorConstants.PAYMENT_TYPE_OT : null;
@@ -109,8 +115,8 @@ public class MisDaoImpl implements MisDAO {
 
     @SuppressWarnings("unchecked")
     public Map<Long, Double> getCustomersPayableInstAmtMap(SearchBean searchBean) {
-        DetachedCriteria dc = getCriteria(searchBean).createAlias("installments", "i")
-                .createAlias("building", "b");
+        DetachedCriteria dc = getCriteria(searchBean).createAlias("installments", "i");
+                //.createAlias("building", "b")
         dc.setProjection(Projections.projectionList()
                         .add(Projections.groupProperty("id"), "ID")
                         .add(Projections.sum("i.amount"), "AMT")
@@ -130,7 +136,7 @@ public class MisDaoImpl implements MisDAO {
     public Map<Long, Double> getCustomersPayableOPAmtMap(SearchBean searchBean) {
         DetachedCriteria dc = getCriteria(searchBean)
                 .createAlias("otherPayments", "op")
-                .createAlias("building", "b")
+                //.createAlias("building", "b")
                 .setProjection(Projections.projectionList()
                                 .add(Projections.groupProperty("id"), "ID")
                                 .add(Projections.sum("op.amount"), "AMT")
@@ -149,7 +155,7 @@ public class MisDaoImpl implements MisDAO {
     @SuppressWarnings("unchecked")
     public Map<Long, Double> getCustomersPaidInstAmtMap(SearchBean searchBean) {
         DetachedCriteria dc = getCriteria(searchBean).createAlias("moneyReceipts", "r")
-                .createAlias("building", "b")
+                //.createAlias("building", "b")
                 .setProjection(Projections.projectionList()
                                 .add(Projections.groupProperty("id"), "ID")
                                 .add(Projections.sum("r.amount"), "AMT")

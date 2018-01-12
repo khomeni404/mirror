@@ -9,6 +9,8 @@
 	<parameter name="OFFER_NAME" class="java.lang.String"/>
 	<parameter name="FLOOR_SIZE" class="java.lang.String"/>
 	<parameter name="PAY_MODE" class="java.lang.String"/>
+	<parameter name="B_HANDOVER" class="java.lang.String"/>
+	<parameter name="STATUS" class="java.lang.String"/>
 	<field name="SL" class="java.lang.String"/>
 	<field name="NAME" class="java.lang.String"/>
 	<field name="AID" class="java.lang.String"/>
@@ -67,56 +69,84 @@
 	<pageHeader>
 		<band height="37" splitType="Stretch">
 			<textField>
-				<reportElement x="86" y="4" width="161" height="14" uuid="1eb91eee-6d44-4cd8-aeb4-472272212fa4"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[": "+$P{HANDOVER_YEAR}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="14" y="4" width="54" height="14" uuid="ea2dd901-f4a1-4cf2-bdeb-e1eaefc9831e"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Hand Over]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="14" y="18" width="72" height="14" uuid="bb13bc16-0962-4d63-ab1d-2af8044c6d12"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Pament Mode]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="87" y="18" width="161" height="14" uuid="dbb84b49-805f-4d7c-9295-cd89d1b450fb"/>
+				<reportElement x="87" y="20" width="100" height="14" uuid="0bb487c9-3a72-4234-a61f-1f88f5d1edb3"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[": "+$P{PAY_MODE}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="311" y="4" width="59" height="14" uuid="f6f52ba4-3338-4382-a62c-c5f4822a323c"/>
+				<reportElement x="14" y="20" width="72" height="14" uuid="7967ab45-b2e6-48a5-9e8e-ca8c51a81d61"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pament Mode]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="86" y="6" width="101" height="14" uuid="2ac389dd-60e7-4d75-a140-31a557563a4e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[": "+$P{HANDOVER_YEAR}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="189" y="6" width="59" height="14" uuid="923c1571-0d60-4ce4-828f-69433632304e"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Floor Size]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="370" y="4" width="161" height="14" uuid="4b8d0dd0-d41b-40f3-998e-0004ab0db97b"/>
+			<staticText>
+				<reportElement x="324" y="20" width="94" height="14" uuid="920c0b0f-27c0-4579-93fb-48ce005cce80"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[": "+$P{FLOOR_SIZE}]]></textFieldExpression>
+				<text><![CDATA[Building Handover]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="418" y="20" width="125" height="14" uuid="97c3d474-3f5e-4753-a4f8-1964cb355c3e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[": "+$P{B_HANDOVER}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="311" y="18" width="59" height="14" uuid="4f303634-3000-49ee-9785-1c2879592947"/>
+				<reportElement x="189" y="20" width="35" height="14" uuid="f8947ab7-3b05-44aa-a164-c9f5bb8a72b1"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="6" width="54" height="14" uuid="d6f258f6-1d4c-43b0-a154-df49b823910f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hand Over]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="248" y="20" width="76" height="14" uuid="798ad023-3f61-4628-a54d-b568407b24ae"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[": "+$P{STATUS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="324" y="6" width="94" height="14" uuid="e137d6df-ac2a-4746-b2be-93bc8e4e5726"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Offer Name]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="370" y="18" width="161" height="14" uuid="6489a82d-f509-4d9f-a63a-9bcc0743cfb6"/>
+				<reportElement x="248" y="6" width="76" height="14" uuid="46eb670c-c2bd-440b-9be9-1bf27dd4dcca"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[": "+$P{FLOOR_SIZE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="418" y="6" width="126" height="14" uuid="534e0068-ed26-4789-b12b-e0578319a880"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>

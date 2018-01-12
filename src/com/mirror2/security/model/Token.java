@@ -84,7 +84,8 @@ public class Token implements Serializable {
 	}
 
     public static void main(String[] args) {
-        System.out.println(getDesPassword("yesali1988", "jZ3lFhHV+QiDXwk4karg+w=="));
+        DESEDE desede = new DESEDE("md");
+        System.out.println(desede.encrypt("123456"));
     }
 
 }

@@ -127,7 +127,7 @@ public class MISServiceImpl implements MISService {
     }
 
     @Override
-    public List<Map<String, String>> getCustomersDataByHandoverYYYY(SearchBean searchBean) {
+    public List<Map<String, String>> getCustomerListCustomized(SearchBean searchBean) {
         searchBean.setNotStatus(MirrorDataList.CUST_STATUS_REFUNDED);
         SimpleDateFormat sdf = new SimpleDateFormat("MMM yy");
         List<Map<String, Object>> customerList = misDAO.getCustomerDataListMap(searchBean);

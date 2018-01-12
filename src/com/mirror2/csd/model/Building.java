@@ -10,6 +10,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "CSD_BUILDING")
 public class Building implements Serializable {
+    public Building(){}
+    public Building(Long id){this.id = id;}
     @Id
     @GeneratedValue
     private Long id;

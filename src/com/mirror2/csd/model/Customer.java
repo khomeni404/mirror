@@ -42,6 +42,11 @@ public class Customer implements Serializable{
     @Column(name="COUNTRY_LOCATION")
     private String countryLocation;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SELECT)
+    @JoinColumn(name = "loc_id")
+    private Location location;
+
     @ManyToOne
     private MID referenceBy;
 
@@ -159,6 +164,14 @@ public class Customer implements Serializable{
 
     public Integer getRecoverableInst() {
         return recoverableInst;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public Double getPaidInst() {

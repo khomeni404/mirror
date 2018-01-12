@@ -102,6 +102,10 @@
                             <td class="b <#if customer.status == "Refunded">blink</#if>" style="color: <#if customer.status == "Cancelled" || customer.status == "Refunded">red</#if>">${customer.status}</td>
                         </tr>
                         <tr>
+                            <td class="a">Location :</td>
+                            <td class="b" colspan="2">${(customer.location.toString())!}</td>
+                        </tr>
+                        <tr>
                             <td class="a">Address :</td>
                             <td class="b" colspan="2">${customer.mailingAddress}</td>
                         </tr>

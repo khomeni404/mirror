@@ -55,6 +55,7 @@
                                         <tr>
                                             <td class="a">${customer.CID}</td>
                                             <td class="b">${customer.name}</td>
+
                                             <td><a style="color: #000000"
                                                    href="/mirror/csd/viewPaymentReport.erp?cid=${customer.CID}">Report</a>
                                             </td>
