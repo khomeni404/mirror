@@ -426,14 +426,20 @@ public class CsdController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/viewCustomer.erp")
-    public ModelAndView viewCustomer(@RequestParam("cidView") String cid) {
+    public ModelAndView viewCustomer(@RequestParam(value = "cidView", required = false) String cid,
+                                     @RequestParam(value = "id", required = false) Long id) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("PageTitle", "Customer Details");
         map.put("DashboardLink", MirrorConstants.DASHBOARD_LINK);
         cid = MirrorUtil.makeCid(cid);
 
-        map.put("cid", cid);
-        Customer customer = csdService.getCustomer(cid);
+        Customer customer;
+        if (GenericValidator.isBlankOrNull(cid)) {
+            customer = commonService.get(Customer.class, id);
+        } else {
+            customer = csdService.getCustomer(cid);
+        }
+        map.put("cid", customer.getCID());
         map.put("customer", customer);
 
         List<FollowUpHistory> historyList = csdService.findAllFollowUpHistory(customer);

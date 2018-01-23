@@ -268,6 +268,7 @@
                         </div>
                         <div class="col-lg-4 text-center">
                             <select name="badgeId" class="form-control">
+                                <option value="">All Badge</option>
                                 <#list  badgeList as badge>
                                     <option value="${badge.id!}">${badge.name!}</option>
                                 </#list>

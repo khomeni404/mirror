@@ -9,6 +9,7 @@ import com.mirror2.util.MirrorConstants;
 import com.mirror2.util.MirrorDataList;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.validator.GenericValidator;
+import org.hibernate.Criteria;
 import org.hibernate.criterion.*;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,10 +52,11 @@ public class MisDaoImpl implements MisDAO {
 
     @SuppressWarnings("unchecked")
     public List<Map<String, Object>> getCustomerDataListMap(SearchBean searchBean) {
-        DetachedCriteria dc = getCriteria(searchBean)
+        /*Detached*/Criteria dc = getCriteria(searchBean)
                 .setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY)
                 //.createAlias("building", "b")
                 .setProjection(Projections.projectionList()
+                                .add(Projections.distinct(Projections.property("CID")))
                                 .add(Projections.property("id"), "ID")
                                 .add(Projections.property("CID").as("CID"))
                                 .add(Projections.property("name").as("NAME"))
@@ -66,13 +68,15 @@ public class MisDaoImpl implements MisDAO {
                 );
 
         dc.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
-        return hibernateTemplate.findByCriteria(dc);
+        return dc.list();// hibernateTemplate.findByCriteria(dc);
     }
 
-    private DetachedCriteria getCriteria(SearchBean searchBean) {
-        DetachedCriteria dc = DetachedCriteria.forClass(Customer.class)
-                .createAlias("offer", "o")
-                .createAlias("badgeList", "Badge")
+    private /*Detached*/Criteria getCriteria(SearchBean searchBean) {
+        Criteria dc = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(Customer.class)
+                .createAlias("badgeList", "Badge", CriteriaSpecification.LEFT_JOIN);
+        //DetachedCriteria dc = DetachedCriteria.forClass(Customer.class);
+        dc.createAlias("offer", "o")
+                //.createAlias("badgeList", "Badge")
                 .createAlias("building", "b");
         if (!GenericValidator.isBlankOrNull(searchBean.getNotStatus())) {
             dc.add(Restrictions.ne("status", searchBean.getNotStatus()));
@@ -120,7 +124,7 @@ public class MisDaoImpl implements MisDAO {
 
     @SuppressWarnings("unchecked")
     public Map<Long, Double> getCustomersPayableInstAmtMap(SearchBean searchBean) {
-        DetachedCriteria dc = getCriteria(searchBean).createAlias("installments", "i");
+        /*Detached*/Criteria dc = getCriteria(searchBean).createAlias("installments", "i");
                 //.createAlias("building", "b")
         dc.setProjection(Projections.projectionList()
                         .add(Projections.groupProperty("id"), "ID")
@@ -129,7 +133,7 @@ public class MisDaoImpl implements MisDAO {
         dc.add(Restrictions.le("i.deadLine", new Date()));
 
         dc.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
-        List<Map<String, Object>> data = hibernateTemplate.findByCriteria(dc);
+        List<Map<String, Object>> data = dc.list(); // hibernateTemplate.findByCriteria(dc);
         Map<Long, Double> map = new HashMap<Long, Double>();
         for (Map<String, Object> m : data) {
             map.put((Long) m.get("ID"), (Double) m.get("AMT"));
@@ -139,7 +143,7 @@ public class MisDaoImpl implements MisDAO {
 
     @SuppressWarnings("unchecked")
     public Map<Long, Double> getCustomersPayableOPAmtMap(SearchBean searchBean) {
-        DetachedCriteria dc = getCriteria(searchBean)
+        /*Detached*/Criteria dc = getCriteria(searchBean)
                 .createAlias("otherPayments", "op")
                 //.createAlias("building", "b")
                 .setProjection(Projections.projectionList()
@@ -149,7 +153,7 @@ public class MisDaoImpl implements MisDAO {
                 .add(Restrictions.le("op.deadLine", new Date()));
 
         dc.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
-        List<Map<String, Object>> data = hibernateTemplate.findByCriteria(dc);
+        List<Map<String, Object>> data = dc.list();// hibernateTemplate.findByCriteria(dc);
         Map<Long, Double> map = new HashMap<Long, Double>();
         for (Map<String, Object> m : data) {
             map.put((Long) m.get("ID"), (Double) m.get("AMT"));
@@ -159,7 +163,7 @@ public class MisDaoImpl implements MisDAO {
 
     @SuppressWarnings("unchecked")
     public Map<Long, Double> getCustomersPaidInstAmtMap(SearchBean searchBean) {
-        DetachedCriteria dc = getCriteria(searchBean).createAlias("moneyReceipts", "r")
+        /*Detached*/Criteria dc = getCriteria(searchBean).createAlias("moneyReceipts", "r")
                 //.createAlias("building", "b")
                 .setProjection(Projections.projectionList()
                                 .add(Projections.groupProperty("id"), "ID")
@@ -167,7 +171,7 @@ public class MisDaoImpl implements MisDAO {
                 );
 
         dc.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
-        List<Map<String, Object>> data = hibernateTemplate.findByCriteria(dc);
+        List<Map<String, Object>> data = dc.list();// hibernateTemplate.findByCriteria(dc);
         Map<Long, Double> map = new HashMap<Long, Double>();
         for (Map<String, Object> m : data) {
             map.put((Long) m.get("ID"), (Double) m.get("AMT"));
