@@ -174,7 +174,9 @@
                 <label for="" id="avatar-name">${customer.name}</label>
                 <hr/>
                 <a href="#" class="pull-right"><i class="fa fa-pencil btn btn-danger"
-                                                  onclick="editCustomer('${customer.id}')"> Edit</i></a>
+                                                  onclick="editCustomer('${customer.id}')"> Edit</i></a> &nbsp; &nbsp;
+                <a href="#" class="pull-left"><i class="fa fa-plus btn btn-info"
+                                                  onclick="window.location = '${ctx}/common/addCustomerBadge.erp?id=${customer.id}'"> Add Badge</i></a>
 
             </div>
 

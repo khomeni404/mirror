@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.mirror2.security.service.SecurityService;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.lang.annotation.Annotation;
 import java.util.List;
 
 @Aspect
@@ -52,20 +53,28 @@ public class AuthorizationAspect {
 	@Around("allControllers() && allOperations()")
 	public Object proceedToAction(ProceedingJoinPoint proceedJoinPoint) throws Throwable {
         features = SessionUtil.getSessionUserFeatures();
-        int annotationFind = 0;
+        int annotationIndex = 0;
+        Annotation[] annotations = proceedJoinPoint.getTarget().getClass().getAnnotations();
         int annotationLength = proceedJoinPoint.getTarget().getClass().getAnnotations().length;
         for(int i = 0; i < annotationLength; i++){
             if(proceedJoinPoint.getTarget().getClass().getAnnotations()[i].toString()
                     .contains("RequestMapping")){
-                annotationFind = i;
+                annotationIndex = i;
                 break;
 
             }
         }
 
-        requestMapping = proceedJoinPoint.getTarget().getClass().
-                getAnnotations()[annotationFind].toString();
-        module = requestMapping.split(",")[1].split("/")[1];
+        requestMapping = annotations[annotationIndex].toString();
+        int start = requestMapping.indexOf("value=[/")+8;
+        requestMapping = requestMapping.substring(start);
+        int end = requestMapping.indexOf("/]");
+        try {
+            module = requestMapping.substring(0, end);
+            //module = requestMapping.split(",")[1].split("/")[1];
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         operation = proceedJoinPoint.getSignature().getName();
         isAllowed = authorizationService.checkAuthorization(features,module,operation);

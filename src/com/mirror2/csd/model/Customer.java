@@ -1,5 +1,6 @@
 package com.mirror2.csd.model;
 
+import com.mirror2.common.model.Badge;
 import com.mirror2.security.model.User;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -129,10 +130,17 @@ public class Customer implements Serializable{
     private List<Voucher> vouchers = new ArrayList<Voucher>();
 
     @OneToMany
-    @JoinTable(name="CSD_JT_CUSTOMER_INCENTIVE_DIST", joinColumns = @JoinColumn(name="CUSTOMER_ID"),
+    @JoinTable(name="CSD_JT_CUSTOMER_INCENTIVE_DIST",
+            joinColumns = @JoinColumn(name="CUSTOMER_ID"),
             inverseJoinColumns = @JoinColumn(name="INCENTIVE_DIST_ID"))
     private List<IncentiveDist> distList = new ArrayList<IncentiveDist>();
 
+    @OneToMany(fetch = FetchType.LAZY)
+    @Fetch(value = FetchMode.SELECT)
+    @JoinTable(name = "CSD_JT_CUSTOMER_BADGE",
+            joinColumns = {@JoinColumn(name = "cust_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "badge_id", referencedColumnName = "id")})
+    private List<Badge> badgeList = new ArrayList<Badge>(0);
 
     @Transient
     private Integer totalInst;
@@ -440,5 +448,13 @@ public class Customer implements Serializable{
 
     public void setDistList(List<IncentiveDist> distList) {
         this.distList = distList;
+    }
+
+    public List<Badge> getBadgeList() {
+        return badgeList;
+    }
+
+    public void setBadgeList(List<Badge> badgeList) {
+        this.badgeList = badgeList;
     }
 }

@@ -1,4 +1,5 @@
-<script src="../resources/js/jquery.min.js"></script>
+<script src="../resources/js/plugIns/jquery/jquery.min.js"></script>
+<#--<script src="../resources/js/jquery.min.js"></script>-->
 <script src="../resources/js/jquery.placeholder.js"></script>
 <script src="../resources/js/application.js"></script>
 

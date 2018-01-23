@@ -24,11 +24,14 @@
         <fieldset class="form">
             <div id="ele1" class="content scaffold-list" role="main">
                 <div class="container_16" style="font-size: 17px">
+
                     <#if customerList?has_content>
+                        <#assign cc = 0>
                         <table>
                             <#list customerList as customer>
-
+                                <#assign cc = cc+1>
                                 <tr>
+                                    <td>${cc}</td>
                                     <td class="a">${customer.CID}</td>
                                     <td class="b">${customer.name}</td>
                                     <td>${(customer.cellPhone)!'--'}</td>

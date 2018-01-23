@@ -5,6 +5,7 @@ import com.mirror2.csd.model.Director;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public interface AdminService {
     public boolean save(BoardMeeting meeting);
@@ -18,6 +19,8 @@ public interface AdminService {
     public BoardMeeting getBoardMeeting(Long id);
 
     public Date getLastBoardMeetingDate();
+
+    List<Map<String, String>> getCustomerBadgeDataMapList(Long userId);
 
     //Director
     public boolean save(Director director);

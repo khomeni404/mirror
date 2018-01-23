@@ -249,7 +249,7 @@
                             </select>
                         </div>
                     </div>
-                    <hr/>
+                    <br/>
                     <div class="row text-right">
                         <div class="col-lg-2 text-left">
                             <b>Status</b>
@@ -263,15 +263,36 @@
                                 <option value="Refunded">Refunded</option>
                             </select>
                         </div>
-                        <input type="hidden" name="reportFileName" id="report-file-name"/>
+                        <div class="col-lg-2 text-left">
+                            <b>Badge</b>
+                        </div>
+                        <div class="col-lg-4 text-center">
+                            <select name="badgeId" class="form-control">
+                                <#list  badgeList as badge>
+                                    <option value="${badge.id!}">${badge.name!}</option>
+                                </#list>
+                            </select>
+                        </div>
 
-                        <div class="col-lg-3">
+                    </div>
+                    <hr/>
+                    <div class="row text-right" style="background-color: #f1f6ff; padding: 3px 3px 3px 3px ">
+                        <div class="col-lg-2 text-left">
+
+                        </div>
+                        <div class="col-lg-2 text-center">
+
+                        </div>
+
+
+                        <input type="hidden" name="reportFileName" id="report-file-name"/>
+                        <div class="col-lg-4">
                             <button type="submit" id="view-customer-payment-month"
                                     onclick="$('#report-file-name').val('report_27');"
-                                    class="btn  btn-block btn-success">Old Format
+                                    class="btn btn-block btn-info">Old Format
                             </button>
                         </div>
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <button type="submit" id="view-customer-payment-month"
                                     onclick="$('#report-file-name').val('report_27_2');"
                                     class="btn  btn-block btn-success">New Format

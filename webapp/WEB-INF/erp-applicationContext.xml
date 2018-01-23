@@ -107,6 +107,8 @@
                 <!--Messaging-->
                 <value>com.mirror2.messaging.model.EmailCluster</value>
                 <value>com.mirror2.messaging.model.SMSCluster</value>
+                <!--Common-->
+                <value>com.mirror2.common.model.Badge</value>
 
             </list>
         </property>

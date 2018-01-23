@@ -57,7 +57,7 @@
         <span><span class="ico gray recruit"></span>&nbsp;&nbsp;${PageTitle}</span>
     </div>
 
-    <div id="recruit_home" class="content scaffold-list" role="main" style="width: 799px;height: 200px">
+    <div id="recruit_home" class="content scaffold-list" role="main" style="width: 799px;height: 300px">
         <ul class="widgetlist">
 
 
@@ -109,6 +109,12 @@
             <li>
                 <a href="../csd/createCancellationApp.erp" original-title="Job Status">
                     <img src="../resources/images/hrm/ico2.png" height="50px" width="50px" /><span>Cancellation App</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="../common/badgeList.erp" original-title="Badge">
+                    <img src="../resources/images/hrm/jobTitle.png"><span>Badge List</span>
                 </a>
             </li>
 

@@ -32,7 +32,10 @@ public class SearchBean {
     private Integer floorSize;
 
     private String payMode;
+
     private Long offerId;
+
+    private Long badgeId;
 
     private String reportFileName;
 
@@ -130,5 +133,13 @@ public class SearchBean {
 
     public void setReportFileName(String reportFileName) {
         this.reportFileName = reportFileName;
+    }
+
+    public Long getBadgeId() {
+        return badgeId;
+    }
+
+    public void setBadgeId(Long badgeId) {
+        this.badgeId = badgeId;
     }
 }

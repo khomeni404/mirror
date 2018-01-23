@@ -1,6 +1,11 @@
 package com.mirror2.common.service;
 
 
+import com.mirror2.admin.service.AdminService;
+import com.mirror2.common.dao.CommonDAO;
+import com.mirror2.csd.service.CsdService;
+import com.mirror2.mis.service.MISService;
+import com.mirror2.report.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Component;
@@ -26,6 +31,21 @@ public class GenericController {
 
     @Autowired
     public CommonService commonService;
+
+    @Autowired
+    public AdminService adminService;
+
+    @Autowired
+    public MISService misService;
+
+    @Autowired
+    public CsdService csdService;
+
+    @Autowired
+    public ReportService reportService;
+
+    @Autowired
+    public CommonDAO commonDAO;
 
 
 

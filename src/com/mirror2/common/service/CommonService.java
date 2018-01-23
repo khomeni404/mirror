@@ -48,8 +48,10 @@ public interface CommonService {
 
     Object findAll(DetachedCriteria dc);
 
+    @Deprecated
     <MODEL> List<MODEL> searchBy_name(Class<MODEL> clazz, String text);
 
+    @Deprecated
     <MODEL> List<MODEL> searchBy_name_nameBN(Class<MODEL> clazz, String text);
 
     Integer count(Class clazz);

@@ -27,47 +27,47 @@ public class CommonServiceImpl implements CommonService {
 
     @Override
     public boolean saveAll(List<?> modelList) {
-        return false;
+        return commonDAO.saveAll(modelList);
     }
 
     @Override
     public boolean update(Object model) {
-        return false;
+        return commonDAO.update(model);
     }
 
     @Override
     public boolean updateAll(List<?> modelList) {
-        return false;
+        return commonDAO.updateAll(modelList);
     }
 
     @Override
     public boolean delete(Object model) {
-        return false;
+        return commonDAO.delete(model);
     }
 
     @Override
     public <MODEL> MODEL get(Class<MODEL> clazz, Long id) {
-        return null;
+        return commonDAO.get(clazz, id);
     }
 
     @Override
     public <MODEL> MODEL get(Class<MODEL> clazz, String propertyName, Object propertyValue) {
-        return null;
+        return commonDAO.get(clazz, propertyName, propertyValue);
     }
 
     @Override
     public <MODEL> MODEL get(Class<MODEL> clazz, String propertyName1, Object propertyValue1, String propertyName2, Object propertyValue2) {
-        return null;
+        return commonDAO.get(clazz, propertyName1, propertyValue1, propertyName2, propertyValue2);
     }
 
     @Override
     public <MODEL> MODEL get(Class<MODEL> clazz, String aliasModel, String propertyName, Object propertyValue) {
-        return null;
+        return commonDAO.get(clazz, aliasModel, propertyName, propertyValue);
     }
 
     @Override
     public <MODEL> MODEL get(Class<MODEL> clazz, Long id, Boolean active) {
-        return null;
+        return commonDAO.get(clazz, id, active);
     }
 
     @Override
@@ -77,37 +77,37 @@ public class CommonServiceImpl implements CommonService {
 
     @Override
     public <MODEL> List<MODEL> findAll(Class<MODEL> clazz, String[] idArray) {
-        return commonDAO.findAll(clazz);
+        return commonDAO.findAll(clazz, idArray);
     }
 
     @Override
     public <MODEL> List<MODEL> findAll(Class<MODEL> clazz, int start, int limit) {
-        return commonDAO.findAll(clazz);
+        return commonDAO.findAll(clazz, start, limit);
     }
 
     @Override
     public <MODEL> List<MODEL> findAll(Class<MODEL> clazz, int start, int limit, List<String> projections) {
-        return commonDAO.findAll(clazz);
+        return commonDAO.findAll(clazz, start, limit, projections);
     }
 
     @Override
     public <MODEL> List<MODEL> findAll(Class<MODEL> clazz, Boolean active) {
-        return commonDAO.findAll(clazz);
+        return commonDAO.findAll(clazz, active);
     }
 
     @Override
     public <MODEL> List<MODEL> findAll(Class<MODEL> clazz, String propertyName, Object propertyValue) {
-        return commonDAO.findAll(clazz);
+        return commonDAO.findAll(clazz, propertyName, propertyValue);
     }
 
     @Override
     public <MODEL> List<MODEL> findAll(Class<MODEL> clazz, String aliasModel, String propertyName, Object propertyValue) {
-        return commonDAO.findAll(clazz);
+        return commonDAO.findAll(clazz, aliasModel, propertyName, propertyValue);
     }
 
     @Override
     public <MODEL> List<MODEL> findAll(Class<MODEL> clazz, Map<String, Object> propertyValueMap) {
-        return commonDAO.findAll(clazz);
+        return commonDAO.findAll(clazz, propertyValueMap);
     }
     @Override
     public Object findAll(DetachedCriteria dc) {
@@ -126,11 +126,11 @@ public class CommonServiceImpl implements CommonService {
 
     @Override
     public Integer count(Class clazz) {
-        return null;
+        return commonDAO.count(clazz);
     }
 
     @Override
     public Integer count(Class clazz, Boolean active) {
-        return null;
+        return commonDAO.count(clazz, active);
     }
 }

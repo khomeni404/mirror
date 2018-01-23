@@ -4,9 +4,7 @@
             <meta charset="utf-8">
             <title>${title}</title>
             <#include "stylesheets.ftl"/>
-            <!-- Scripts -->
-            <#include "scripts.ftl"/>
-            <!-- Scripts -->
+
         </head>
 		<body>
 			<#-- Header content    -->
@@ -46,6 +44,10 @@
 			<!-- Footer content -->
 				<#include "footer.ftl"/>
 			<!-- Footer content -->
+
+            <!-- Scripts -->
+                <#include "scripts.ftl"/>
+            <!-- Scripts -->
 
 
 		</body>

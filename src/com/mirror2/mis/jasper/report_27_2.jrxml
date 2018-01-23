@@ -6,11 +6,12 @@
 	<parameter name="LOGO" class="java.lang.String"/>
 	<parameter name="HANDOVER_YEAR" class="java.lang.String"/>
 	<parameter name="REPORT_DATE" class="java.lang.String"/>
-	<parameter name="OFFER_NAME" class="java.lang.String"/>
+	<parameter name="OFFER" class="java.lang.String"/>
 	<parameter name="FLOOR_SIZE" class="java.lang.String"/>
 	<parameter name="PAY_MODE" class="java.lang.String"/>
 	<parameter name="STATUS" class="java.lang.String"/>
 	<parameter name="B_HANDOVER" class="java.lang.String"/>
+	<parameter name="BADGE" class="java.lang.String"/>
 	<field name="SL" class="java.lang.String"/>
 	<field name="NAME" class="java.lang.String"/>
 	<field name="AID" class="java.lang.String"/>
@@ -68,7 +69,7 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="37" splitType="Stretch">
+		<band height="53" splitType="Stretch">
 			<textField>
 				<reportElement x="86" y="4" width="101" height="14" uuid="1eb91eee-6d44-4cd8-aeb4-472272212fa4"/>
 				<textElement>
@@ -123,7 +124,7 @@
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[": "+$P{OFFER_NAME}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[": "+$P{OFFER}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="248" y="18" width="76" height="14" uuid="7cc62f14-6485-4696-bc59-0b113081ec7a"/>
@@ -153,6 +154,20 @@
 				</textElement>
 				<textFieldExpression><![CDATA[": "+$P{B_HANDOVER}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="419" y="32" width="125" height="14" uuid="9402e9ba-c917-42b2-9458-15a80039dbe1"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[": "+$P{BADGE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="324" y="32" width="94" height="14" uuid="f1e057bc-99b5-4a80-bc27-7a71bd1f058f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Occupation /Badge]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>

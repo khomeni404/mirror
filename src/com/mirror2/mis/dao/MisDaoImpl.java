@@ -72,6 +72,7 @@ public class MisDaoImpl implements MisDAO {
     private DetachedCriteria getCriteria(SearchBean searchBean) {
         DetachedCriteria dc = DetachedCriteria.forClass(Customer.class)
                 .createAlias("offer", "o")
+                .createAlias("badgeList", "Badge")
                 .createAlias("building", "b");
         if (!GenericValidator.isBlankOrNull(searchBean.getNotStatus())) {
             dc.add(Restrictions.ne("status", searchBean.getNotStatus()));
@@ -97,6 +98,10 @@ public class MisDaoImpl implements MisDAO {
         Integer floorSize = searchBean.getFloorSize();
         if (floorSize != null) {
             dc.add(Restrictions.eq("floorSize", floorSize));
+        }
+        Long badgeId = searchBean.getBadgeId();
+        if (badgeId != null) {
+            dc.add(Restrictions.eq("Badge.id", badgeId));
         }
         Long offerId = searchBean.getOfferId();
         if (offerId != null) {

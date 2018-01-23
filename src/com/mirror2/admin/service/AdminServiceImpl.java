@@ -3,20 +3,26 @@ package com.mirror2.admin.service;
 
 import com.mirror2.admin.dao.BoardMeetingDAO;
 import com.mirror2.admin.model.BoardMeeting;
+import com.mirror2.common.dao.CommonDAO;
+import com.mirror2.common.model.Badge;
+import com.mirror2.csd.dao.CsdDAO;
 import com.mirror2.csd.dao.DirectorDAO;
 import com.mirror2.csd.model.Director;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
-public class AdminServiceImpl implements AdminService {
+public class AdminServiceImpl  implements AdminService {
     @Autowired
     BoardMeetingDAO boardMeetingDAO;
     @Autowired
     private DirectorDAO directorDAO;
+    @Autowired
+    private CommonDAO commonDAO;
+    @Autowired
+    private CsdDAO csdDAO;
 
     @Override
     public boolean save(Director director) {
@@ -73,5 +79,24 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Date getLastBoardMeetingDate() {
         return boardMeetingDAO.getLastBoardMeetingDate();
+    }
+
+    @Override
+    public List<Map<String, String>> getCustomerBadgeDataMapList(Long customerId) {
+        List<Long> assignedGroupIds = csdDAO.getAssignedBadgeIdList(customerId);
+        List<Badge> badgeList = commonDAO.findAll(Badge.class);
+
+        List<Map<String, String>> dataList = new ArrayList<Map<String, String>>();
+        Map<String, String> dataMap;
+        for (Badge badge : badgeList) {
+            dataMap = new HashMap<String, String>();
+            Long groupId = badge.getId();
+            dataMap.put("id", groupId.toString());
+            dataMap.put("name", badge.getName());
+            boolean isAssigned = assignedGroupIds.contains(groupId);
+            dataMap.put("checked", isAssigned ? "checked" : "");
+            dataList.add(dataMap);
+        }
+        return dataList;
     }
 }

@@ -1,6 +1,8 @@
 package com.mirror2.mis;
 
 import com.mirror2.common.dao.CommonDAO;
+import com.mirror2.common.model.Badge;
+import com.mirror2.common.service.GenericController;
 import com.mirror2.csd.model.Customer;
 import com.mirror2.csd.model.Location;
 import com.mirror2.csd.model.Offer;
@@ -46,21 +48,9 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/mis/")
-public class MISController {
+public class MISController extends GenericController{
     SimpleDateFormat sdf_1 = new SimpleDateFormat("dd/MM/yyyy");
     SimpleDateFormat sdf_2 = new SimpleDateFormat("dd-MM-yyyy");
-
-    @Autowired
-    private MISService misService;
-
-    @Autowired
-    private CsdService csdService;
-
-    @Autowired
-    private ReportService reportService;
-
-    @Autowired
-    private CommonDAO commonDAO;
 
     @RequestMapping(method = RequestMethod.GET, value = "/home.erp")
     public ModelAndView home() {
@@ -75,6 +65,7 @@ public class MISController {
         map.put("handoverYearList", commonDAO.findAll(sql, null));
         map.put("offerList", commonDAO.findAll(Offer.class));
         map.put("locationList", commonDAO.findAll(Location.class));
+        map.put("badgeList", commonDAO.findAll(Badge.class));
         return new ModelAndView("/mis/home_mis", map);
     }
 
@@ -200,28 +191,33 @@ public class MISController {
     }
 
 
-    @RequestMapping(value = "/getCustomerListCustomized.erp", method = RequestMethod.POST)
+    @RequestMapping(value = "/getCustomerListCustomized.erp", method = {RequestMethod.POST, RequestMethod.GET})
     public
     @ResponseBody
     String getCustomerListCustomized(@ModelAttribute SearchBean searchBean,
                                          HttpServletRequest request, HttpServletResponse response)
             throws JRException, IOException {
-
         Map<String, Object> params = new HashMap<String, Object>();
-
         List<Map<String, String>> dataList = misService.getCustomerListCustomized(searchBean);
 
         String handoverYear = searchBean.getHandoverYear();
         String payMode = searchBean.getPayMode();
         Long offerId = searchBean.getOfferId();
+        Long badgeId = searchBean.getBadgeId();
         Integer floorSize = searchBean.getFloorSize();
         params.put("HANDOVER_YEAR", GenericValidator.isBlankOrNull(handoverYear) ? "All year" : handoverYear);
         params.put("PAY_MODE", GenericValidator.isBlankOrNull(payMode) ? "All Mode" : payMode);
+        Badge badge = null;
+        if (badgeId != null) {
+            badge = commonDAO.get(Badge.class, badgeId);
+        }
+        params.put("BADGE", badge == null ? "All Occupation" : badge.getName());
+
         Offer offer = null;
         if (offerId != null) {
             offer = commonDAO.get(Offer.class, offerId);
         }
-        params.put("OFFER_NAME", offer == null ? "All Offer" : offer.getOfferName());
+        params.put("OFFER", offer == null ? "All Offer" : offer.getOfferName());
         params.put("FLOOR_SIZE", floorSize == null ? "All Sizes" : String.valueOf(floorSize));
         params.put("REPORT_DATE", sdf_2.format(new Date()));
         params.put("STATUS", GenericValidator.isBlankOrNull(searchBean.getBookingStatus()) ? "All Status": searchBean.getBookingStatus());
