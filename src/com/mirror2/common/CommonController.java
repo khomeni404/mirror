@@ -394,9 +394,8 @@ public class CommonController extends GenericController{
         customer.setBadgeList(groupList);
         commonService.update(customer);
         map.put("message", "Badge been assigned successfully.");
-        map.put("id", customerId);
 
-        return new ModelAndView("redirect:/csd/viewCustomer.erp", map);
+        return new ModelAndView("redirect:/csd/viewCustomer.erp?id="+customerId);
         //return new ModelAndView("/csd/add_badge", map);
     }
 

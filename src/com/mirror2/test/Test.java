@@ -16,13 +16,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class Test {
     public static void main(String[] args) {
-        String username = "yesali1988";
-        String password = "r01921190799";
-        DESEDE desede = new DESEDE(username);
-        Object[] paramArr = new Object[2];
-        paramArr[0] = new String(username);
-        paramArr[1] = desede.encrypt(password);
-        System.out.println(paramArr[1]);
+        System.out.print(45);
     }
     public static void main2(String[] args) {
 

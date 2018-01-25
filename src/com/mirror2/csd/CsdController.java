@@ -426,18 +426,18 @@ public class CsdController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/viewCustomer.erp")
-    public ModelAndView viewCustomer(@RequestParam(value = "cidView", required = false) String cid,
-                                     @RequestParam(value = "id", required = false) Long id) {
+    public ModelAndView viewCustomer(@RequestParam(required = false) String cidView,
+                                     @RequestParam(required = false) Long id) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("PageTitle", "Customer Details");
         map.put("DashboardLink", MirrorConstants.DASHBOARD_LINK);
-        cid = MirrorUtil.makeCid(cid);
 
         Customer customer;
-        if (GenericValidator.isBlankOrNull(cid)) {
-            customer = commonService.get(Customer.class, id);
+        if (GenericValidator.isBlankOrNull(cidView)) {
+            customer = csdService.getCustomer(id);
         } else {
-            customer = csdService.getCustomer(cid);
+            cidView = MirrorUtil.makeCid(cidView);
+            customer = csdService.getCustomer(cidView);
         }
         map.put("cid", customer.getCID());
         map.put("customer", customer);
