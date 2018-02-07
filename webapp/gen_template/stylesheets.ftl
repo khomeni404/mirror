@@ -1,4 +1,3 @@
-
 <link rel="stylesheet" href="../resources/css/main.css" type="text/css">
 <link rel="stylesheet" href="../resources/css/mobile.css" type="text/css">
 <link rel="stylesheet" href="../resources/js/extjs/resources/css/ext-all.css"/>

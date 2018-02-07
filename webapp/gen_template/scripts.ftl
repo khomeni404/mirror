@@ -1,8 +1,6 @@
-<script src="../resources/js/plugIns/jquery/jquery.min.js"></script>
-<#--<script src="../resources/js/jquery.min.js"></script>-->
+<script src="../resources/js/jquery.min.js"></script>
 <script src="../resources/js/jquery.placeholder.js"></script>
 <script src="../resources/js/application.js"></script>
-
 
 <script src="../resources/js/highcharts.src.js" type="text/javascript"></script>
 <script src="../resources/js/extjs/adapter/ext/ext-base-debug.js" type="text/javascript"></script>
