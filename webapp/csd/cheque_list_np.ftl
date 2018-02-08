@@ -29,6 +29,10 @@
     </div>
 
 </div>
+
+
+</@layout.gen_app_layout>
+
 <script type="text/javascript">
     function abc(id, chqDate){
         //var date = new Date(parseInt(chqDate.substr(2)));
@@ -43,5 +47,3 @@
         return new Date(parseInt(jsonDateString.replace('/Date(', '')));
     }
 </script>
-
-</@layout.gen_app_layout>

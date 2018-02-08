@@ -3,7 +3,7 @@
     <#assign ctx = rc.getContextPath()/>
 <!--Resources For Bootstrap-->
     <#include "../gen_template/resources_of_bootstrap.ftl">
-<link rel="stylesheet" href="../resources/js/extjs/resources/css/ext-all.css" type="text/css">
+<#--<link rel="stylesheet" href="../resources/js/extjs/resources/css/ext-all.css" type="text/css">-->
 
 
 <div class="row">
@@ -20,7 +20,7 @@
                     </div>
                     <div class="col-lg-4 text-center">
                         <div class="form-group  text-left">
-                            <input type="text" placeholder="DD-MM-YYYY" readonly name="applicationDate"
+                            <input type="text" placeholder="DD-MM-YYYY" name="applicationDate"
                                    id="date-from" class="form-control" value="${from!}">
                                     <span for="errMsgDateFrom" id="errMsgDateFrom"
                                           class="errMsg text-left text-danger"></span>
@@ -37,7 +37,7 @@
                     </div>
                     <div class="col-lg-4 text-center">
                         <div class="form-group  text-left">
-                            <input type="text" placeholder="DD-MM-YYYY" readonly name="applicationDate"
+                            <input type="text" placeholder="DD-MM-YYYY" name="applicationDate"
                                    id="date-to" class="form-control" value="${to!}">
                                     <span for="errMsgDateTo" id="errMsgDateTo"
                                           class="errMsg text-left text-danger"></span>
@@ -68,7 +68,7 @@
                     </div>
                     <div class="col-lg-4 text-center">
                         <div class="form-group  text-left">
-                            <input type="text" placeholder="DD-MM-YYYY" readonly
+                            <input type="text" placeholder="DD-MM-YYYY"
                                    id="date-from-16" class="form-control" value="${from!}">
                                     <span for="errMsgDateFrom" id="errMsgDateFrom"
                                           class="errMsg text-left text-danger"></span>
@@ -81,7 +81,7 @@
                     </div>
                     <div class="col-lg-4 text-center">
                         <div class="form-group  text-left">
-                            <input type="text" placeholder="DD-MM-YYYY" readonly
+                            <input type="text" placeholder="DD-MM-YYYY"
                                    id="date-to-16" class="form-control" value="${to!}">
                                     <span for="errMsgDateTo" id="errMsgDateTo"
                                           class="errMsg text-left text-danger"></span>
@@ -319,7 +319,7 @@
                     </div>
                     <div class="col-lg-4 text-center">
                         <div class="form-group  text-left">
-                            <input type="text" placeholder="YYYY-MM-DD" readonly name="applicationDate"
+                            <input type="text" placeholder="YYYY-MM-DD" name="applicationDate"
                                    id="ct-date-from" class="form-control" onclick="clearErrMsg()">
                                     <span for="errMsgDateFrom" id="errMsgDateFrom"
                                           class="errMsg text-left text-danger"></span>
@@ -343,8 +343,8 @@
                     </div>
                     <div class="col-lg-4 text-center">
                         <div class="form-group  text-left">
-                            <input type="text" placeholder="YYYY-MM-DD" readonly name="applicationDate"
-                                   id="ct-date-to" class="form-control" onclick="clearErrMsg()">
+                            <input type="text" placeholder="YYYY-MM-DD"  name="applicationDate"
+                                   id="ct-date-to" class="form-control" value="">
                                     <span for="errMsgDateTo" id="errMsgDateTo"
                                           class="errMsg text-left text-danger"></span>
                         </div>

@@ -19,7 +19,7 @@
                     </div>
                     <div class="col-lg-4 text-center">
                         <div class="form-group  text-left">
-                            <input type="text" placeholder="YYYY-MM-DD" readonly name="applicationDate"
+                            <input type="text" placeholder="YYYY-MM-DD" name="applicationDate"
                                    id="ct-date-from" class="form-control" onclick="clearErrMsg()">
                                     <span for="errMsgDateFrom" id="errMsgDateFrom"
                                           class="errMsg text-left text-danger"></span>
@@ -45,7 +45,7 @@
                     </div>
                     <div class="col-lg-4 text-center">
                         <div class="form-group  text-left">
-                            <input type="text" placeholder="YYYY-MM-DD" readonly name="applicationDate"
+                            <input type="text" placeholder="YYYY-MM-DD" name="applicationDate"
                                    id="ct-date-to" class="form-control" onclick="clearErrMsg()">
                                     <span for="errMsgDateTo" id="errMsgDateTo"
                                           class="errMsg text-left text-danger"></span>

@@ -9,10 +9,9 @@
 
     <link rel="icon" type="image/ico" href="favicon.ico"/>
 
-    <link href="../resources/taurus/HTML/css/stylesheets.css" rel="stylesheet" type="text/css"/>
-    <link href="../resources/css/random.css" rel="stylesheet" type="text/css"/>
-
-    <#include "script.ftl">
+    <#assign ctx = rc.getContextPath()/>
+    <!--Resources For Bootstrap-->
+    <#include "../gen_template/resources_of_bootstrap.ftl">
 
 </head>
 <body class="block <#--bg-img-num3 -->bg-white2 bg-light"> <#-- bg-img-num1 class="bg-img-num3" 3 == block bg-lblue bg-light-->

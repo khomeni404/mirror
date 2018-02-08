@@ -65,7 +65,7 @@ ${message!}
             <div class="form-group">
                 <div class="col-md-9"></div>
                 <div class="col-md-3 pull-right">
-                    <input type="submit" value="Update Badge" class="btn btn-success"/>
+                    <input type="submit" value="Save Badge" class="btn btn-success"/>
                 </div>
             </div>
         </div>
