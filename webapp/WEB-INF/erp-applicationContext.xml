@@ -71,6 +71,7 @@
                 <value>com.mirror2.csd.model.Shareholder</value>
                 <value>com.mirror2.csd.model.MoneyReceipt</value>
                 <value>com.mirror2.csd.model.OtherPayment</value>
+                <value>com.mirror2.csd.model.DelayCharge</value>
                 <value>com.mirror2.csd.model.Voucher</value>
                 <value>com.mirror2.csd.model.AdjustmentVoucher</value>
                 <value>com.mirror2.csd.model.WithdrawVoucher</value>

@@ -66,6 +66,7 @@ public class MISController extends GenericController{
         map.put("offerList", commonDAO.findAll(Offer.class));
         map.put("locationList", commonDAO.findAll(Location.class));
         map.put("badgeList", commonDAO.findAll(Badge.class));
+        commonService.test();
         return new ModelAndView("/mis/home_mis", map);
     }
 

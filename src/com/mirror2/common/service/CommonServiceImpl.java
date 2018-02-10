@@ -133,4 +133,9 @@ public class CommonServiceImpl implements CommonService {
     public Integer count(Class clazz, Boolean active) {
         return commonDAO.count(clazz, active);
     }
+
+    @Override
+    public Object test() {
+        return commonDAO.test();
+    }
 }

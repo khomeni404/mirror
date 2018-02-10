@@ -21,6 +21,7 @@ import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.validator.GenericValidator;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -1309,6 +1310,36 @@ public class CsdController {
         map.put("instInfo", csdService.getInstallmentInfo(customer));
 
         return new ModelAndView("csd/report/payment_schedule", map);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/calculateDelayCharge.erp")
+    public ModelAndView calculateDelayCharge(@RequestParam("cid") String cid) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        if (cid.toUpperCase().startsWith("DPL")) {
+            cid = cid.substring(3, cid.length());
+        }
+        DecimalFormat df = new DecimalFormat("000000");
+        cid = "DPL " + df.format(Integer.parseInt(cid.trim()));
+
+        Customer customer = csdService.getCustomer(cid);
+
+        //            Customer c =  get(Customer.class, "CID", "DPL 000004");
+        //c.setId(290L);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        LocalDate from = new LocalDate("2010-01-01");
+        LocalDate to = new LocalDate("2018-12-31");
+        //Date startDate = sdf.parse("01/01/2017");
+        //Date endDate = sdf.parse("31/12/2017");
+        List<DelayCharge> delayChargeList = csdService.calculateDelayCharge(customer, from, to);
+
+        map.put("PageTitle", "Payment Schedule");
+        map.put("DashboardLink", MirrorConstants.DASHBOARD_LINK);
+        map.put("cid", cid);
+        map.put("name", customer.getName());
+        map.put("delayChargeList", delayChargeList);
+        map.put("instInfo", csdService.getInstallmentInfo(customer));
+
+        return new ModelAndView("csd/report/delay_charge", map);
     }
 
 

@@ -57,4 +57,6 @@ public interface CommonService {
     Integer count(Class clazz);
 
     Integer count(Class clazz, Boolean active);
+
+    Object test();
 }

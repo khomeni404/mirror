@@ -1,14 +1,17 @@
 package com.mirror2.icm.test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.mirror2.util.DateUtil;
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
+import java.util.*;
 
 public class TEst {
     public static void main(String[] args) {
-Integer year = 2015;
-        System.out.println(year.toString().substring(2, 4));
-
+        DateTimeFormatter formatterFecha = DateTimeFormat.forPattern("MMMM, yyyy");
+       // DateTime primerDiaDelMes = new DateTime().dayOfMonth().withMinimumValue();
+        String desde = new LocalDate(new Date()).toString(formatterFecha);
+        System.out.println("desde = " + desde);
     }
 }

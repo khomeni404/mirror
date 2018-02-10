@@ -9,6 +9,7 @@ import com.mirror2.util.MyProperty;
 import com.mirror2.util.TheDates;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.transform.ResultTransformer;
+import org.joda.time.LocalDate;
 import org.smslib.AGateway;
 import org.smslib.InboundMessage;
 import org.smslib.OutboundMessage;
@@ -62,6 +63,8 @@ public class CsdServiceImpl implements CsdService {
     private AdminService adminService;
     @Autowired
     private DisbursementLogDAO disbursementLogDAO;
+    @Autowired
+    private CsdDAO csdDAO;
 
     //==========================================
 
@@ -69,6 +72,11 @@ public class CsdServiceImpl implements CsdService {
 
     //TODO...
     //Date from = new TheDates().toDate("2015-06-17");
+
+    @Override
+    public List<DelayCharge> calculateDelayCharge(Customer customer, LocalDate from, LocalDate to) {
+        return csdDAO.calculateDelayCharge(customer, from, to);
+    }
 
     @Override
     public List<Map<String, Object>> getSalesCountListByStatus() {

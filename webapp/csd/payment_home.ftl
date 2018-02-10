@@ -45,9 +45,10 @@
                     <img src="../resources/images/csd/schedule.png"><span>Add Installment</span>
                 </a>
             </li>
+
             <li>
-                <a href="../csd/followUpHistoryList.erp?date=today&of=today" original-title="Client Followup">
-                    <img src="../resources/images/csd/schedule.png"><span>Follow-up</span>
+                <a href="../csd/calculateDelayCharge.erp?cid=1" original-title="Employment Status">
+                    <img src="../resources/images/hrm/common.png"><span>Delay Charge</span>
                 </a>
             </li>
 
@@ -58,6 +59,12 @@
             <li>
                 <a href="../csd/createIncentiveDist.erp" original-title="Job Status">
                     <img src="../resources/images/hrm/degree.png"><span>Incentive Distribution</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="../csd/followUpHistoryList.erp?date=today&of=today" original-title="Client Followup">
+                    <img src="../resources/images/csd/schedule.png"><span>Follow-up</span>
                 </a>
             </li>
         </ul>

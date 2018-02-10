@@ -1,6 +1,7 @@
 package com.mirror2.csd.service;
 
 import com.mirror2.csd.model.*;
+import org.joda.time.LocalDate;
 
 import java.util.Date;
 import java.util.List;
@@ -8,6 +9,8 @@ import java.util.Map;
 
 public interface CsdService {
     //Report
+    List<DelayCharge> calculateDelayCharge(Customer customer, LocalDate from, LocalDate to);
+
     public List<Map<String, Object>> getSalesCountListByStatus();
 
     public List<Map<String, Object>> getSalesCountListByOffer();
