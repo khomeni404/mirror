@@ -55,7 +55,7 @@
                         <tr><td class="CompanyName">DORPAN Properties Limited</td></tr>
                         <tr><td class="address">Flat <b>5A</b>, House <b>30</b>, Sonargaon Janapath, Sector <b>11 Chowrasta</b></td></tr>
                         <tr><td class="address">Uttara, Dhaka <b>1230, </b>Ph: <b>0289 58752</td></tr>
-                        <tr><td class="header">Delay Charge</td></tr>
+                        <tr><td class="header">Delay Charge : Month Wise</td></tr>
                     </table>
                     <hr/><br/><br/><br/><br/><br/>
                     <h4>${cid} : ${name}</h4>

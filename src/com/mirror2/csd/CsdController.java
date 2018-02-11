@@ -1327,7 +1327,7 @@ public class CsdController {
         //c.setId(290L);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         LocalDate from = new LocalDate("2010-01-01");
-        LocalDate to = new LocalDate("2018-12-31");
+        LocalDate to = new LocalDate(new Date());
         //Date startDate = sdf.parse("01/01/2017");
         //Date endDate = sdf.parse("31/12/2017");
         List<DelayCharge> delayChargeList = csdService.calculateDelayCharge(customer, from, to);

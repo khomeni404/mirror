@@ -122,13 +122,13 @@ public class CsdDaoImpl implements CsdDAO {
             List<DelayCharge> dcList = new ArrayList<DelayCharge>();
             int totalDays = 0;
             for (LocalDate localDate = from; localDate.isBefore(to); localDate = localDate.plusDays(1)) {
-                if (localDate.toString().startsWith("-04-30")) {
+                if (localDate.toString().equals("2018-12-30")) {
                     System.out.println("");
                     //DateUtil.getTotalDaysOfMonth()
                 }
                 Date date = localDate.toDate();
                 if (totalDays == 0) {
-                    totalDays = DateUtil.getTotalDaysOfMonth(new LocalDate(date).toString(MMyyy));
+                    totalDays = DateUtil.getTotalDaysOfMonth(localDate.toString(MMyyy));
                     monthlyCharge = 0.0;
                 }
 
@@ -161,6 +161,12 @@ public class CsdDaoImpl implements CsdDAO {
                 map.put("D_CHARGE_BAL", dayCharge);
                 if (dayCharge > 0) {
                     dataList.add(map);
+                    /*DelayCharge dc = new DelayCharge();
+                    dc.setCustomer(c);
+                    dc.setAmount(dayCharge);
+                    dc.setChargeOf(localDate.toString());
+                    dc.setDeadLine(localDate.plusDays(10).toDate());
+                    dcList.add(dc);*/
                 }
 
                 totalDays--;
@@ -169,12 +175,13 @@ public class CsdDaoImpl implements CsdDAO {
                         DelayCharge dc = new DelayCharge();
                         dc.setCustomer(c);
                         dc.setAmount(monthlyCharge);
-                        dc.setChargeOf(new LocalDate(date).toString(MMMMyyyy));
+                        dc.setChargeOf(localDate.toString(MMMMyyyy));
                         dc.setDeadLine(localDate.plusDays(10).toDate());
                         dcList.add(dc);
                         //session.save(dc);
                     }
                 }
+
             }
             System.out.println(dataList.size());
             System.out.println(dcList.size());
